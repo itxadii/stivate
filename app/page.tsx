@@ -13,7 +13,7 @@ import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
-    <main className="relative w-full bg-black text-white font-sans selection:bg-white/30">
+    <main className="relative w-full bg-[#FFF9D2] text-zinc-900 font-sans selection:bg-[#FFEBCC]">
       <Hero />
       <OurStudio />
       <Clients />

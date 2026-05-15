@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Stivate | Premium Creative Agency",
+  title: "Stivate",
   description: "Cinematic premium creative-dev agency specializing in futuristic automation and Apple-style motion design.",
 };
 
