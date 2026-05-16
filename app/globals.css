@@ -1,12 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050604; /* Dark olive background */
-  --foreground: #f0f4e8; /* Off-white text */
-  --primary: #c3e236; /* Lime green accent */
-  --primary-foreground: #000000;
-  --glass: rgba(20, 25, 15, 0.3); /* Olive glass */
-  --glass-border: rgba(195, 226, 54, 0.1); /* Lime thin border */
+  --background: #FFF6DE;
+  --foreground: #18181b;
+  --primary: #18181b;
+  --primary-foreground: #ffffff;
+  --glass: rgba(255, 246, 222, 0.6);
+  --glass-border: rgba(0, 0, 0, 0.08);
+}
+
+#spline-watermark {
+  display: none !important;
+}
+
+canvas+div {
+  display: none !important;
 }
 
 @theme {
@@ -16,7 +24,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-glass: var(--glass);
   --color-glass-border: var(--glass-border);
-  
+
   --font-sans: var(--font-inter);
 }
 
@@ -29,36 +37,42 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  background-color: #e4d9b8;
+  color: #18181b;
+}
+
 /* Custom cinematic utilities */
 @layer utilities {
   .text-glow {
     text-shadow: 0 0 40px rgba(195, 226, 54, 0.4);
   }
-  
+
   .glassmorphism {
     background: var(--glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
   }
-  
+
   .cinematic-shadow {
     box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.8),
-                0 0 40px -10px rgba(195, 226, 54, 0.1);
+      0 0 40px -10px rgba(195, 226, 54, 0.1);
   }
-  
+
   .text-tight {
     letter-spacing: -0.04em;
     line-height: 0.9;
   }
-  
+
   .text-massive {
     font-size: clamp(4rem, 15vw, 12rem);
   }
 }
 
 /* Lenis recommended CSS */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 

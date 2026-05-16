@@ -1,25 +1,82 @@
+import { Phone, Hammer, Rocket, type LucideIcon } from "lucide-react";
+import ModernButton from "../ui/ModernButton";
+
+interface Step {
+  num: string;
+  Icon: LucideIcon;
+  title: string;
+  desc: string;
+}
+
+const steps: Step[] = [
+  {
+    num: "01",
+    Icon: Phone,
+    title: "Free Strategy Call",
+    desc: "Tell us about your business. We'll map out exactly what's holding you back and what to build first.",
+  },
+  {
+    num: "02",
+    Icon: Hammer,
+    title: "We Build It",
+    desc: "Our team designs and delivers your solution fast. No fluff, no delays, no jargon — just results.",
+  },
+  {
+    num: "03",
+    Icon: Rocket,
+    title: "You Grow",
+    desc: "Your new system goes live. More leads come in. Less time wasted. You focus on running your business.",
+  },
+];
+
 export default function HowItWorks() {
   return (
-    <section className="py-24 px-4 md:px-12 bg-[#FFF9D2] text-zinc-900 border-t border-[#FFEBCC]">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-20 text-center">Engagement Model</h2>
-        <div className="space-y-16 max-w-4xl mx-auto">
-          {[
-            { title: "Discovery & Analysis", desc: "We start by deeply understanding your operational workflows, technical debt, and future scaling requirements." },
-            { title: "Strategic Planning", desc: "Our architects draft a comprehensive roadmap, detailing the tech stack, infrastructure, and security compliance." },
-            { title: "Development & Integration", desc: "Our engineering teams build and integrate solutions using modern CI/CD pipelines and best practices." },
-            { title: "Managed Support", desc: "Post-deployment, we provide 24/7 monitoring, maintenance, and continuous optimization." }
-          ].map((item, i) => (
-            <div key={i} className="flex flex-col md:flex-row gap-6 md:gap-12 items-start group">
-              <div className="text-6xl md:text-7xl font-bold text-[#FFEBCC] group-hover:text-zinc-300 transition-colors mt-[-10px]">
-                {(i + 1).toString().padStart(2, '0')}
+    <section
+      id="how-it-works"
+      className="py-24 px-6 md:px-12 bg-gradient-to-b from-[#FFF6DE] to-white/60 text-zinc-900 border-t border-[#FFF6DE] relative overflow-hidden"
+    >
+      <div className="absolute right-0 top-0 w-[450px] h-[450px] bg-[#FFF6DE]/50 rounded-full filter blur-[100px] pointer-events-none" />
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-zinc-200 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
+            Simple process
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">
+            From idea to live system
+            <br />
+            <span className="text-zinc-400">in 3 steps</span>
+          </h2>
+        </div>
+
+        <div className="space-y-5 mb-14">
+          {steps.map(({ num, Icon, title, desc }, i) => (
+            <div
+              key={i}
+              className="flex flex-col md:flex-row items-start md:items-center gap-6 p-8 rounded-3xl bg-white/60 backdrop-blur-md border border-white/80 shadow-sm hover:shadow-lg hover:bg-white/80 transition-all duration-300 group"
+            >
+              <div className="flex-shrink-0 flex items-center gap-4">
+                <div className="text-5xl md:text-6xl font-extrabold text-zinc-100 group-hover:text-zinc-200 transition-colors leading-none select-none">
+                  {num}
+                </div>
+                <div className="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center">
+                  <Icon size={18} />
+                </div>
               </div>
               <div>
-                <h3 className="text-2xl font-bold mb-4 text-zinc-900">{item.title}</h3>
-                <p className="text-zinc-600 text-lg leading-relaxed">{item.desc}</p>
+                <h3 className="text-xl font-bold mb-2 text-zinc-900">{title}</h3>
+                <p className="text-zinc-600 text-base leading-relaxed">{desc}</p>
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="text-center">
+          <ModernButton
+            href="#contact"
+            label="Book Your Free Call Today"
+            className="px-10 py-5 text-base"
+          />
         </div>
       </div>
     </section>

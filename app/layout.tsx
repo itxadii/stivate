@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Stivate",
-  description: "Cinematic premium creative-dev agency specializing in futuristic automation and Apple-style motion design.",
+  title: "Stivate — Websites, WhatsApp Bots & CRM for Indian Businesses",
+  description: "We build websites, WhatsApp automation, and custom CRMs that help Indian businesses grow faster. Get a free 30-minute strategy session today.",
 };
 
 export default function RootLayout({

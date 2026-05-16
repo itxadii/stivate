@@ -1,21 +1,48 @@
-export default function OurApproach() {
+import { Check } from "lucide-react";
+
+const reasons = [
+  "We speak your language — no tech jargon, just clear outcomes",
+  "We move fast — most projects go live within 2–4 weeks",
+  "Everything is built custom for your business, not copy-pasted",
+  "We stay with you after launch — not disappear like other agencies",
+  "Transparent pricing — you know exactly what you're paying for",
+];
+
+export default function WhyStivate() {
   return (
-    <section className="py-24 px-4 md:px-12 bg-white text-zinc-900">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-8">Our Methodology</h2>
-        <p className="text-xl md:text-2xl text-zinc-600 font-light leading-relaxed mb-16">
-          We combine agile frameworks with deep technical expertise to deliver scalable IT solutions that align precisely with your business objectives.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-          {[
-            { step: 'Assess', desc: 'Comprehensive audit of your current architecture and business needs.' },
-            { step: 'Architect', desc: 'Designing secure, scalable, and resilient technical solutions.' },
-            { step: 'Implement', desc: 'Agile execution with rigorous testing and deployment protocols.' }
-          ].map((item, i) => (
-            <div key={i} className="border-t-2 border-[#FFEBCC] pt-8">
-              <span className="text-zinc-400 font-bold text-lg block mb-4">0{i + 1}</span>
-              <h3 className="text-2xl font-semibold mb-3 text-zinc-900">{item.step}</h3>
-              <p className="text-zinc-600 leading-relaxed">{item.desc}</p>
+    <section className="py-24 px-6 md:px-12 bg-white/50 backdrop-blur-sm text-zinc-900 relative overflow-hidden">
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#BFDDF0]/15 rounded-full filter blur-[130px] pointer-events-none" />
+
+      <div className="max-w-5xl mx-auto relative z-10 grid md:grid-cols-2 gap-12 items-center">
+        {/* Left */}
+        <div>
+          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-zinc-200 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
+            Why Stivate
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight mb-6">
+            Why businesses
+            <br />
+            choose us
+          </h2>
+          <p className="text-zinc-500 text-lg leading-relaxed">
+            We're not just another agency. We're your growth partner — obsessed
+            with building systems that actually work for your business.
+          </p>
+        </div>
+
+        {/* Right */}
+        <div className="space-y-4">
+          {reasons.map((reason, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-4 p-5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 shadow-sm hover:shadow-md hover:bg-white transition-all duration-300"
+            >
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-zinc-900 flex items-center justify-center mt-0.5">
+                <Check size={13} className="text-white" strokeWidth={3} />
+              </div>
+              <p className="text-zinc-700 text-base font-medium leading-snug">
+                {reason}
+              </p>
             </div>
           ))}
         </div>

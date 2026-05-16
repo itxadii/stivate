@@ -1,30 +1,28 @@
 import Hero from "@/components/home/Hero";
-import OurStudio from "@/components/home/OurStudio";
-import Clients from "@/components/home/Clients";
+import Problem from "@/components/home/OurStudio";
+import ClientsBar from "@/components/home/People";
 import Services from "@/components/home/Services";
-import OurWork from "@/components/home/OurWork";
-import OurApproach from "@/components/home/OurApproach";
+import Results from "@/components/home/OurWork";
 import HowItWorks from "@/components/home/HowItWorks";
-import KeyStats from "@/components/home/KeyStats";
+import WhyStivate from "@/components/home/OurApproach";
 import Testimonials from "@/components/home/Testimonials";
-import People from "@/components/home/People";
-import GetStarted from "@/components/home/GetStarted";
+import LeadCapture from "@/components/home/GetStarted";
+import FAQ from "@/components/home/KeyStats";
 import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
-    <main className="relative w-full bg-[#FFF9D2] text-zinc-900 font-sans selection:bg-[#FFEBCC]">
+    <main className="relative w-full bg-[#FFF6DE] text-zinc-900 font-sans selection:bg-[#e4d9b8] pb-24">
       <Hero />
-      <OurStudio />
-      <Clients />
+      <ClientsBar />
+      <Problem />
       <Services />
-      <OurWork />
-      <OurApproach />
+      <Results />
       <HowItWorks />
-      <KeyStats />
+      <WhyStivate />
       <Testimonials />
-      <People />
-      <GetStarted />
+      <LeadCapture />
+      <FAQ />
       <Footer />
     </main>
   );

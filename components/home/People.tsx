@@ -1,117 +1,43 @@
-export default function People() {
+import { Store, GraduationCap, Truck, ShoppingBag, BookOpen, Heart } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+interface Client {
+  Icon: LucideIcon;
+  name: string;
+  city: string;
+}
+
+const clients: Client[] = [
+  { Icon: Store,         name: "Furniture Store",    city: "Pune" },
+  { Icon: GraduationCap, name: "Training Institute", city: "Mumbai" },
+  { Icon: Truck,         name: "Logistics Co.",      city: "Delhi" },
+  { Icon: ShoppingBag,   name: "Retail Chain",       city: "Bangalore" },
+  { Icon: BookOpen,      name: "Coaching Center",    city: "Hyderabad" },
+  { Icon: Heart,         name: "Healthcare Clinic",  city: "Chennai" },
+];
+
+export default function ClientsBar() {
   return (
-    <section className="py-24 px-4 md:px-12 bg-white/40 backdrop-blur-sm text-zinc-900 relative overflow-hidden">
-
-      {/* Ambient Glow */}
-      <div className="absolute inset-x-0 bottom-0 mx-auto w-[280px] h-[280px] md:w-[500px] md:h-[500px] bg-[#FFF9D2]/60 rounded-full blur-[120px] -z-10"></div>
-
+    <section className="py-12 px-6 md:px-12 bg-white/70 backdrop-blur-sm border-y border-zinc-100">
       <div className="max-w-7xl mx-auto">
-
-        {/* Heading */}
-        <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center">
-          Leadership Team
-        </h2>
-
-        {/* Team Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-
-          {[
-            {
-              name: "John Smith",
-              role: "Principal Cloud Architect",
-            },
-            {
-              name: "Sarah Jenkins",
-              role: "Head of Engineering",
-            },
-            {
-              name: "Michael Chen",
-              role: "VP of IT Strategy",
-            },
-            {
-              name: "Emily Davis",
-              role: "Lead Security Consultant",
-            },
-          ].map((person, i) => (
+        <p className="text-center text-zinc-400 text-xs font-semibold uppercase tracking-widest mb-8">
+          Trusted by 50+ businesses across India
+        </p>
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6">
+          {clients.map(({ Icon, name, city }, i) => (
             <div
               key={i}
-              className="
-                text-center
-                group
-                p-6
-                rounded-3xl
-                bg-white/30
-                backdrop-blur-md
-                border
-                border-white/50
-                hover:bg-white/60
-                transition-all
-                duration-300
-                shadow-sm
-              "
+              className="flex flex-col items-center gap-2 p-4 rounded-2xl hover:bg-zinc-50 transition-all duration-200 group"
             >
-
-              {/* Photo Card */}
-              <div
-                className="
-                  w-full
-                  aspect-square
-                  bg-gradient-to-br
-                  from-[#BFDDF0]/40
-                  to-[#FFEBCC]/30
-                  rounded-2xl
-                  mb-6
-                  overflow-hidden
-                  relative
-                  border
-                  border-white/60
-                  transition-transform
-                  duration-500
-                  shadow-sm
-                  group-hover:-translate-y-2
-                  group-hover:shadow-[0_10px_40px_rgb(191,221,240,0.5)]
-                "
-              >
-
-                {/* Glass Overlay */}
-                <div
-                  className="
-                    absolute
-                    inset-0
-                    bg-white/20
-                    backdrop-blur-sm
-                    group-hover:opacity-0
-                    transition-opacity
-                    duration-700
-                  "
-                />
-
-                {/* Placeholder */}
-                <div
-                  className="
-                    absolute
-                    inset-0
-                    flex
-                    items-center
-                    justify-center
-                    text-zinc-500
-                    font-medium
-                  "
-                >
-                  Photo
-                </div>
+              <div className="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center group-hover:bg-zinc-200 transition-colors">
+                <Icon size={18} className="text-zinc-500" />
               </div>
-
-              {/* Name */}
-              <h4 className="font-bold text-xl mb-1 text-zinc-900">
-                {person.name}
-              </h4>
-
-              {/* Role */}
-              <p className="text-[#BFDDF0] font-semibold text-sm drop-shadow-sm">
-                {person.role}
-              </p>
-
+              <div className="text-center">
+                <p className="text-zinc-700 text-xs font-semibold leading-tight">
+                  {name}
+                </p>
+                <p className="text-zinc-400 text-xs">{city}</p>
+              </div>
             </div>
           ))}
         </div>
