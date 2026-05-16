@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { FloatingDock } from "@/components/ui/FloatingDock";
 import ModernButton from "@/components/ui/ModernButton";
-import { Home, Globe, TrendingUp, Zap, MessageSquare } from "lucide-react";
+import { Home, Globe, TrendingUp, MessageSquare, Briefcase } from "lucide-react";
 
 const dockLinks = [
   { title: "Home", icon: <Home className="w-full h-full text-zinc-700" />, href: "/" },
-  { title: "Services", icon: <Globe className="w-full h-full text-zinc-700" />, href: "#services" },
-  { title: "Results", icon: <TrendingUp className="w-full h-full text-zinc-700" />, href: "#results" },
-  { title: "How It Works", icon: <Zap className="w-full h-full text-zinc-700" />, href: "#how-it-works" },
-  { title: "Contact", icon: <MessageSquare className="w-full h-full text-zinc-700" />, href: "#contact" },
+  { title: "Services", icon: <Globe className="w-full h-full text-zinc-700" />, href: "/services" },
+  { title: "Projects", icon: <TrendingUp className="w-full h-full text-zinc-700" />, href: "/projects" },
+  { title: "Careers", icon: <Briefcase className="w-full h-full text-zinc-700" />, href: "/careers" },
+  { title: "Contact", icon: <MessageSquare className="w-full h-full text-zinc-700" />, href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -24,7 +24,7 @@ export default function Navbar() {
         </Link>
 
         <div className="pointer-events-auto">
-          <ModernButton href="#contact" label="Get a Free Demo" />
+          <ModernButton href="/contact" label="Get a Free Demo" />
         </div>
 
       </div>

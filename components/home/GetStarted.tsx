@@ -17,7 +17,13 @@ const businessTypes = [
   "Other",
 ];
 
-export default function LeadCapture() {
+export default function LeadCapture({
+  className = "",
+  hideHeader = false
+}: {
+  className?: string;
+  hideHeader?: boolean;
+}) {
   const [formData, setFormData] = useState({
     name: "",
     whatsapp: "",
@@ -61,24 +67,26 @@ export default function LeadCapture() {
   return (
     <section
       id="contact"
-      className="py-24 px-6 md:px-12 bg-[#FFF6DE] relative overflow-hidden"
+      className={`py-24 px-6 md:px-12 bg-[#FFF6DE] relative overflow-hidden ${className}`}
     >
       <div className="max-w-xl mx-auto relative z-10">
 
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-zinc-300 bg-white text-sm font-medium text-zinc-500">
-            Free Strategy Session
+        {!hideHeader && (
+          <div className="text-center mb-12">
+            <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-zinc-300 bg-white text-sm font-medium text-zinc-500">
+              Free Strategy Session
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-zinc-900">
+              Ready to digitalize
+              <br />
+              <span className="text-zinc-400">your business?</span>
+            </h2>
+            <p className="text-zinc-500 text-base leading-relaxed">
+              Get a free 30-minute strategy session. No sales pitch, no pressure.
+            </p>
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-zinc-900">
-            Ready to digitalize
-            <br />
-            <span className="text-zinc-400">your business?</span>
-          </h2>
-          <p className="text-zinc-500 text-base leading-relaxed">
-            Get a free 30-minute strategy session. No sales pitch, no pressure.
-          </p>
-        </div>
+        )}
 
         {!submitted ? (
           <form

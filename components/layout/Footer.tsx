@@ -16,12 +16,9 @@ export default function Footer() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <ModernButton
-              href="https://wa.me/919529602759" label="Talk to Us on WhatsApp"
-            />
-            <ModernButton
               href="#contact"
               label="Book a Free Call"
-              className="bg-transparent border-zinc-300 hover:bg-white/80 hover:text-zinc-900"
+              className="px-10 py-5"
             />
           </div>
         </div>
@@ -32,9 +29,9 @@ export default function Footer() {
             <Image
               src="/logo.png"
               alt="Stivate"
-              width={140}
-              height={45}
-              className="h-9 w-auto object-contain mb-4"
+              width={350}
+              height={112}
+              className="h-20 w-auto object-contain mb-6"
             />
             <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
               We build websites, WhatsApp bots, and custom CRMs that help
@@ -48,10 +45,10 @@ export default function Footer() {
             </h5>
             <ul className="space-y-3 text-zinc-500 text-sm">
               {[
-                ["Services", "#services"],
-                ["Results", "#results"],
-                ["How It Works", "#how-it-works"],
-                ["Contact", "#contact"],
+                ["Services", "/services"],
+                ["Projects", "/projects"],
+                ["Careers", "/careers"],
+                ["Contact", "/contact"],
               ].map(([label, href]) => (
                 <li key={label}>
                   <a href={href} className="hover:text-zinc-900 transition-colors duration-200">
@@ -68,18 +65,13 @@ export default function Footer() {
             </h5>
             <ul className="space-y-3 text-zinc-500 text-sm">
               <li>
-                <a
-                  href="https://wa.me/918000000000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-zinc-900 transition-colors duration-200"
-                >
-                  WhatsApp Us
+                <a href="#contact" className="hover:text-zinc-900 transition-colors duration-200">
+                  Book a Free Call
                 </a>
               </li>
               <li>
-                <a href="#contact" className="hover:text-zinc-900 transition-colors duration-200">
-                  Book a Free Call
+                <a href="mailto:hello@stivate.com" className="hover:text-zinc-900 transition-colors duration-200">
+                  hello@stivate.com
                 </a>
               </li>
             </ul>
@@ -90,8 +82,8 @@ export default function Footer() {
         <div className="pt-8 border-t border-zinc-200/60 flex flex-col md:flex-row justify-between items-center text-zinc-400 text-sm gap-4">
           <p>© {new Date().getFullYear()} Stivate. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-zinc-700 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-zinc-700 transition-colors">Terms of Service</a>
+            <a href="/privacy-policy" className="hover:text-zinc-700 transition-colors">Privacy Policy</a>
+            <a href="/cookie-policy" className="hover:text-zinc-700 transition-colors">Cookie Policy</a>
           </div>
         </div>
       </div>

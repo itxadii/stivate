@@ -4,8 +4,8 @@
  * Desktop navbar is better positioned at the bottom
  * Mobile navbar is better positioned at bottom right.
  **/
-
-import Link from "next/link";
+import LoaderLink from "@/components/ui/LoaderLink";
+import { cn } from "@/lib/utils";
 import {
   AnimatePresence,
   MotionValue,
@@ -14,7 +14,6 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-
 
 import { useRef, useState } from "react";
 
@@ -44,7 +43,10 @@ const FloatingDockDesktop = ({
     <motion.div
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
-      className={`mx-auto flex h-16 items-end gap-4 rounded-3xl bg-white/30 backdrop-blur-md border border-white/40 shadow-xl px-4 pb-3${className ? ` ${className}` : ''}`}
+      className={cn(
+        "mx-auto flex h-16 items-end gap-4 rounded-3xl bg-white/30 backdrop-blur-md border border-white/40 shadow-xl px-4 pb-3 dark:bg-neutral-900/40 dark:border-white/10",
+        className,
+      )}
     >
       {items.map((item) => (
         <IconContainer mouseX={mouseX} key={item.title} {...item} />
@@ -107,7 +109,7 @@ function IconContainer({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <a href={href}>
+    <LoaderLink href={href}>
       <motion.div
         ref={ref}
         style={{ width, height }}
@@ -134,6 +136,6 @@ function IconContainer({
           {icon}
         </motion.div>
       </motion.div>
-    </a>
+    </LoaderLink>
   );
 }
