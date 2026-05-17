@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { FloatingDock } from "@/components/ui/FloatingDock";
 import ModernButton from "@/components/ui/ModernButton";
-import { Home, Globe, TrendingUp, MessageSquare, Briefcase } from "lucide-react";
+import { Home, HandHeart, MousePointerClick, MessageCircle, Briefcase } from "lucide-react";
 
 const dockLinks = [
   { title: "Home", icon: <Home className="w-full h-full text-zinc-700" />, href: "/" },
-  { title: "Services", icon: <Globe className="w-full h-full text-zinc-700" />, href: "/services" },
-  { title: "Projects", icon: <TrendingUp className="w-full h-full text-zinc-700" />, href: "/projects" },
+  { title: "Services", icon: <MousePointerClick className="w-full h-full text-zinc-700" />, href: "/services" },
+  { title: "Projects", icon: <HandHeart className="w-full h-full text-zinc-700" />, href: "/projects" },
   { title: "Careers", icon: <Briefcase className="w-full h-full text-zinc-700" />, href: "/careers" },
-  { title: "Contact", icon: <MessageSquare className="w-full h-full text-zinc-700" />, href: "/contact" },
+  { title: "Contact", icon: <MessageCircle className="w-full h-full text-zinc-700" />, href: "/contact" },
 ];
 
 export default function Navbar() {
