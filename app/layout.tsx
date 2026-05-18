@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import LenisProvider from "@/components/layout/LenisProvider";
 import Navbar from "@/components/layout/Navbar";
@@ -77,6 +78,18 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-primary-foreground">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-GQWMGVG48M"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-GQWMGVG48M');
+          `}
+        </Script>
         <LenisProvider>
           <NoiseOverlay />
           <Navbar />
