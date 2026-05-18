@@ -1,12 +1,7 @@
 'use client'
-import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { Star } from 'lucide-react'
 import ModernButton from '../ui/ModernButton'
-
-const SplineHero = dynamic(() => import('./SplineHero'), {
-  ssr: false,
-  loading: () => null,
-})
 
 const stats = [
   { value: '50+', label: 'Businesses served' },
@@ -18,13 +13,9 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-screen bg-[#FFF6DE] flex items-center overflow-hidden">
 
-      {/* Spline sits behind everything */}
-      <SplineHero />
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12 pt-28 pb-16 flex flex-col lg:flex-row items-center justify-between gap-12">
 
-      {/* Content sits on top */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12 pt-28 pb-16">
-
-        <div className="flex flex-col items-start max-w-2xl">
+        <div className="flex flex-col items-start max-w-2xl lg:w-[55%]">
 
           <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-zinc-300 bg-white/70 backdrop-blur-sm text-sm font-medium text-zinc-500">
             <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-pulse" />
@@ -89,6 +80,18 @@ export default function Hero() {
           </div>
 
         </div>
+
+        <div className="lg:w-[45%] relative flex justify-center items-center mt-12 lg:mt-0 w-full">
+          <Image 
+            src="/heroimage.png" 
+            alt="Stivate Automation and Websites" 
+            width={800} 
+            height={800} 
+            className="w-full max-w-lg lg:max-w-none h-auto object-contain drop-shadow-2xl" 
+            priority 
+          />
+        </div>
+
       </div>
 
     </section >
