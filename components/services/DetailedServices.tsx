@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Globe, MessageSquare, BarChart2, Zap, CheckCircle2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import Image from "next/image";
 
 interface ServiceDetail {
   Icon: LucideIcon;
@@ -12,6 +13,7 @@ interface ServiceDetail {
   features: string[];
   results: string;
   color: string;
+  image: string;
 }
 
 const detailedServices: ServiceDetail[] = [
@@ -27,7 +29,8 @@ const detailedServices: ServiceDetail[] = [
       "Integrated lead capture forms"
     ],
     results: "Average 40% increase in lead generation post-launch.",
-    color: "bg-blue-50"
+    color: "bg-blue-50",
+    image: "/services/webdev.png"
   },
   {
     Icon: MessageSquare,
@@ -41,7 +44,8 @@ const detailedServices: ServiceDetail[] = [
       "Real-time lead notifications"
     ],
     results: "Reduces manual response time by up to 90%.",
-    color: "bg-green-50"
+    color: "bg-green-50",
+    image: "/services/whatsappautomation.png"
   },
   {
     Icon: BarChart2,
@@ -55,7 +59,8 @@ const detailedServices: ServiceDetail[] = [
       "Team collaboration tools"
     ],
     results: "Helps teams close deals 25% faster with better tracking.",
-    color: "bg-purple-50"
+    color: "bg-purple-50",
+    image: "/services/customcrm.png"
   },
   {
     Icon: Zap,
@@ -69,7 +74,8 @@ const detailedServices: ServiceDetail[] = [
       "Data synchronization across platforms"
     ],
     results: "Saves an average of 15+ hours of manual work per week.",
-    color: "bg-orange-50"
+    color: "bg-orange-50",
+    image: "/services/businessautomation.png"
   }
 ];
 
@@ -89,15 +95,20 @@ export default function DetailedServices() {
                 i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
               } gap-12 md:gap-24 items-center`}
             >
-              {/* Image/Graphic Placeholder */}
-              <div className="w-full md:w-1/2 aspect-square md:aspect-video rounded-3xl overflow-hidden bg-zinc-50 border border-zinc-100 relative group">
+              <div className="w-full md:w-1/2 aspect-square md:aspect-video rounded-3xl overflow-hidden bg-zinc-50 border border-slate-400 relative group">
                 <div className={`absolute inset-0 ${service.color} opacity-50 group-hover:opacity-70 transition-opacity`} />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <service.Icon size={120} className="text-zinc-200 group-hover:text-zinc-300 transition-colors" />
+                
+                <div className="relative w-full h-full z-10 flex items-center justify-center">
+                  <Image 
+                    src={service.image} 
+                    alt={service.title} 
+                    fill 
+                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                  />
                 </div>
                 
                 {/* Decorative floating card */}
-                <div className="absolute bottom-6 right-6 p-6 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/50 max-w-[240px]">
+                <div className="absolute bottom-6 right-6 z-20 p-6 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-slate-400 max-w-[240px]">
                   <p className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">Impact</p>
                   <p className="text-zinc-900 font-medium text-sm leading-snug">{service.results}</p>
                 </div>

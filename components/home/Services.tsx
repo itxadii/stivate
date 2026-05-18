@@ -60,7 +60,7 @@ export default function Services() {
           {services.map(({ Icon, title, subtitle, desc, quote }, i) => (
             <div
               key={i}
-              className="p-8 rounded-3xl bg-white border border-zinc-100 hover:border-zinc-200 hover:shadow-md transition-all duration-300"
+              className="p-8 rounded-3xl bg-white border border-slate-400 hover:border-slate-400 hover:shadow-md transition-all duration-300"
             >
               <div className="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center mb-5">
                 <Icon size={18} className="text-zinc-600" />

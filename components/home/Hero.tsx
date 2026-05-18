@@ -17,7 +17,7 @@ export default function Hero() {
 
         <div className="flex flex-col items-start max-w-2xl lg:w-[55%]">
 
-          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-zinc-300 bg-white/70 backdrop-blur-sm text-sm font-medium text-zinc-500">
+          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-slate-400 bg-white/70 backdrop-blur-sm text-sm font-medium text-zinc-500">
             <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-pulse" />
             Your competitors are already automating.
           </div>

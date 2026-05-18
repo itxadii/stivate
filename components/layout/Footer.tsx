@@ -35,7 +35,7 @@ export default function Footer() {
             />
             <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
               We build websites, WhatsApp bots, and custom CRMs that help
-              Indian businesses grow faster.
+              businesses grow faster.
             </p>
           </div>
 
@@ -79,7 +79,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-zinc-200/60 flex flex-col md:flex-row justify-between items-center text-zinc-400 text-sm gap-4">
+        <div className="pt-8 border-t border-slate-400/60 flex flex-col md:flex-row justify-between items-center text-zinc-400 text-sm gap-4">
           <p>© {new Date().getFullYear()} Stivate. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="/privacy-policy" className="hover:text-zinc-700 transition-colors">Privacy Policy</a>

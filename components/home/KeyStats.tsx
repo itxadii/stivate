@@ -35,7 +35,7 @@ export default function FAQ() {
 
       <div className="max-w-3xl mx-auto relative z-10">
         <div className="text-center mb-14">
-          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-zinc-200 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
+          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-slate-400 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
             FAQ
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">

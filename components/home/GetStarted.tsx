@@ -62,7 +62,7 @@ export default function LeadCapture({
     }
   };
 
-  const inputClass = "w-full px-5 py-3.5 rounded-xl bg-white border border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-zinc-400 transition-all duration-200 text-base"
+  const inputClass = "w-full px-5 py-3.5 rounded-xl bg-white border border-slate-400 text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-zinc-400 transition-all duration-200 text-base"
 
   return (
     <section
@@ -74,7 +74,7 @@ export default function LeadCapture({
         {/* Header */}
         {!hideHeader && (
           <div className="text-center mb-12">
-            <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-zinc-300 bg-white text-sm font-medium text-zinc-500">
+            <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-slate-400 bg-white text-sm font-medium text-zinc-500">
               Free Strategy Session
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-zinc-900">
@@ -91,7 +91,7 @@ export default function LeadCapture({
         {!submitted ? (
           <form
             onSubmit={handleSubmit}
-            className="space-y-4 p-8 rounded-3xl bg-white border border-zinc-200 shadow-sm"
+            className="space-y-4 p-8 rounded-3xl bg-white border border-slate-400 shadow-sm"
           >
             <div>
               <label className="block text-zinc-700 text-sm font-semibold mb-2">Full Name</label>
@@ -158,7 +158,7 @@ export default function LeadCapture({
             </p>
           </form>
         ) : (
-          <div className="text-center p-12 rounded-3xl bg-white border border-zinc-200 shadow-sm">
+          <div className="text-center p-12 rounded-3xl bg-white border border-slate-400 shadow-sm">
             <div className="w-12 h-12 rounded-full bg-green-100 border border-green-200 flex items-center justify-center mx-auto mb-5">
               <CheckCircle size={20} className="text-green-600" />
             </div>

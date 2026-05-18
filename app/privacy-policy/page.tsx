@@ -4,7 +4,7 @@ export default function PrivacyPolicy() {
   return (
     <main className="relative w-full bg-[#FFF6DE] text-zinc-900 font-sans selection:bg-[#e4d9b8] pt-32 pb-24 px-6 md:px-12">
       <div className="max-w-4xl mx-auto space-y-12">
-        <div className="space-y-4 border-b border-zinc-200 pb-8">
+        <div className="space-y-4 border-b border-slate-400 pb-8">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">Privacy Policy</h1>
           <p className="text-zinc-500 font-medium italic">Last updated: May 2026</p>
         </div>
@@ -119,7 +119,7 @@ export default function PrivacyPolicy() {
           <p className="text-zinc-600 leading-relaxed">We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top of this page. We encourage you to review this policy periodically. Continued use of our website after any changes means you accept the updated policy.</p>
         </section>
 
-        <section className="space-y-6 border-t border-zinc-200 pt-8">
+        <section className="space-y-6 border-t border-slate-400 pt-8">
           <h2 className="text-2xl font-bold">11. Contact Us</h2>
           <div className="space-y-2 text-zinc-600">
             <p className="font-bold text-zinc-900">Stivate</p>

@@ -27,7 +27,7 @@ export default function ContactDetails() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
       {details.map((item, i) => (
-        <div key={i} className="p-6 rounded-2xl bg-white border border-zinc-100 hover:border-zinc-200 transition-all duration-300">
+        <div key={i} className="p-6 rounded-2xl bg-white border border-slate-400 hover:border-slate-400 transition-all duration-300">
           <div className="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center mb-4">
             <item.Icon size={18} />
           </div>

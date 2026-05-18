@@ -21,7 +21,7 @@ export default function CareersHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block px-4 py-1.5 rounded-full border border-zinc-200 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600 mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full border border-slate-400 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600 mb-6">
             Join Our Team
           </span>
           <h1 className="text-5xl md:text-8xl font-extrabold tracking-tighter uppercase text-zinc-900 leading-[0.9]">
@@ -37,7 +37,7 @@ export default function CareersHero() {
           className="text-xl text-zinc-600 max-w-2xl mx-auto leading-relaxed"
         >
           We're looking for passionate individuals who want to redefine how 
-          Indian businesses operate through technology and automation.
+          businesses operate through technology and automation.
         </motion.p>
       </div>
     </section>

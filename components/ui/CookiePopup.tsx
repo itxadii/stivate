@@ -31,7 +31,7 @@ export default function CookiePopup() {
           exit={{ opacity: 0, y: 50, scale: 0.9 }}
           className="fixed bottom-6 left-6 right-6 md:left-auto md:right-10 md:max-w-md z-[100] pointer-events-auto"
         >
-          <div className="bg-white/90 backdrop-blur-xl border border-zinc-200 shadow-2xl rounded-[32px] p-6 md:p-8 flex flex-col md:flex-row items-start gap-6 relative overflow-hidden">
+          <div className="bg-white/90 backdrop-blur-xl border border-slate-400 shadow-2xl rounded-[32px] p-6 md:p-8 flex flex-col md:flex-row items-start gap-6 relative overflow-hidden">
             {/* Background accent */}
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#FFF6DE] rounded-full filter blur-3xl opacity-50" />
             

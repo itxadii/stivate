@@ -18,7 +18,7 @@ const clients: Client[] = [
 
 export default function ClientsBar() {
   return (
-    <section className="py-12 px-6 md:px-12 bg-white/70 backdrop-blur-sm border-y border-zinc-100">
+    <section className="py-12 px-6 md:px-12 bg-white/70 backdrop-blur-sm border-y border-slate-400">
       <div className="max-w-7xl mx-auto">
         <p className="text-center text-zinc-400 text-xs font-semibold uppercase tracking-widest mb-8">
           Trusted by 50+ businesses across India

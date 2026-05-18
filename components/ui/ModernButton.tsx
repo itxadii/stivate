@@ -26,7 +26,7 @@ export default function ModernButton({
   const content = children || label;
   const renderIcon = icon !== undefined ? icon : <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />;
 
-  const baseClasses = `inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-zinc-900 bg-transparent text-zinc-900 text-sm font-bold hover:bg-zinc-900 hover:text-white transition-all duration-300 group disabled:opacity-70 disabled:pointer-events-none ${className}`;
+  const baseClasses = `inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-zinc-900 bg-transparent text-zinc-900 text-sm font-bold hover:bg-zinc-900 hover:text-white transition-all duration-300 group disabled:opacity-70 disabled:pointer-events-none cursor-pointer ${className}`;
 
   if (href) {
     return (

@@ -14,7 +14,7 @@ export default function Problem() {
 
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-zinc-200 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
+          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-slate-400 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
             Sound familiar?
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">

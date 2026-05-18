@@ -76,6 +76,7 @@ export default function PremiumButton({
         font-medium
         overflow-hidden
         group
+        cursor-pointer
         ${className}
       `}
     >

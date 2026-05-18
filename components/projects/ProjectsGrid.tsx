@@ -65,13 +65,13 @@ export default function ProjectsGrid() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group p-8 rounded-3xl bg-zinc-50 border border-zinc-100 hover:border-zinc-200 hover:bg-white hover:shadow-xl transition-all duration-300"
+              className="group p-8 rounded-3xl bg-zinc-50 border border-slate-400 hover:border-slate-400 hover:bg-white hover:shadow-xl transition-all duration-300"
             >
               <div className="flex justify-between items-start mb-8">
                 <div className={`w-14 h-14 rounded-2xl ${project.color} flex items-center justify-center`}>
                   <project.Icon size={24} className="text-zinc-900" />
                 </div>
-                <div className="p-2 rounded-full bg-white border border-zinc-100 group-hover:bg-zinc-900 group-hover:text-white transition-colors duration-300">
+                <div className="p-2 rounded-full bg-white border border-slate-400 group-hover:bg-zinc-900 group-hover:text-white transition-colors duration-300">
                   <ArrowUpRight size={20} />
                 </div>
               </div>

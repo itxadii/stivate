@@ -21,7 +21,7 @@ export default function ProjectsHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block px-4 py-1.5 rounded-full border border-zinc-200 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600 mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full border border-slate-400 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600 mb-6">
             Case Studies
           </span>
           <h1 className="text-5xl md:text-8xl font-extrabold tracking-tighter uppercase text-zinc-900 leading-[0.9]">
@@ -36,7 +36,7 @@ export default function ProjectsHero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-xl text-zinc-600 max-w-2xl mx-auto leading-relaxed"
         >
-          Explore how we've helped Indian businesses automate their workflows, 
+          Explore how we've helped businesses automate their workflows, 
           scale their reach, and reclaim their time through custom digital systems.
         </motion.p>
       </div>

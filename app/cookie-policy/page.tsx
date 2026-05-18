@@ -4,7 +4,7 @@ export default function CookiePolicy() {
   return (
     <main className="relative w-full bg-[#FFF6DE] text-zinc-900 font-sans selection:bg-[#e4d9b8] pt-32 pb-24 px-6 md:px-12">
       <div className="max-w-4xl mx-auto space-y-12">
-        <div className="space-y-4 border-b border-zinc-200 pb-8">
+        <div className="space-y-4 border-b border-slate-400 pb-8">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">Cookie Policy</h1>
           <p className="text-zinc-500 font-medium italic">Last updated: May 2026</p>
         </div>
@@ -25,19 +25,19 @@ export default function CookiePolicy() {
               <h3 className="text-xl font-bold">Essential Cookies</h3>
               <p className="text-zinc-600">These are required for the website to function properly. Without them, the site cannot load correctly. They do not track you and no consent is required.</p>
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse bg-white rounded-xl overflow-hidden border border-zinc-200">
+                <table className="w-full text-left border-collapse bg-white rounded-xl overflow-hidden border border-slate-400">
                   <thead className="bg-zinc-50">
                     <tr>
-                      <th className="p-4 font-bold text-zinc-900 border-b border-zinc-200">Cookie</th>
-                      <th className="p-4 font-bold text-zinc-900 border-b border-zinc-200">Purpose</th>
-                      <th className="p-4 font-bold text-zinc-900 border-b border-zinc-200">Duration</th>
+                      <th className="p-4 font-bold text-zinc-900 border-b border-slate-400">Cookie</th>
+                      <th className="p-4 font-bold text-zinc-900 border-b border-slate-400">Purpose</th>
+                      <th className="p-4 font-bold text-zinc-900 border-b border-slate-400">Duration</th>
                     </tr>
                   </thead>
                   <tbody className="text-zinc-600">
                     <tr>
-                      <td className="p-4 border-b border-zinc-100">Session cookie</td>
-                      <td className="p-4 border-b border-zinc-100">Keeps the website functional during your visit</td>
-                      <td className="p-4 border-b border-zinc-100">Session (deleted when browser closes)</td>
+                      <td className="p-4 border-b border-slate-400">Session cookie</td>
+                      <td className="p-4 border-b border-slate-400">Keeps the website functional during your visit</td>
+                      <td className="p-4 border-b border-slate-400">Session (deleted when browser closes)</td>
                     </tr>
                   </tbody>
                 </table>
@@ -48,27 +48,27 @@ export default function CookiePolicy() {
               <h3 className="text-xl font-bold">Analytics Cookies (if enabled)</h3>
               <p className="text-zinc-600">These help us understand how visitors use our site — which pages are visited most, how long visitors stay, and where they come from. All data is anonymous and aggregated.</p>
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse bg-white rounded-xl overflow-hidden border border-zinc-200">
+                <table className="w-full text-left border-collapse bg-white rounded-xl overflow-hidden border border-slate-400">
                   <thead className="bg-zinc-50">
                     <tr>
-                      <th className="p-4 font-bold text-zinc-900 border-b border-zinc-200">Cookie</th>
-                      <th className="p-4 font-bold text-zinc-900 border-b border-zinc-200">Provider</th>
-                      <th className="p-4 font-bold text-zinc-900 border-b border-zinc-200">Purpose</th>
-                      <th className="p-4 font-bold text-zinc-900 border-b border-zinc-200">Duration</th>
+                      <th className="p-4 font-bold text-zinc-900 border-b border-slate-400">Cookie</th>
+                      <th className="p-4 font-bold text-zinc-900 border-b border-slate-400">Provider</th>
+                      <th className="p-4 font-bold text-zinc-900 border-b border-slate-400">Purpose</th>
+                      <th className="p-4 font-bold text-zinc-900 border-b border-slate-400">Duration</th>
                     </tr>
                   </thead>
                   <tbody className="text-zinc-600">
                     <tr>
-                      <td className="p-4 border-b border-zinc-100">_ga</td>
-                      <td className="p-4 border-b border-zinc-100">Google Analytics</td>
-                      <td className="p-4 border-b border-zinc-100">Tracks unique visitors</td>
-                      <td className="p-4 border-b border-zinc-100">2 years</td>
+                      <td className="p-4 border-b border-slate-400">_ga</td>
+                      <td className="p-4 border-b border-slate-400">Google Analytics</td>
+                      <td className="p-4 border-b border-slate-400">Tracks unique visitors</td>
+                      <td className="p-4 border-b border-slate-400">2 years</td>
                     </tr>
                     <tr>
-                      <td className="p-4 border-b border-zinc-100">_ga_*</td>
-                      <td className="p-4 border-b border-zinc-100">Google Analytics</td>
-                      <td className="p-4 border-b border-zinc-100">Session tracking</td>
-                      <td className="p-4 border-b border-zinc-100">2 years</td>
+                      <td className="p-4 border-b border-slate-400">_ga_*</td>
+                      <td className="p-4 border-b border-slate-400">Google Analytics</td>
+                      <td className="p-4 border-b border-slate-400">Session tracking</td>
+                      <td className="p-4 border-b border-slate-400">2 years</td>
                     </tr>
                   </tbody>
                 </table>
@@ -117,7 +117,7 @@ export default function CookiePolicy() {
           <p className="text-zinc-600 leading-relaxed">We may update this Cookie Policy as our website or applicable laws change. The "Last updated" date at the top of this page will reflect any changes. We recommend checking this page periodically.</p>
         </section>
 
-        <section className="space-y-6 border-t border-zinc-200 pt-8">
+        <section className="space-y-6 border-t border-slate-400 pt-8">
           <h2 className="text-2xl font-bold">7. Contact Us</h2>
           <div className="space-y-2 text-zinc-600">
             <p className="font-bold text-zinc-900">Stivate</p>

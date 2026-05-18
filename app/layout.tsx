@@ -12,13 +12,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Stivate — Websites, WhatsApp Bots & CRM for Indian Businesses",
-  description: "We build high-performance websites, WhatsApp automation, and custom CRMs that help Indian businesses grow faster. Get a free 30-minute strategy session today.",
-  keywords: ["Web Design India", "WhatsApp Automation", "Custom CRM", "Business Automation India", "Stivate"],
+  metadataBase: new URL("https://stivate.com"),
+  title: "Stivate — Websites, WhatsApp Bots & CRM for Forward-Thinking Businesses",
+  description: "We build high-performance websites, WhatsApp automation, and custom CRMs that help businesses grow faster. Get a free 30-minute strategy session today.",
+  keywords: ["Web Design", "WhatsApp Automation", "Custom CRM", "Business Automation", "Stivate", "Global Agency"],
   authors: [{ name: "Stivate" }],
   openGraph: {
     title: "Stivate — Digital Systems for Growth",
-    description: "Websites, WhatsApp Automation, and Custom CRMs for Indian Businesses.",
+    description: "Websites, WhatsApp Automation, and Custom CRMs for Businesses.",
     url: "https://stivate.com",
     siteName: "Stivate",
     images: [
@@ -28,13 +29,13 @@ export const metadata: Metadata = {
         height: 600,
       },
     ],
-    locale: "en_IN",
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Stivate — Digital Systems for Growth",
-    description: "Websites, WhatsApp Automation, and Custom CRMs for Indian Businesses.",
+    description: "Websites, WhatsApp Automation, and Custom CRMs for Businesses.",
     images: ["/logo.png"],
   },
   icons: {
@@ -53,7 +54,7 @@ export default function RootLayout({
     "name": "Stivate",
     "url": "https://stivate.com",
     "logo": "https://stivate.com/logo.png",
-    "description": "We build websites, WhatsApp automation, and custom CRMs for Indian businesses.",
+    "description": "We build websites, WhatsApp automation, and custom CRMs for businesses globally.",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Pune",

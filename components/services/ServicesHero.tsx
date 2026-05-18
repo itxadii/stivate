@@ -22,7 +22,7 @@ export default function ServicesHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block px-4 py-1.5 rounded-full border border-zinc-200 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600 mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full border border-slate-400 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600 mb-6">
             Our Expertise
           </span>
           <h1 className="text-5xl md:text-8xl font-extrabold tracking-tighter uppercase text-zinc-900 leading-[0.9]">
@@ -37,7 +37,7 @@ export default function ServicesHero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-xl text-zinc-600 max-w-2xl mx-auto leading-relaxed"
         >
-          We build high-performance digital tools designed specifically for Indian 
+          We build high-performance digital tools designed specifically for 
           businesses. No fluff, just scalable systems that save you time and increase revenue.
         </motion.p>
       </div>

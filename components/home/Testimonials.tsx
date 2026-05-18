@@ -26,7 +26,7 @@ export default function Testimonials() {
 
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-zinc-200 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
+          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-slate-400 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
             Testimonials
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">
@@ -47,7 +47,7 @@ export default function Testimonials() {
               <p className="text-zinc-700 text-base md:text-lg leading-relaxed italic mb-8 flex-1">
                 {t.quote}
               </p>
-              <div className="flex items-center gap-4 pt-6 border-t border-zinc-100">
+              <div className="flex items-center gap-4 pt-6 border-t border-slate-400">
                 <div
                   className={`w-11 h-11 rounded-full ${t.bg} flex items-center justify-center font-bold text-zinc-700 text-sm`}
                 >
