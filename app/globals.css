@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FFF6DE;
+  --background: #ffffff;
   --foreground: #18181b;
   --primary: #18181b;
   --primary-foreground: #ffffff;
-  --glass: rgba(255, 246, 222, 0.6);
+  --glass: rgba(255, 255, 255, 0.6);
   --glass-border: rgba(0, 0, 0, 0.08);
 }
 
@@ -38,7 +38,7 @@ body {
 }
 
 ::selection {
-  background-color: #e4d9b8;
+  background-color: #e9d5ff;
   color: #18181b;
 }
 
@@ -67,6 +67,12 @@ body {
 
   .text-massive {
     font-size: clamp(4rem, 15vw, 12rem);
+  }
+
+  .bg-isometric {
+    background-image: url('/patterns/isometric.svg');
+    background-repeat: repeat;
+    background-size: 86.603px 150px;
   }
 }
 

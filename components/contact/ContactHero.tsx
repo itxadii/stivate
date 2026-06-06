@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import Scene from "@/components/three/Scene";
 
 export default function ContactHero() {
   return (
-    <section className="relative w-full min-h-[50vh] flex items-center justify-center pt-24 overflow-hidden bg-[#FFF6DE]">
+    <section className="relative w-full min-h-[50vh] flex items-center justify-center pt-24 overflow-hidden bg-background">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className="absolute top-1/4 -left-20 w-[400px] h-[400px] bg-[#BFDDF0]/20 rounded-full filter blur-[100px]" />
         <div className="absolute bottom-1/4 -right-20 w-[400px] h-[400px] bg-zinc-200/30 rounded-full filter blur-[100px]" />
@@ -43,3 +43,4 @@ export default function ContactHero() {
     </section>
   );
 }
+

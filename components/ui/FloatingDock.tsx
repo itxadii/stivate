@@ -44,7 +44,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto flex h-16 items-end gap-4 rounded-3xl bg-white/30 backdrop-blur-md border border-white/40 shadow-xl px-4 pb-3 dark:bg-neutral-900/40 dark:border-white/10",
+        "mx-auto flex h-16 items-end gap-4 rounded-3xl bg-white/30 backdrop-blur-md border border-white/40 px-4 pb-3",
         className,
       )}
     >
@@ -115,7 +115,7 @@ function IconContainer({
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="relative flex aspect-square items-center justify-center rounded-full bg-white/40 shadow-sm border border-white/20 dark:bg-neutral-800/50"
+        className="relative flex aspect-square items-center justify-center rounded-full bg-white/40 border border-white/20"
       >
         <AnimatePresence>
           {hovered && (

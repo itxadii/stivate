@@ -34,8 +34,7 @@ export default function Footer() {
               className="h-20 w-auto object-contain mb-6"
             />
             <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
-              We build websites, WhatsApp bots, and custom CRMs that help
-              businesses grow faster.
+              We build WMS systems, logistics automation, and custom CRM architectures for enterprise efficiency.
             </p>
           </div>
 
@@ -46,7 +45,7 @@ export default function Footer() {
             <ul className="space-y-3 text-zinc-500 text-sm">
               {[
                 ["Services", "/services"],
-                ["Projects", "/projects"],
+                ["Work", "/work"],
                 ["Careers", "/careers"],
                 ["Contact", "/contact"],
               ].map(([label, href]) => (

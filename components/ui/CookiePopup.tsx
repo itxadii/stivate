@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,7 +33,7 @@ export default function CookiePopup() {
         >
           <div className="bg-white/90 backdrop-blur-xl border border-slate-400 shadow-2xl rounded-[32px] p-6 md:p-8 flex flex-col md:flex-row items-start gap-6 relative overflow-hidden">
             {/* Background accent */}
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#FFF6DE] rounded-full filter blur-3xl opacity-50" />
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-background rounded-full filter blur-3xl opacity-50" />
             
             <div className="w-12 h-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center flex-shrink-0 relative z-10">
               <Cookie size={24} />
@@ -69,3 +69,4 @@ export default function CookiePopup() {
     </AnimatePresence>
   );
 }
+

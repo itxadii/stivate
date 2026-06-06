@@ -19,7 +19,7 @@ const steps: Step[] = [
     num: "02",
     Icon: Hammer,
     title: "We Build It",
-    desc: "Our team designs and delivers your solution fast. No fluff, no delays, no jargon — just results.",
+    desc: "Our team designs and delivers your solution fast. No fluff, no delays, no jargon â€” just results.",
   },
   {
     num: "03",
@@ -33,9 +33,9 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="py-24 px-6 md:px-12 bg-gradient-to-b from-[#FFF6DE] to-white/60 text-zinc-900 border-t border-[#FFF6DE] relative overflow-hidden"
+      className="py-24 px-6 md:px-12 bg-transparent text-zinc-900 border-t border-zinc-200 relative overflow-hidden"
     >
-      <div className="absolute right-0 top-0 w-[450px] h-[450px] bg-[#FFF6DE]/50 rounded-full filter blur-[100px] pointer-events-none" />
+      <div className="absolute right-0 top-0 w-[450px] h-[450px] bg-background/50 rounded-full filter blur-[100px] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-16">
@@ -82,3 +82,5 @@ export default function HowItWorks() {
     </section>
   );
 }
+
+

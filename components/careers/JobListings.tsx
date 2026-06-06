@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Briefcase, MapPin, ArrowRight } from "lucide-react";
@@ -76,7 +76,7 @@ export default function JobListings() {
           ))}
         </div>
 
-        <div className="mt-20 p-10 rounded-[40px] bg-[#FFF6DE] text-center border border-[#e4d9b8]">
+        <div className="mt-20 p-10 rounded-[40px] bg-background text-center border border-[#e4d9b8]">
           <h3 className="text-2xl font-bold text-zinc-900 mb-4">Don't see a perfect fit?</h3>
           <p className="text-zinc-600 mb-8 max-w-xl mx-auto">
             We're always looking for talented people to join us. Send your resume to
@@ -95,3 +95,4 @@ export default function JobListings() {
     </section>
   );
 }
+

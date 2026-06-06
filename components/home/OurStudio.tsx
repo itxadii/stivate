@@ -1,15 +1,15 @@
 import { AlertCircle } from "lucide-react";
 
 const problems = [
-  "You're losing leads because nobody replies fast enough on WhatsApp",
-  "Your team wastes hours on follow-ups, spreadsheets, and copy-pasting data",
-  "You have no website — or one that looks outdated and drives customers away",
-  "You want to grow, but your systems can't keep up",
+  "Your team wastes hours manually entering tracking info, syncing stock sheets, and copy-pasting data",
+  "You're experiencing supply chain lags, inventory mismatches, or slow dispatch reconciliations",
+  "You need custom WMS features, CRM workflows, or SAP sync, but legacy systems make modifications risky",
+  "You have no professional web portal — or an outdated presence that fails to represent your corporate scale",
 ];
 
 export default function Problem() {
   return (
-    <section className="py-24 px-6 md:px-12 bg-[#FFF6DE] relative overflow-hidden">
+    <section className="py-24 px-6 md:px-12 bg-transparent relative overflow-hidden">
       <div className="absolute right-0 top-0 w-[400px] h-[400px] bg-[#BFDDF0]/30 rounded-full filter blur-[100px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto">
@@ -50,3 +50,5 @@ export default function Problem() {
     </section>
   );
 }
+
+

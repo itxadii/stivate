@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 
 export default function ContactPage() {
   return (
-    <main className="relative w-full bg-[#FFF6DE] text-zinc-900 font-sans selection:bg-[#e4d9b8]">
+    <main className="relative w-full bg-transparent text-zinc-900 font-sans ">
       <ContactHero />
       
       <section className="py-24 px-6 md:px-12 bg-white">
@@ -22,7 +22,7 @@ export default function ContactPage() {
               <ContactDetails />
             </div>
             
-            <div className="bg-[#FFF6DE] p-1 rounded-[40px] overflow-hidden">
+            <div className="bg-background p-1 rounded-[40px] overflow-hidden">
               <LeadCapture hideHeader className="py-12 md:py-16" />
             </div>
           </div>
@@ -33,3 +33,5 @@ export default function ContactPage() {
     </main>
   );
 }
+
+

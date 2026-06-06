@@ -11,7 +11,7 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 const dockLinks = [
   { title: "Home", icon: <Home className="w-full h-full text-zinc-700" />, href: "/" },
   { title: "Services", icon: <MousePointerClick className="w-full h-full text-zinc-700" />, href: "/services" },
-  { title: "Projects", icon: <HandHeart className="w-full h-full text-zinc-700" />, href: "/projects" },
+  { title: "Work", icon: <HandHeart className="w-full h-full text-zinc-700" />, href: "/work" },
   { title: "Careers", icon: <Briefcase className="w-full h-full text-zinc-700" />, href: "/careers" },
   { title: "Contact", icon: <MessageCircle className="w-full h-full text-zinc-700" />, href: "/contact" },
 ];

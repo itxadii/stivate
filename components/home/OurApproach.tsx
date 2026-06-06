@@ -10,7 +10,7 @@ const reasons = [
 
 export default function WhyStivate() {
   return (
-    <section className="py-24 px-6 md:px-12 bg-white/50 backdrop-blur-sm text-zinc-900 relative overflow-hidden">
+    <section className="py-24 px-6 md:px-12 bg-transparent backdrop-blur-sm text-zinc-900 relative overflow-hidden">
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#BFDDF0]/15 rounded-full filter blur-[130px] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -50,3 +50,4 @@ export default function WhyStivate() {
     </section>
   );
 }
+

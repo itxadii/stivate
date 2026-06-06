@@ -14,20 +14,31 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://stivate.com"),
-  title: "Stivate — Websites, WhatsApp Bots & CRM for Forward-Thinking Businesses",
-  description: "We build high-performance websites, WhatsApp automation, and custom CRMs that help businesses grow faster. Get a free 30-minute strategy session today.",
-  keywords: ["Web Design", "WhatsApp Automation", "Custom CRM", "Business Automation", "Stivate", "Global Agency"],
+  title: "Stivate — Logistics Automation, Custom WMS & Enterprise Web Systems",
+  description: "We build custom WMS software, logistics automation platforms, SAP integrations, and high-performance web systems to scale warehousing and supply chain operations.",
+  keywords: [
+    "Logistics Automation",
+    "Warehouse Management System",
+    "WMS Software",
+    "SAP ERP Integration",
+    "OCR Document Processing",
+    "QR Inventory Tracking",
+    "Supply Chain Systems",
+    "Enterprise Web Development",
+    "Stivate"
+  ],
   authors: [{ name: "Stivate" }],
   openGraph: {
-    title: "Stivate — Digital Systems for Growth",
-    description: "Websites, WhatsApp Automation, and Custom CRMs for Businesses.",
+    title: "Stivate — Logistics Automation & Custom WMS",
+    description: "High-performance logistics automation platforms, WMS tracking systems, and SAP integrations.",
     url: "https://stivate.com",
     siteName: "Stivate",
     images: [
       {
-        url: "/logo.png",
+        url: "https://stivate.com/logo.png",
         width: 800,
         height: 600,
+        alt: "Stivate Logo"
       },
     ],
     locale: "en_US",
@@ -35,9 +46,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stivate — Digital Systems for Growth",
-    description: "Websites, WhatsApp Automation, and Custom CRMs for Businesses.",
-    images: ["/logo.png"],
+    title: "Stivate — Logistics Automation & Custom WMS",
+    description: "High-performance logistics automation platforms, WMS tracking systems, and SAP integrations.",
+    images: ["https://stivate.com/logo.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -55,7 +66,8 @@ export default function RootLayout({
     "name": "Stivate",
     "url": "https://stivate.com",
     "logo": "https://stivate.com/logo.png",
-    "description": "We build websites, WhatsApp automation, and custom CRMs for businesses globally.",
+    "image": "https://stivate.com/logo.png",
+    "description": "We build logistics automation platforms, custom WMS tracking portals, SAP ERP integrations, and enterprise web portals.",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Pune",
@@ -77,7 +89,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-primary-foreground">
+      <body className="min-h-full flex flex-col bg-background bg-isometric text-foreground overflow-x-hidden selection:bg-primary selection:text-primary-foreground">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-GQWMGVG48M"
           strategy="afterInteractive"
@@ -100,3 +112,4 @@ export default function RootLayout({
     </html>
   );
 }
+

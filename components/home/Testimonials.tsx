@@ -15,14 +15,14 @@ const testimonials = [
     role: "Director, Training Institute",
     location: "Mumbai",
     initials: "PS",
-    bg: "bg-[#FFF6DE]/80",
+    bg: "bg-background/80",
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="py-24 px-6 md:px-12 bg-gradient-to-b from-white/40 to-[#FFF6DE] text-zinc-900 border-t border-white/50 backdrop-blur-sm relative overflow-hidden">
-      <div className="absolute right-0 bottom-0 w-[400px] h-[400px] bg-[#FFF6DE]/30 rounded-full filter blur-[100px] pointer-events-none" />
+    <section className="py-24 px-6 md:px-12 bg-transparent text-zinc-900 border-t border-zinc-200 relative overflow-hidden">
+      <div className="absolute right-0 bottom-0 w-[400px] h-[400px] bg-background/30 rounded-full filter blur-[100px] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-16">
@@ -40,7 +40,7 @@ export default function Testimonials() {
               key={i}
               className="p-8 rounded-3xl bg-white/60 backdrop-blur-md border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
             >
-              {/* Large quote mark — typographic, no emoji */}
+              {/* Large quote mark â€” typographic, no emoji */}
               <div className="text-6xl text-zinc-200 font-serif leading-none mb-4 select-none">
                 &ldquo;
               </div>
@@ -54,7 +54,7 @@ export default function Testimonials() {
                   {t.initials}
                 </div>
                 <div>
-                  <div className="font-bold text-zinc-900">— {t.name}</div>
+                  <div className="font-bold text-zinc-900">â€” {t.name}</div>
                   <div className="text-zinc-400 text-sm">
                     {t.role}, {t.location}
                   </div>
@@ -67,3 +67,5 @@ export default function Testimonials() {
     </section>
   );
 }
+
+

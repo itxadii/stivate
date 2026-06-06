@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Globe, MessageSquare, BarChart2, Zap, CheckCircle2 } from "lucide-react";
+import { Globe, BarChart2, Package, Truck, CheckCircle2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import PremiumButton from "@/components/ui/PremiumButton";
 
 interface ServiceDetail {
   Icon: LucideIcon;
@@ -18,70 +20,70 @@ interface ServiceDetail {
 
 const detailedServices: ServiceDetail[] = [
   {
-    Icon: Globe,
-    title: "Professional Website",
-    subtitle: "High-Converting Digital Presence",
-    desc: "Your website shouldn't just look good; it should be your best salesperson. We build lightning-fast, mobile-optimized sites that turn visitors into loyal customers.",
+    Icon: Package,
+    title: "Warehouse & WMS Automation",
+    subtitle: "Cloud-Native Inventory Tracking & SAP Sync",
+    desc: "Transform your storage facilities. We construct high-integrity WMS dashboards with QR-based shelf tracking, automated OCR document receiving, and secure bi-directional SAP ERP integrations.",
     features: [
-      "Conversion-focused design",
-      "SEO & Speed optimization",
-      "Mobile-first architecture",
-      "Integrated lead capture forms"
+      "QR code asset tagging & tracking",
+      "OCR invoice data extraction",
+      "SAP & legacy system integration",
+      "Live location & movement audit logs"
     ],
-    results: "Average 40% increase in lead generation post-launch.",
+    results: "90% faster inbound receipt processing.",
     color: "bg-blue-50",
-    image: "/services/webdev.png"
+    image: "/services/businessautomation.png"
   },
   {
-    Icon: MessageSquare,
-    title: "WhatsApp Automation",
-    subtitle: "24/7 Customer Engagement",
-    desc: "Meet your customers where they are. We build intelligent WhatsApp flows that handle inquiries, bookings, and support automatically, so you never miss a lead again.",
+    Icon: Truck,
+    title: "Logistics Workflow Automation",
+    subtitle: "End-to-End Operational Control",
+    desc: "Connect operations, save time. We build tracking platforms that link dispatch routing, carrier validation, real-time driver tracking, and instant automated customer delivery updates.",
     features: [
-      "Automated FAQ responses",
-      "Appointment & booking bots",
-      "Broadcast & marketing flows",
-      "Real-time lead notifications"
+      "Automated dispatch planning",
+      "Carrier & driver tracking portals",
+      "Real-time customer status alerts",
+      "Centralized operational telemetry"
     ],
-    results: "Reduces manual response time by up to 90%.",
+    results: "Reduces dispatch lag by up to 80%.",
     color: "bg-green-50",
     image: "/services/whatsappautomation.png"
   },
   {
     Icon: BarChart2,
-    title: "Custom CRM",
-    subtitle: "Unified Business Intelligence",
-    desc: "Stop relying on messy spreadsheets. We build custom CRM systems tailored to your specific workflow, giving you total visibility into your sales pipeline and customer data.",
+    title: "Custom Enterprise CRM",
+    subtitle: "Tailored Business Process Optimization",
+    desc: "Stop relying on chaotic worksheets. We deploy custom business CRMs engineered for your unique operations—handling tenant files, balance ledgers, automatic invoicing, and HR payroll administration.",
     features: [
-      "Lead & pipeline management",
-      "Automated follow-up reminders",
-      "Custom analytics dashboards",
-      "Team collaboration tools"
+      "Custom workspace management grids",
+      "Automated outstanding balance tracking",
+      "Dynamic data-table visibility control",
+      "Website form-to-CRM lead pipelines"
     ],
-    results: "Helps teams close deals 25% faster with better tracking.",
+    results: "100% visibility into collections and rental pipelines.",
     color: "bg-purple-50",
     image: "/services/customcrm.png"
   },
   {
-    Icon: Zap,
-    title: "Business Automation",
-    subtitle: "Eliminate Repetitive Tasks",
-    desc: "Work smarter, not harder. We connect your existing tools and automate boring manual tasks, freeing up your team to focus on high-value work that actually grows the business.",
+    Icon: Globe,
+    title: "Professional Website",
+    subtitle: "High-Converting Web Portals",
+    desc: "Your web presence should match your enterprise scale. We build fast, mobile-optimized Next.js web applications that showcase your operations and capture corporate inquiries.",
     features: [
-      "Tool integration (Zapier/Make)",
-      "Automated invoicing & reporting",
-      "Workflow optimization",
-      "Data synchronization across platforms"
+      "Conversion-focused structure",
+      "Technical SEO & Core Web Vitals",
+      "Custom Headless CMS dashboards",
+      "Interactive quotation forms"
     ],
-    results: "Saves an average of 15+ hours of manual work per week.",
+    results: "Drives 24/7 lead capture and catalog traffic.",
     color: "bg-orange-50",
-    image: "/services/businessautomation.png"
+    image: "/services/webdev.png"
   }
 ];
 
 export default function DetailedServices() {
   return (
-    <section className="py-24 px-6 md:px-12 bg-white">
+    <section className="py-24 px-6 md:px-12 bg-transparent">
       <div className="max-w-7xl mx-auto">
         <div className="space-y-32">
           {detailedServices.map((service, i) => (
@@ -133,6 +135,14 @@ export default function DetailedServices() {
                     </div>
                   ))}
                 </div>
+
+                <div className="pt-4">
+                  <Link href={service.title.includes("Website") ? "/websites" : "/work"}>
+                    <PremiumButton variant="secondary" className="w-full sm:w-auto">
+                      {service.title === "Professional Website" ? "View Website Plans" : `View ${service.title} Work`}
+                    </PremiumButton>
+                  </Link>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -141,3 +151,4 @@ export default function DetailedServices() {
     </section>
   );
 }
+

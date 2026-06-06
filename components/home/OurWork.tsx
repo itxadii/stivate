@@ -39,7 +39,7 @@ export default function Results() {
   return (
     <section
       id="results"
-      className="py-24 px-6 md:px-12 bg-[#FFF6DE] text-zinc-900"
+      className="py-24 px-6 md:px-12 bg-transparent text-zinc-900"
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
@@ -72,3 +72,5 @@ export default function Results() {
     </section>
   );
 }
+
+

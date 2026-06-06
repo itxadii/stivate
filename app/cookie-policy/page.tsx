@@ -2,7 +2,7 @@ import Footer from "@/components/layout/Footer";
 
 export default function CookiePolicy() {
   return (
-    <main className="relative w-full bg-[#FFF6DE] text-zinc-900 font-sans selection:bg-[#e4d9b8] pt-32 pb-24 px-6 md:px-12">
+    <main className="relative w-full bg-transparent text-zinc-900 font-sans  pt-32 pb-24 px-6 md:px-12">
       <div className="max-w-4xl mx-auto space-y-12">
         <div className="space-y-4 border-b border-slate-400 pb-8">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">Cookie Policy</h1>
@@ -132,3 +132,5 @@ export default function CookiePolicy() {
     </main>
   );
 }
+
+

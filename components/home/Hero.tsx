@@ -11,7 +11,7 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-screen bg-[#FFF6DE] flex items-center overflow-hidden">
+    <section className="relative w-full min-h-screen bg-transparent flex items-center overflow-hidden">
 
       <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12 pt-28 pb-16 flex flex-col lg:flex-row items-center justify-between gap-12">
 
@@ -47,10 +47,10 @@ export default function Hero() {
           </h1>
 
           <p className="text-zinc-500 text-lg leading-relaxed mb-10 max-w-xl">
-            We build <strong className="text-zinc-800">websites</strong>,{' '}
-            <strong className="text-zinc-800">WhatsApp bots</strong>, and{' '}
-            <strong className="text-zinc-800">custom CRMs</strong> that turn
-            your slow, manual business into a lean, revenue-generating machine —
+            We build <strong className="text-zinc-800">logistics automation systems</strong>,{' '}
+            <strong className="text-zinc-800">custom WMS tracking portals</strong>, and{' '}
+            <strong className="text-zinc-800">high-converting websites</strong> that turn
+            your slow, manual operations into a lean, high-efficiency machine —
             in weeks, not months.
           </p>
 
@@ -97,3 +97,4 @@ export default function Hero() {
     </section >
   )
 }
+

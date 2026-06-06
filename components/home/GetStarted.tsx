@@ -67,7 +67,7 @@ export default function LeadCapture({
   return (
     <section
       id="contact"
-      className={`py-24 px-6 md:px-12 bg-[#FFF6DE] relative overflow-hidden ${className}`}
+      className={`py-24 px-6 md:px-12 bg-transparent relative overflow-hidden ${className}`}
     >
       <div className="max-w-xl mx-auto relative z-10">
 
@@ -170,3 +170,4 @@ export default function LeadCapture({
     </section>
   );
 }
+

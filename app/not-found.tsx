@@ -6,7 +6,7 @@ import ModernButton from "@/components/ui/ModernButton";
 
 export default function NotFound() {
   return (
-    <main className="relative w-full min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-[#FFF6DE]">
+    <main className="relative w-full min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-transparent">
       {/* Decorative background elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className="absolute top-1/4 -left-20 w-[400px] h-[400px] bg-[#BFDDF0]/20 rounded-full filter blur-[100px]" />
@@ -53,3 +53,5 @@ export default function NotFound() {
     </main>
   );
 }
+
+

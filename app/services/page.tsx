@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 
 export default function ServicesPage() {
   return (
-    <main className="relative w-full bg-[#FFF6DE] text-zinc-900 font-sans selection:bg-[#e4d9b8]">
+    <main className="relative w-full bg-transparent text-zinc-900 font-sans">
       <ServicesHero />
       <DetailedServices />
       <HowItWorks />
@@ -15,3 +15,4 @@ export default function ServicesPage() {
     </main>
   );
 }
+

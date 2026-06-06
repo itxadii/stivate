@@ -30,7 +30,7 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="py-24 px-6 md:px-12 bg-[#FFF6DE] text-zinc-900 border-t border-[#FFF6DE] relative overflow-hidden">
+    <section className="py-24 px-6 md:px-12 bg-transparent text-zinc-900 border-t border-zinc-200 relative overflow-hidden">
       <div className="absolute right-0 top-0 w-[400px] h-[400px] bg-[#BFDDF0]/20 rounded-full filter blur-[100px] pointer-events-none" />
 
       <div className="max-w-3xl mx-auto relative z-10">
@@ -79,3 +79,5 @@ export default function FAQ() {
     </section>
   );
 }
+
+
