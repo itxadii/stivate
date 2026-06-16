@@ -3,8 +3,10 @@ import ModernButton from "../ui/ModernButton";
 
 export default function Footer() {
   return (
-    <footer className="bg-white/40 backdrop-blur-xl border-t border-white/60 pt-16 pb-8 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto">
+    <footer className="relative py-16 pb-8 px-6 md:px-12 overflow-hidden bg-transparent">
+      {/* Sky blue background like upper div */}
+      <div className="absolute inset-0 mx-4 md:mx-8 my-4 rounded-3xl bg-[#E8F4FD] pointer-events-none z-0" />
+      <div className="max-w-7xl mx-auto relative z-10">
 
         {/* Footer CTA Banner */}
         <div className="mb-14 p-10 md:p-14 rounded-3xl bg-white/50 border border-white/70 text-center">

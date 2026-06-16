@@ -19,7 +19,7 @@ const steps: Step[] = [
     num: "02",
     Icon: Hammer,
     title: "We Build It",
-    desc: "Our team designs and delivers your solution fast. No fluff, no delays, no jargon â€” just results.",
+    desc: "Our team designs and delivers your solution fast. No fluff, no delays, no jargon — just results.",
   },
   {
     num: "03",

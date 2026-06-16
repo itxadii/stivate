@@ -9,10 +9,12 @@ const problems = [
 
 export default function Problem() {
   return (
-    <section className="py-24 px-6 md:px-12 bg-transparent relative overflow-hidden">
+    <section className="py-24 px-6 md:px-12 relative overflow-hidden">
+      {/* Sky blue background */}
+      <div className="absolute inset-0 mx-4 md:mx-8 my-4 rounded-3xl bg-[#E8F4FD]" />
       <div className="absolute right-0 top-0 w-[400px] h-[400px] bg-[#BFDDF0]/30 rounded-full filter blur-[100px] pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto relative z-10">
         <div className="mb-12">
           <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-slate-400 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
             Sound familiar?

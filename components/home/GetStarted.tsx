@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle } from "lucide-react";
+import Image from "next/image";
 import ModernButton from "../ui/ModernButton";
 
 const businessTypes = [
@@ -67,22 +68,31 @@ export default function LeadCapture({
   return (
     <section
       id="contact"
-      className={`py-24 px-6 md:px-12 bg-transparent relative overflow-hidden ${className}`}
+      className={`py-24 px-6 md:px-12 bg-transparent relative overflow-hidden rounded-3xl mx-auto max-w-[98%] my-12 shadow-xl ${className}`}
     >
+      <Image
+        src="/contactsection.png"
+        alt=""
+        fill
+        className="object-cover z-0"
+        sizes="100vw"
+      />
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/30 z-[1]" />
       <div className="max-w-xl mx-auto relative z-10">
 
         {/* Header */}
         {!hideHeader && (
           <div className="text-center mb-12">
-            <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-slate-400 bg-white text-sm font-medium text-zinc-500">
+            <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-sm font-medium text-slate-200">
               Free Strategy Session
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-zinc-900">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">
               Ready to digitalize
               <br />
-              <span className="text-zinc-400">your business?</span>
+              <span className="text-sky-400 font-black">your business?</span>
             </h2>
-            <p className="text-zinc-500 text-base leading-relaxed">
+            <p className="text-slate-300 text-base font-medium leading-relaxed">
               Get a free 30-minute strategy session. No sales pitch, no pressure.
             </p>
           </div>

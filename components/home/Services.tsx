@@ -1,10 +1,9 @@
-import { Globe, BarChart2, Package, Truck } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import PremiumButton from "@/components/ui/PremiumButton";
 
 interface Service {
-  Icon: LucideIcon;
+  image: string;
   title: string;
   subtitle: string;
   desc: string;
@@ -14,7 +13,7 @@ interface Service {
 
 const services: Service[] = [
   {
-    Icon: Package,
+    image: "/systems/wmsautomation.png",
     title: "Warehouse & WMS Automation",
     subtitle: "QR tracking, OCR, & ERP sync.",
     desc: "We build cloud-native warehouse applications with QR-based inventory tracking, OCR document extraction, and seamless SAP/ERP synchronization.",
@@ -22,7 +21,7 @@ const services: Service[] = [
     buttonLabel: "Explore Logistics Solutions",
   },
   {
-    Icon: Truck,
+    image: "/systems/logisticsautomation.png",
     title: "Logistics Workflow Automation",
     subtitle: "Connect operations, save time.",
     desc: "We connect dispatch routing, vehicle status tracking, automated customer order alerts, and operational reports into single-pane dashboards.",
@@ -30,7 +29,7 @@ const services: Service[] = [
     buttonLabel: "Explore Systems",
   },
   {
-    Icon: BarChart2,
+    image: "/systems/customcrm.png",
     title: "Custom Enterprise CRM",
     subtitle: "Stop running from spreadsheets.",
     desc: "Get a custom CRM built for your exact operational workflow — manage clients, track document collection, automate invoicing and HR pipelines.",
@@ -38,7 +37,7 @@ const services: Service[] = [
     buttonLabel: "View CRM Systems",
   },
   {
-    Icon: Globe,
+    image: "/systems/customwebsite.png",
     title: "Professional Website",
     subtitle: "High-performance digital presence.",
     desc: "We build lightning-fast, mobile-first websites with interactive lead generation, WhatsApp integrations, and secure headless CMS dashboards.",
@@ -64,21 +63,29 @@ export default function Services() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {services.map(({ Icon, title, subtitle, desc, quote, buttonLabel }, i) => (
+          {services.map(({ image, title, subtitle, desc, quote, buttonLabel }, i) => (
             <div
               key={i}
-              className="p-8 rounded-3xl bg-white border border-slate-400 hover:border-slate-400 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              className="rounded-3xl bg-white border border-slate-400 hover:border-slate-400 hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
             >
               <div>
-                <div className="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center mb-5">
-                  <Icon size={18} className="text-zinc-600" />
+                <div className="w-full h-52 relative">
+                  <Image
+                    src={image}
+                    alt={title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
-                <h3 className="text-xl font-bold mb-1 text-zinc-900">{title}</h3>
-                <p className="text-zinc-400 text-sm font-medium mb-3">{subtitle}</p>
-                <p className="text-zinc-600 text-base leading-relaxed mb-6">{desc}</p>
-                <p className="text-zinc-400 text-sm italic mb-6">{quote}</p>
+                <div className="p-8">
+                  <h3 className="text-xl font-bold mb-1 text-zinc-900">{title}</h3>
+                  <p className="text-zinc-400 text-sm font-medium mb-3">{subtitle}</p>
+                  <p className="text-zinc-600 text-base leading-relaxed mb-6">{desc}</p>
+                  <p className="text-zinc-400 text-sm italic mb-6">{quote}</p>
+                </div>
               </div>
-              <div>
+              <div className="px-8 pb-8">
                 <Link href={buttonLabel.includes("Website") ? "/websites" : "/work"}>
                   <PremiumButton variant="secondary" className="w-full sm:w-auto">
                     {buttonLabel}
@@ -92,5 +99,4 @@ export default function Services() {
     </section>
   );
 }
-
 

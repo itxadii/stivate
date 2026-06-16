@@ -1,20 +1,20 @@
 const testimonials = [
   {
     quote:
-      "We had no website and were losing customers to competitors. Stivate built us a site and set up WhatsApp automation in 3 weeks. Our enquiries doubled in the first month.",
-    name: "Rahul M.",
-    role: "Owner, Furniture Store",
-    location: "Pune",
-    initials: "RM",
+      "The team delivered exactly what we needed for our CRM. They added custom features tailored to our business processes, making lead management and customer tracking much more efficient. Their technical expertise, quick response times, and understanding of our requirements helped us improve productivity across our operations. We are very satisfied with the results.",
+    name: "Mohammad Yasin Ansari",
+    role: "Founder, Prime Time Business Center",
+    location: "Dubai",
+    initials: "YA",
     bg: "bg-[#BFDDF0]/60",
   },
   {
     quote:
-      "I used to track everything in Excel. Now I have a CRM that shows me every lead, every follow-up, every sale. I wish I had done this 2 years ago.",
-    name: "Priya S.",
-    role: "Director, Training Institute",
-    location: "Mumbai",
-    initials: "PS",
+      "Our goal was to establish a strong digital presence and generate quality inquiries through our website. The team developed a professional website that reflects our brand and project portfolio while also focusing on lead generation. Since launch, we've seen improved online visibility and a steady flow of genuine customer inquiries. Their dedication and business-focused approach made the entire experience seamless.",
+    name: "Shripad Mankar",
+    role: "Founder, Shrinivas Developers",
+    location: "Pune",
+    initials: "SM",
     bg: "bg-background/80",
   },
 ];
@@ -40,7 +40,7 @@ export default function Testimonials() {
               key={i}
               className="p-8 rounded-3xl bg-white/60 backdrop-blur-md border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
             >
-              {/* Large quote mark â€” typographic, no emoji */}
+              {/* Large quote mark — typographic, no emoji */}
               <div className="text-6xl text-zinc-200 font-serif leading-none mb-4 select-none">
                 &ldquo;
               </div>
@@ -54,7 +54,7 @@ export default function Testimonials() {
                   {t.initials}
                 </div>
                 <div>
-                  <div className="font-bold text-zinc-900">â€” {t.name}</div>
+                  <div className="font-bold text-zinc-900">{t.name}</div>
                   <div className="text-zinc-400 text-sm">
                     {t.role}, {t.location}
                   </div>
