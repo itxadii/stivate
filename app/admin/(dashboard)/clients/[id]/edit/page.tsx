@@ -20,7 +20,7 @@ export default function EditClientPage() {
     async function fetchClient() {
       try {
         const clients = await getClients()
-        const found = clients.find(c => c.id === id)
+        const found = clients.find((c: any) => c.id === id)
         if (!found) {
           setError("Client not found")
         } else {
