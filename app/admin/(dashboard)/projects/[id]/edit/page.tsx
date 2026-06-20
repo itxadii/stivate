@@ -1,10 +1,11 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { createProject } from "@/lib/actions/project"
+import { useState, useEffect } from "react"
+import { useRouter, useParams } from "next/navigation"
+import { getProject, updateProject, archiveProject } from "@/lib/actions/project"
+import { getClients } from "@/lib/actions/client"
 import Link from "next/link"
-import { ArrowLeft, Save } from "lucide-react"
+import { ArrowLeft, Save, Trash2 } from "lucide-react"
 
 interface Client {
   id: string
@@ -12,13 +13,38 @@ interface Client {
   company: string | null
 }
 
-export default function NewProjectForm({ clients }: { clients: Client[] }) {
+export default function EditProjectPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const defaultClientId = searchParams?.get("clientId") || ""
+  const params = useParams()
+  const id = params.id as string
 
+  const [isLoading, setIsLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [project, setProject] = useState<any>(null)
+  const [clients, setClients] = useState<Client[]>([])
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [proj, clientsList] = await Promise.all([
+          getProject(id),
+          getClients()
+        ])
+        if (!proj) {
+          setError("Project not found")
+        } else {
+          setProject(proj)
+        }
+        setClients(clientsList)
+      } catch (err: any) {
+        setError(err.message || "Failed to load project details")
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    loadData()
+  }, [id])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -30,7 +56,7 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
     const val = valString ? parseFloat(valString) : undefined
 
     try {
-      await createProject({
+      await updateProject(id, {
         clientId: formData.get("clientId") as string,
         name: formData.get("name") as string,
         description: formData.get("description") as string,
@@ -41,27 +67,72 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
         dueDate: formData.get("dueDate") as string || null,
       })
       router.push("/admin/projects")
+      router.refresh()
     } catch (err: any) {
-      setError(err.message || "Failed to create project")
+      setError(err.message || "Failed to update project")
       setIsSubmitting(false)
     }
   }
 
+  async function handleArchive() {
+    if (!confirm("Are you sure you want to archive this project?")) return
+    try {
+      await archiveProject(id)
+      router.push("/admin/projects")
+      router.refresh()
+    } catch (err: any) {
+      alert("Failed to archive project")
+    }
+  }
+
+  if (isLoading) {
+    return <div className="p-8 text-center text-gray-500">Loading project details...</div>
+  }
+
+  if (!project && !isLoading) {
+    return (
+      <div className="p-8 text-center text-red-500">
+        <p>{error}</p>
+        <Link href="/admin/projects" className="mt-4 text-blue-600 hover:underline">
+          Go back
+        </Link>
+      </div>
+    )
+  }
+
+  // Format dates for input defaultValue
+  const formattedStartDate = project.startDate
+    ? new Date(project.startDate).toISOString().split("T")[0]
+    : ""
+  const formattedDueDate = project.dueDate
+    ? new Date(project.dueDate).toISOString().split("T")[0]
+    : ""
+
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <div className="flex items-center gap-4">
-        <Link
-          href="/admin/projects"
-          className="p-2 -ml-2 text-gray-400 hover:text-gray-500 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">New Project</h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Create a new project associated with a client.
-          </p>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <Link
+            href="/admin/projects"
+            className="p-2 -ml-2 text-gray-400 hover:text-gray-500 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Link>
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Edit Project</h1>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              Update information for {project.name}.
+            </p>
+          </div>
         </div>
+
+        <button
+          onClick={handleArchive}
+          className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-red-600 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+        >
+          <Trash2 className="w-4 h-4" />
+          Archive
+        </button>
       </div>
 
       <div className="bg-white dark:bg-gray-900 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
@@ -82,7 +153,7 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
                   required
                   name="clientId"
                   id="clientId"
-                  defaultValue={defaultClientId}
+                  defaultValue={project.clientId}
                   className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                 >
                   <option value="" disabled>Select a client...</option>
@@ -105,6 +176,7 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
                   type="text"
                   name="name"
                   id="name"
+                  defaultValue={project.name}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                 />
               </div>
@@ -118,7 +190,7 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
                 <select
                   name="status"
                   id="status"
-                  defaultValue="LEAD"
+                  defaultValue={project.status}
                   className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                 >
                   <option value="LEAD">Lead</option>
@@ -139,6 +211,7 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
                   id="description"
                   name="description"
                   rows={3}
+                  defaultValue={project.description || ""}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                 />
               </div>
@@ -154,6 +227,7 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
                   step="0.01"
                   name="value"
                   id="value"
+                  defaultValue={project.value || ""}
                   placeholder="0.00"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                 />
@@ -168,8 +242,8 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
                 <select
                   name="currency"
                   id="currency"
-                  defaultValue="USD"
-                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
+                  defaultValue={project.currency || "USD"}
+                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                 >
                   <option value="USD">USD ($)</option>
                   <option value="EUR">EUR (€)</option>
@@ -192,6 +266,7 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
                   type="date"
                   name="startDate"
                   id="startDate"
+                  defaultValue={formattedStartDate}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                 />
               </div>
@@ -206,6 +281,7 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
                   type="date"
                   name="dueDate"
                   id="dueDate"
+                  defaultValue={formattedDueDate}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                 />
               </div>
@@ -229,7 +305,7 @@ export default function NewProjectForm({ clients }: { clients: Client[] }) {
               ) : (
                 <>
                   <Save className="w-4 h-4" />
-                  Save Project
+                  Save Changes
                 </>
               )}
             </button>

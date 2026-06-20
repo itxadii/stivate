@@ -1,6 +1,6 @@
-import { getLeads, archiveLead } from "@/lib/actions/lead"
+import { getLeads, archiveLead, convertLeadToClient } from "@/lib/actions/lead"
 import Link from "next/link"
-import { Plus, Flame, Phone, Calendar, Trash2 } from "lucide-react"
+import { Plus, Flame, Phone, Calendar, Trash2, UserCheck } from "lucide-react"
 
 export default async function LeadsPage() {
   let leads: any[] = []
@@ -127,20 +127,37 @@ export default async function LeadsPage() {
                       </div>
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <form
-                        action={async () => {
-                          "use server"
-                          await archiveLead(lead.id)
-                        }}
-                      >
-                        <button
-                          type="submit"
-                          className="text-red-600 hover:text-red-900 dark:hover:text-red-400 p-1 rounded-md hover:bg-red-50 dark:hover:bg-red-950/20"
-                          title="Archive Lead"
+                      <div className="flex items-center justify-end gap-2">
+                        <form
+                          action={async () => {
+                            "use server"
+                            await convertLeadToClient(lead.id)
+                          }}
                         >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </form>
+                          <button
+                            type="submit"
+                            className="text-emerald-600 hover:text-emerald-950 dark:hover:text-emerald-400 p-1.5 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-950/20"
+                            title="Convert to Client & Project"
+                          >
+                            <UserCheck className="w-4 h-4" />
+                          </button>
+                        </form>
+
+                        <form
+                          action={async () => {
+                            "use server"
+                            await archiveLead(lead.id)
+                          }}
+                        >
+                          <button
+                            type="submit"
+                            className="text-red-600 hover:text-red-900 dark:hover:text-red-400 p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-950/20"
+                            title="Archive Lead"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </form>
+                      </div>
                     </td>
                   </tr>
                 ))}

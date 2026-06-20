@@ -1,6 +1,6 @@
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
-import { LayoutDashboard, Users, FolderKanban, Receipt, FileText, Settings, LogOut, Flame } from "lucide-react"
+import { LayoutDashboard, Users, FolderKanban, Receipt, FileText, Settings, LogOut, Flame, Banknote, ClipboardList } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -21,6 +21,8 @@ export default async function AdminLayout({
     { name: "Leads", href: "/admin/leads", icon: Flame },
     { name: "Projects", href: "/admin/projects", icon: FolderKanban },
     { name: "Invoices", href: "/admin/invoices", icon: Receipt },
+    { name: "Quotations", href: "/admin/quotations", icon: ClipboardList },
+    { name: "Expenses", href: "/admin/expenses", icon: Banknote },
     { name: "Documents", href: "/admin/documents", icon: FileText },
   ]
 

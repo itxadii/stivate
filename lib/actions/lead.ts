@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 
 export async function getLeads() {
   const session = await auth()
@@ -39,7 +40,8 @@ export async function getLeadWithFollowUps(id: string) {
 }
 
 export async function createFollowUp(data: {
-  leadId: string
+  leadId?: string | null
+  clientId?: string | null
   discussed: string
   date?: Date | string | null
   notes?: string
@@ -47,22 +49,39 @@ export async function createFollowUp(data: {
   const session = await auth()
   if (!session?.user?.id) throw new Error("Unauthorized")
 
+  if (!data.leadId && !data.clientId) {
+    throw new Error("Either leadId or clientId must be provided")
+  }
+
   const followUp = await prisma.followUp.create({
     data: {
-      leadId: data.leadId,
+      leadId: data.leadId || null,
+      clientId: data.clientId || null,
       discussed: data.discussed,
       date: data.date ? new Date(data.date) : new Date(),
       notes: data.notes || null,
     },
   })
 
-  // Touch the parent lead's updatedAt timestamp to bring it to the top
-  await prisma.lead.update({
-    where: { id: data.leadId },
-    data: {
-      updatedAt: new Date(),
-    },
-  })
+  if (data.leadId) {
+    // Touch the parent lead's updatedAt timestamp to bring it to the top
+    await prisma.lead.update({
+      where: { id: data.leadId },
+      data: {
+        updatedAt: new Date(),
+      },
+    })
+  }
+
+  if (data.clientId) {
+    // Touch the client's updatedAt timestamp
+    await prisma.client.update({
+      where: { id: data.clientId },
+      data: {
+        updatedAt: new Date(),
+      },
+    })
+  }
 
   await prisma.activity.create({
     data: {
@@ -70,12 +89,18 @@ export async function createFollowUp(data: {
       entityId: followUp.id,
       action: "CREATED",
       userId: session.user.id,
-      metadata: { leadId: data.leadId }
+      metadata: { leadId: data.leadId || null, clientId: data.clientId || null }
     }
   })
 
-  revalidatePath("/admin/leads")
-  revalidatePath(`/admin/leads/${data.leadId}`)
+  if (data.leadId) {
+    revalidatePath("/admin/leads")
+    revalidatePath(`/admin/leads/${data.leadId}`)
+  }
+  if (data.clientId) {
+    revalidatePath("/admin/clients")
+    revalidatePath(`/admin/clients/${data.clientId}`)
+  }
   return followUp
 }
 
@@ -141,4 +166,93 @@ export async function archiveLead(id: string) {
   revalidatePath("/admin/leads")
   revalidatePath("/")
   return lead
+}
+
+export async function convertLeadToClient(leadId: string) {
+  const session = await auth()
+  if (!session?.user?.id) throw new Error("Unauthorized")
+
+  const lead = await prisma.lead.findUnique({
+    where: { id: leadId },
+  })
+  if (!lead) throw new Error("Lead not found")
+
+  let clientId = lead.clientId
+
+  // 1. If lead is not linked to any Client, create a new Client record
+  if (!clientId) {
+    const client = await prisma.client.create({
+      data: {
+        name: lead.clientName,
+        phone: lead.phone || null,
+        notes: lead.notes ? `Converted from Lead Pitch: ${lead.notes}` : "Converted from Lead Pitch",
+        status: "ACTIVE",
+      },
+    })
+    clientId = client.id
+
+    await prisma.activity.create({
+      data: {
+        userId: session.user.id,
+        entityType: "Client",
+        entityId: client.id,
+        action: "CREATED",
+        metadata: { newName: client.name, source: "Lead Conversion" },
+      },
+    })
+  } else {
+    // Ensure existing client is ACTIVE
+    await prisma.client.update({
+      where: { id: clientId },
+      data: {
+        status: "ACTIVE",
+      },
+    })
+  }
+
+  // 2. Create a new project under the Client
+  const project = await prisma.project.create({
+    data: {
+      clientId: clientId,
+      name: lead.name,
+      status: "ACTIVE",
+    },
+  })
+
+  // 3. Mark the Lead as archived (so it's "moved" from leads table) and link to client
+  await prisma.lead.update({
+    where: { id: leadId },
+    data: {
+      clientId: clientId,
+      isArchived: true,
+    },
+  })
+
+  // Migrate all follow-up records belonging to this lead to point to the client as well
+  await prisma.followUp.updateMany({
+    where: { leadId: leadId },
+    data: {
+      clientId: clientId,
+    },
+  })
+
+  // 4. Log conversion activity
+  await prisma.activity.create({
+    data: {
+      userId: session.user.id,
+      entityType: "Lead",
+      entityId: leadId,
+      action: "CONVERTED",
+      metadata: { clientId, projectId: project.id },
+    },
+  })
+
+  // Revalidate cache
+  revalidatePath("/admin/leads")
+  revalidatePath("/admin/clients")
+  revalidatePath("/admin/projects")
+  revalidatePath("/")
+
+  // Redirect to client editing page so user can update client details
+  redirect(`/admin/clients/${clientId}/edit`)
 }

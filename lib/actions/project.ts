@@ -27,6 +27,7 @@ export async function createProject(data: {
   description?: string
   status?: any
   value?: number
+  currency?: string
   startDate?: Date | string | null
   dueDate?: Date | string | null
 }) {
@@ -40,6 +41,7 @@ export async function createProject(data: {
       description: data.description,
       status: data.status || "LEAD",
       value: data.value,
+      currency: data.currency || "USD",
       startDate: data.startDate ? new Date(data.startDate) : null,
       dueDate: data.dueDate ? new Date(data.dueDate) : null,
     },
@@ -68,6 +70,7 @@ export async function updateProject(
     description?: string
     status?: any
     value?: number
+    currency?: string
     startDate?: Date | string | null
     dueDate?: Date | string | null
   }
@@ -123,4 +126,16 @@ export async function archiveProject(id: string) {
   revalidatePath("/admin/projects")
   revalidatePath(`/admin/clients/${project.clientId}`)
   return project
+}
+
+export async function getProject(id: string) {
+  const session = await auth()
+  if (!session?.user?.id) throw new Error("Unauthorized")
+
+  return prisma.project.findUnique({
+    where: { id },
+    include: {
+      client: true
+    }
+  })
 }

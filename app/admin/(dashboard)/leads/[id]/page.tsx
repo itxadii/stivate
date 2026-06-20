@@ -1,7 +1,7 @@
-import { getLeadWithFollowUps, archiveLead } from "@/lib/actions/lead"
+import { getLeadWithFollowUps, archiveLead, convertLeadToClient } from "@/lib/actions/lead"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Flame, Phone, Calendar, Clock, MessageSquare, Trash2 } from "lucide-react"
+import { ArrowLeft, Flame, Phone, Calendar, Clock, MessageSquare, Trash2, UserCheck } from "lucide-react"
 import FollowUpForm from "./FollowUpForm"
 
 export default async function LeadDetailPage({
@@ -48,20 +48,37 @@ export default async function LeadDetailPage({
           </div>
         </div>
 
-        <form
-          action={async () => {
-            "use server"
-            await archiveLead(lead.id)
-          }}
-        >
-          <button
-            type="submit"
-            className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-red-600 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+        <div className="flex items-center gap-3">
+          <form
+            action={async () => {
+              "use server"
+              await convertLeadToClient(lead.id)
+            }}
           >
-            <Trash2 className="w-4 h-4" />
-            Archive Lead
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="inline-flex items-center gap-2 rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            >
+              <UserCheck className="w-4 h-4" />
+              Convert to Client
+            </button>
+          </form>
+
+          <form
+            action={async () => {
+              "use server"
+              await archiveLead(lead.id)
+            }}
+          >
+            <button
+              type="submit"
+              className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-red-600 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+            >
+              <Trash2 className="w-4 h-4" />
+              Archive Lead
+            </button>
+          </form>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">

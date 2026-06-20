@@ -5,9 +5,13 @@ import { Plus, Folder, Calendar } from "lucide-react"
 export default async function ProjectsPage() {
   const projects = await getProjects()
 
-  const formatCurrency = (amount: number | null) => {
-    if (!amount) return "$0"
-    return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amount)
+  const formatCurrency = (amount: number | null, currencyCode: string = "USD") => {
+    if (!amount) return new Intl.NumberFormat("en-US", { style: "currency", currency: currencyCode }).format(0)
+    try {
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: currencyCode }).format(amount)
+    } catch {
+      return `${currencyCode} ${amount.toFixed(2)}`
+    }
   }
 
   const getStatusColor = (status: string) => {
@@ -97,7 +101,7 @@ export default async function ProjectsPage() {
                     </span>
                   </td>
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-300 font-medium">
-                    {formatCurrency(project.value)}
+                    {formatCurrency(project.value, project.currency)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                     {project.dueDate ? (

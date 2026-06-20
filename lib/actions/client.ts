@@ -10,6 +10,11 @@ export async function getClients() {
 
   return prisma.client.findMany({
     where: { isArchived: false },
+    include: {
+      _count: {
+        select: { projects: true }
+      }
+    },
     orderBy: { createdAt: "desc" },
   })
 }
@@ -100,4 +105,22 @@ export async function archiveClient(clientId: string) {
 
   revalidatePath("/admin/clients")
   return client
+}
+
+export async function getClientWithProjects(id: string) {
+  const session = await auth()
+  if (!session?.user) throw new Error("Unauthorized")
+
+  return prisma.client.findUnique({
+    where: { id },
+    include: {
+      projects: {
+        where: { isArchived: false },
+        orderBy: { createdAt: "desc" }
+      },
+      followUps: {
+        orderBy: { date: "desc" }
+      }
+    }
+  })
 }

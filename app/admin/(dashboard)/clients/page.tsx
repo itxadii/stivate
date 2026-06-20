@@ -1,5 +1,5 @@
 import { getClients } from "@/lib/actions/client"
-import { Search, Plus, MoreVertical } from "lucide-react"
+import { Search, Plus, Folder } from "lucide-react"
 import Link from "next/link"
 
 export default async function ClientsPage() {
@@ -11,6 +11,8 @@ export default async function ClientsPage() {
   } catch (e: any) {
     error = "Failed to load clients. Database might be unreachable."
   }
+
+
 
   return (
     <div className="space-y-6">
@@ -53,7 +55,7 @@ export default async function ClientsPage() {
               <tr>
                 <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">Name</th>
                 <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Company</th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Status</th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Projects</th>
                 <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Added</th>
                 <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                   <span className="sr-only">Actions</span>
@@ -70,17 +72,28 @@ export default async function ClientsPage() {
               ) : (
                 clients.map((client) => (
                   <tr key={client.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-white sm:pl-6">
-                      {client.name}
+                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                      <Link
+                        href={`/admin/clients/${client.id}`}
+                        className="font-semibold text-gray-900 hover:text-blue-600 dark:text-white dark:hover:text-blue-400 block hover:underline"
+                      >
+                        {client.name}
+                      </Link>
                       <div className="font-normal text-gray-500 dark:text-gray-400">{client.email}</div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                       {client.company || "-"}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm">
-                      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-900/30 dark:text-green-400">
-                        {client.status}
-                      </span>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center gap-1.5">
+                        <Folder className="w-4 h-4 text-gray-400 shrink-0" />
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          {client._count?.projects ?? 0}
+                        </span>
+                        <span className="text-gray-400 dark:text-gray-500 text-xs">
+                          {(client._count?.projects ?? 0) === 1 ? "project" : "projects"}
+                        </span>
+                      </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                       {new Date(client.createdAt).toLocaleDateString()}
