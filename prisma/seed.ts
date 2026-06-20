@@ -1,5 +1,4 @@
-import { config } from 'dotenv'
-config()
+import 'dotenv/config'
 import { prisma } from '../lib/prisma'
 
 async function main() {

@@ -1,5 +1,6 @@
 import { getClients } from "@/lib/actions/client"
 import { Search, Plus, MoreVertical } from "lucide-react"
+import Link from "next/link"
 
 export default async function ClientsPage() {
   // Try to fetch clients. Since DB might be down, we wrap in try-catch for now
@@ -31,13 +32,13 @@ export default async function ClientsPage() {
               placeholder="Search clients..."
             />
           </div>
-          <button
-            type="button"
+          <Link
+            href="/admin/clients/new"
             className="inline-flex items-center gap-x-1.5 rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
           >
             <Plus className="-ml-0.5 h-4 w-4" aria-hidden="true" />
             New Client
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -85,9 +86,12 @@ export default async function ClientsPage() {
                       {new Date(client.createdAt).toLocaleDateString()}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <button type="button" className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
-                        <MoreVertical className="h-5 w-5" aria-hidden="true" />
-                      </button>
+                      <Link
+                        href={`/admin/clients/${client.id}/edit`}
+                        className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 font-semibold"
+                      >
+                        Edit
+                      </Link>
                     </td>
                   </tr>
                 ))

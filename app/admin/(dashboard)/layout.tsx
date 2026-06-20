@@ -2,6 +2,7 @@ import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 import { LayoutDashboard, Users, FolderKanban, Receipt, FileText, Settings, LogOut } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default async function AdminLayout({
   children,
@@ -27,10 +28,15 @@ export default async function AdminLayout({
       {/* Sidebar */}
       <aside className="w-full md:w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 hidden md:block">
         <div className="h-full flex flex-col">
-          <div className="flex h-16 shrink-0 items-center px-6">
-            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Stivate Admin
-            </span>
+          <div className="flex h-32 shrink-0 items-center px-6">
+            <Image
+              src="/logo.png"
+              alt="Stivate"
+              width={720}
+              height={216}
+              priority
+              className="w-full h-auto max-h-30 object-contain dark:invert"
+            />
           </div>
 
           <nav className="flex-1 space-y-1 px-3 py-4">

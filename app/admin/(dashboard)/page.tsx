@@ -1,11 +1,42 @@
-import { Users, FolderKanban, Receipt, Activity } from "lucide-react"
+import { Users, FolderKanban, Receipt, Activity as ActivityIcon } from "lucide-react"
+import { prisma } from "@/lib/prisma"
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  // Fetch actual counts from Neon PostgreSQL database
+  const totalClients = await prisma.client.count({
+    where: { isArchived: false }
+  })
+
+  const activeProjects = await prisma.project.count({
+    where: { isArchived: false }
+  })
+
+  const pendingInvoices = await prisma.invoice.count({
+    where: { isArchived: false, status: { in: ["SENT", "OVERDUE"] } }
+  })
+
+  const recentActivitiesCount = await prisma.activity.count({
+    where: {
+      createdAt: {
+        gte: new Date(Date.now() - 24 * 60 * 60 * 1000)
+      }
+    }
+  })
+
+  // Fetch actual recent activities list
+  const recentActivities = await prisma.activity.findMany({
+    take: 5,
+    orderBy: { createdAt: "desc" },
+    include: {
+      user: true
+    }
+  })
+
   const stats = [
-    { name: "Total Clients", value: "0", icon: Users, change: "+0%" },
-    { name: "Active Projects", value: "0", icon: FolderKanban, change: "+0%" },
-    { name: "Pending Invoices", value: "0", icon: Receipt, change: "0" },
-    { name: "Recent Activities", value: "0", icon: Activity, change: "Today" },
+    { name: "Total Clients", value: totalClients.toString(), icon: Users, change: "+0%" },
+    { name: "Active Projects", value: activeProjects.toString(), icon: FolderKanban, change: "+0%" },
+    { name: "Pending Invoices", value: pendingInvoices.toString(), icon: Receipt, change: "0" },
+    { name: "Recent Activities", value: recentActivitiesCount.toString(), icon: ActivityIcon, change: "Today" },
   ]
 
   return (
@@ -45,14 +76,28 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* Activity and other sections will go here */}
       <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="rounded-xl bg-white dark:bg-gray-900 shadow-sm border border-gray-100 dark:border-gray-800">
           <div className="p-6 border-b border-gray-100 dark:border-gray-800">
             <h3 className="text-base font-semibold leading-6 text-gray-900 dark:text-white">Recent Activity</h3>
           </div>
           <div className="p-6">
-            <p className="text-sm text-gray-500 dark:text-gray-400">No recent activity.</p>
+            {recentActivities.length === 0 ? (
+              <p className="text-sm text-gray-500 dark:text-gray-400">No recent activity.</p>
+            ) : (
+              <ul className="space-y-4">
+                {recentActivities.map((act) => (
+                  <li key={act.id} className="text-sm text-gray-600 dark:text-gray-300">
+                    <span className="font-semibold text-gray-900 dark:text-white">{act.user.name || act.user.email}</span>{" "}
+                    {act.action.toLowerCase() === "created" ? "created" : act.action.toLowerCase() === "updated" ? "updated" : "archived"}{" "}
+                    a <span className="font-medium text-blue-600 dark:text-blue-400">{act.entityType.toLowerCase()}</span>
+                    <span className="text-xs text-gray-400 dark:text-gray-500 block mt-0.5">
+                      {new Date(act.createdAt).toLocaleString()}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
         

@@ -1,15 +1,13 @@
 import NextAuth from "next-auth"
-import Google from "next-auth/providers/google"
+import { authConfig } from "./auth.config"
 import { prisma } from "@/lib/prisma"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [Google],
-  pages: {
-    signIn: "/login",
-  },
+  ...authConfig,
   callbacks: {
-    async signIn({ profile }) {
-      const email = profile?.email
+    ...authConfig.callbacks,
+    async signIn({ profile, user }) {
+      const email = profile?.email || user?.email
       if (!email) return false
 
       const ALLOWED_EMAILS = [
@@ -22,50 +20,34 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       try {
-        let user = await prisma.user.findUnique({
+        let dbUser = await prisma.user.findUnique({
           where: { email },
         })
 
-        if (!user) {
-          // Auto-create the user if they are in the allowed list but not in DB yet
-          user = await prisma.user.create({
+        if (!dbUser) {
+          dbUser = await prisma.user.create({
             data: {
               email,
-              name: profile?.name,
-              image: profile?.picture as string | undefined,
+              name: profile?.name || user?.name,
+              image: profile?.picture || user?.image,
               role: email === "kolpeprathamesh@gmail.com" ? "SUPERADMIN" : "ADMIN",
             },
           })
         }
 
-        if (user.isArchived) {
+        if (dbUser.isArchived) {
           return false
         }
+
+        // Attach DB id and role to the user object so JWT callback can pick it up
+        user.id = dbUser.id
+        user.role = dbUser.role
 
         return true
       } catch (error) {
         console.error("SignIn error:", error)
         return false
       }
-    },
-    async jwt({ token, user }) {
-      if (user?.email) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: user.email },
-        })
-        if (dbUser) {
-          token.id = dbUser.id
-          token.role = dbUser.role
-        }
-      }
-      return token
-    },
-    async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
-      }
-      return session
     },
   },
 })

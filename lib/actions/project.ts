@@ -26,15 +26,22 @@ export async function createProject(data: {
   name: string
   description?: string
   status?: any
-  budget?: number
-  deadline?: Date
+  value?: number
+  startDate?: Date | string | null
+  dueDate?: Date | string | null
 }) {
   const session = await auth()
   if (!session?.user?.id) throw new Error("Unauthorized")
 
   const project = await prisma.project.create({
     data: {
-      ...data,
+      clientId: data.clientId,
+      name: data.name,
+      description: data.description,
+      status: data.status || "LEAD",
+      value: data.value,
+      startDate: data.startDate ? new Date(data.startDate) : null,
+      dueDate: data.dueDate ? new Date(data.dueDate) : null,
     },
   })
 
@@ -60,16 +67,21 @@ export async function updateProject(
     name?: string
     description?: string
     status?: any
-    budget?: number
-    deadline?: Date
+    value?: number
+    startDate?: Date | string | null
+    dueDate?: Date | string | null
   }
 ) {
   const session = await auth()
   if (!session?.user?.id) throw new Error("Unauthorized")
 
+  const updateData: any = { ...data }
+  if (data.startDate !== undefined) updateData.startDate = data.startDate ? new Date(data.startDate) : null
+  if (data.dueDate !== undefined) updateData.dueDate = data.dueDate ? new Date(data.dueDate) : null
+
   const project = await prisma.project.update({
     where: { id },
-    data,
+    data: updateData,
   })
 
   await prisma.activity.create({

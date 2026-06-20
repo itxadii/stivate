@@ -6,6 +6,7 @@ import LenisProvider from "@/components/layout/LenisProvider";
 import Navbar from "@/components/layout/Navbar";
 import NoiseOverlay from "@/components/ui/NoiseOverlay";
 import CookiePopup from "@/components/ui/CookiePopup";
+import { headers } from "next/headers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -55,11 +56,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const isAdmin = headersList.get("x-is-admin") === "true";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -103,13 +107,12 @@ export default function RootLayout({
           `}
         </Script>
         <LenisProvider>
-          <NoiseOverlay />
-          <Navbar />
+          {!isAdmin && <NoiseOverlay />}
+          {!isAdmin && <Navbar />}
           {children}
-          <CookiePopup />
+          {!isAdmin && <CookiePopup />}
         </LenisProvider>
       </body>
     </html>
   );
 }
-
