@@ -86,7 +86,7 @@ export default async function AdminDashboard() {
               <p className="text-sm text-gray-500 dark:text-gray-400">No recent activity.</p>
             ) : (
               <ul className="space-y-4">
-                {recentActivities.map((act) => (
+                {recentActivities.map((act: any) => (
                   <li key={act.id} className="text-sm text-gray-600 dark:text-gray-300">
                     <span className="font-semibold text-gray-900 dark:text-white">{act.user.name || act.user.email}</span>{" "}
                     {act.action.toLowerCase() === "created" ? "created" : act.action.toLowerCase() === "updated" ? "updated" : "archived"}{" "}
