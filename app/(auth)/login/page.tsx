@@ -8,7 +8,7 @@ export default async function LoginPage() {
   const headersList = await headers()
   const host = headersList.get("host") || ""
   const isLocal = host.includes("localhost") && !host.includes("admin.localhost")
-  const redirectPath = isLocal ? "/admin" : "/"
+  const redirectPath = "/admin"
 
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950">

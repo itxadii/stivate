@@ -4,11 +4,11 @@ import { prisma } from '../lib/prisma'
 async function main() {
   const superadmin = await prisma.user.upsert({
     where: { email: 'kolpeprathamesh@gmail.com' },
-    update: { role: 'SUPERADMIN' },
+    update: { role: 'ADMIN' },
     create: {
       email: 'kolpeprathamesh@gmail.com',
       name: 'Prathamesh Kolpe',
-      role: 'SUPERADMIN',
+      role: 'ADMIN',
     },
   })
 

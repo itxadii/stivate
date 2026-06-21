@@ -189,15 +189,23 @@ export default function DashboardCharts({ monthlyData, categoryData, summaryData
                   strokeDashoffset={125.66 * (1 - Math.min(Math.max(profit >= 0 ? profitMargin : 0, 0), 100) / 100)}
                   className="transition-all duration-700 ease-out"
                 />
-              </svg>
-              <div className="absolute bottom-0 text-center">
-                <span className="text-2xs font-extrabold text-gray-900 dark:text-white leading-none">
+                <text
+                  x="50"
+                  y="41"
+                  textAnchor="middle"
+                  className="fill-current text-gray-900 dark:text-white font-extrabold text-[8px]"
+                >
                   {profitMargin.toFixed(1)}%
-                </span>
-                <span className="block text-4xs text-gray-450 dark:text-gray-500 uppercase tracking-wider mt-0.5">
+                </text>
+                <text
+                  x="50"
+                  y="48"
+                  textAnchor="middle"
+                  className="fill-current text-gray-450 dark:text-gray-500 font-bold text-[4px] tracking-wider uppercase"
+                >
                   Margin
-                </span>
-              </div>
+                </text>
+              </svg>
             </div>
 
             {/* Metrics */}

@@ -80,17 +80,15 @@ export default function Sidebar({ session, logoutAction }: SidebarProps) {
     <>
       {/* Mobile Top Header Bar */}
       <header className="md:hidden sticky top-0 z-30 flex items-center justify-between w-full px-4 py-3.5 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-150 dark:border-gray-700/60">
-            <Image
-              src="/favicon.ico"
-              alt="S"
-              width={20}
-              height={20}
-              className="h-5 w-5 object-contain dark:invert"
-            />
-          </div>
-          <span className="text-base font-bold text-gray-900 dark:text-white tracking-wide">Stivate</span>
+        <div className="h-16 flex items-center max-w-[200px]">
+          <Image
+            src="/logo.png"
+            alt="Stivate Logo"
+            width={300}
+            height={90}
+            priority
+            className="w-full h-auto max-h-16 object-contain dark:invert"
+          />
         </div>
         <button 
           onClick={() => setIsMobileOpen(true)}
@@ -116,18 +114,16 @@ export default function Sidebar({ session, logoutAction }: SidebarProps) {
         }`}
       >
         {/* Drawer Header */}
-        <div className="flex h-16 shrink-0 items-center justify-between px-6 border-b border-gray-150 dark:border-gray-800">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-150 dark:border-gray-700/60">
-              <Image
-                src="/favicon.ico"
-                alt="S"
-                width={20}
-                height={20}
-                className="h-5 w-5 object-contain dark:invert"
-              />
-            </div>
-            <span className="text-base font-bold text-gray-900 dark:text-white tracking-wide">Stivate</span>
+        <div className="flex h-20 shrink-0 items-center justify-between px-6 border-b border-gray-150 dark:border-gray-800">
+          <div className="h-16 flex items-center max-w-[200px]">
+            <Image
+              src="/logo.png"
+              alt="Stivate Logo"
+              width={300}
+              height={90}
+              priority
+              className="w-full h-auto max-h-16 object-contain dark:invert"
+            />
           </div>
           <button 
             onClick={() => setIsMobileOpen(false)}

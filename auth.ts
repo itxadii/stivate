@@ -30,7 +30,7 @@ const nextAuthResult = NextAuth({
               email,
               name: profile?.name || user?.name,
               image: profile?.picture || user?.image,
-              role: email === "kolpeprathamesh@gmail.com" ? "SUPERADMIN" : "ADMIN",
+              role: "ADMIN",
             },
           })
         }
@@ -55,18 +55,23 @@ const nextAuthResult = NextAuth({
 export const { handlers, signIn, signOut } = nextAuthResult
 
 export const auth = async (...args: any[]) => {
+  const session = await (nextAuthResult.auth as any)(...args)
+  if (session?.user) {
+    // If a real logged-in session exists, return it!
+    return session
+  }
   if (process.env.NODE_ENV === "development") {
-    // Return a mock session in development to allow headless verification without OAuth blocks
+    // Return a mock session in development only if no active session is found (to enable automated visual verification)
     return {
       user: {
         id: "mock-admin-id",
-        name: "Prathamesh Kolpe",
-        email: "kolpeprathamesh@gmail.com",
-        role: "SUPERADMIN",
+        name: "Aditya Waghmare",
+        email: "adityawaghmarex@gmail.com",
+        role: "ADMIN",
         image: "https://lh3.googleusercontent.com/a/ACg8ocL3g9p1s"
       },
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
     }
   }
-  return (nextAuthResult.auth as any)(...args)
+  return null
 }

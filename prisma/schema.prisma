@@ -7,7 +7,6 @@ generator client {
 }
 
 enum Role {
-  SUPERADMIN
   ADMIN
   MANAGER
   STAFF
