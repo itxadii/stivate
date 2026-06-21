@@ -53,96 +53,98 @@ export default async function QuotationsPage() {
         </div>
       ) : (
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-            <thead className="bg-gray-50 dark:bg-gray-800/50">
-              <tr>
-                <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
-                  Quotation Number
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                  Title
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                  Client
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                  Total Value
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                  Validity
-                </th>
-                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span className="sr-only">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
-              {quotations.length === 0 ? (
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+              <thead className="bg-gray-50 dark:bg-gray-800/50">
                 <tr>
-                  <td colSpan={6} className="whitespace-nowrap py-12 text-center text-sm text-gray-500 dark:text-gray-400">
-                    <div className="flex flex-col items-center justify-center space-y-2">
-                      <ClipboardList className="h-8 w-8 text-gray-400" />
-                      <span className="font-medium text-gray-650 dark:text-gray-300">No quotations found.</span>
-                      <p className="text-xs text-gray-505 dark:text-gray-450 max-w-xs">
-                        Generate your first client quotation to outline scope, pricing, terms and optional items.
-                      </p>
-                    </div>
-                  </td>
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
+                    Quotation Number
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                    Title
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                    Client
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                    Total Value
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                    Validity
+                  </th>
+                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <span className="sr-only">Actions</span>
+                  </th>
                 </tr>
-              ) : (
-                quotations.map((quote) => (
-                  <tr key={quote.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition">
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
-                      <Link href={`/admin/quotations/${quote.id}`} className="hover:text-blue-650 dark:hover:text-blue-400 flex items-center gap-1.5">
-                        <ClipboardList className="h-4 w-4 text-gray-400" />
-                        {quote.quotationNumber}
-                      </Link>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-white font-medium truncate max-w-[200px]">
-                      {quote.title}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                      {quote.clientName}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-950 dark:text-white font-semibold">
-                      {formatCurrency(calculateTotal(quote), quote.currency)}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="text-xs">
-                        <div className="flex items-center gap-1">
-                          <span className="font-semibold text-gray-400">Date:</span>
-                          {quote.issueDate ? new Date(quote.issueDate).toLocaleDateString() : "-"}
-                        </div>
-                        {quote.validUntil && (
-                          <div className="flex items-center gap-1 mt-0.5">
-                            <span className="font-semibold text-gray-400">Valid Till:</span>
-                            {new Date(quote.validUntil).toLocaleDateString()}
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <div className="flex items-center justify-end gap-3">
-                        <Link
-                          href={`/admin/quotations/${quote.id}`}
-                          className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 font-semibold"
-                        >
-                          View Details
-                        </Link>
-                        <span className="text-gray-300">|</span>
-                        <Link
-                          href={`/admin/quotations/${quote.id}/edit`}
-                          className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white font-semibold"
-                        >
-                          Edit
-                        </Link>
+              </thead>
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
+                {quotations.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="whitespace-nowrap py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+                      <div className="flex flex-col items-center justify-center space-y-2">
+                        <ClipboardList className="h-8 w-8 text-gray-400" />
+                        <span className="font-medium text-gray-650 dark:text-gray-300">No quotations found.</span>
+                        <p className="text-xs text-gray-505 dark:text-gray-450 max-w-xs">
+                          Generate your first client quotation to outline scope, pricing, terms and optional items.
+                        </p>
                       </div>
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  quotations.map((quote) => (
+                    <tr key={quote.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition">
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
+                        <Link href={`/admin/quotations/${quote.id}`} className="hover:text-blue-650 dark:hover:text-blue-400 flex items-center gap-1.5">
+                          <ClipboardList className="h-4 w-4 text-gray-400" />
+                          {quote.quotationNumber}
+                        </Link>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-white font-medium truncate max-w-[200px]">
+                        {quote.title}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                        {quote.clientName}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-955 dark:text-white font-semibold">
+                        {formatCurrency(calculateTotal(quote), quote.currency)}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                        <div className="text-xs">
+                          <div className="flex items-center gap-1">
+                            <span className="font-semibold text-gray-400">Date:</span>
+                            {quote.issueDate ? new Date(quote.issueDate).toLocaleDateString() : "-"}
+                          </div>
+                          {quote.validUntil && (
+                            <div className="flex items-center gap-1 mt-0.5">
+                              <span className="font-semibold text-gray-400">Valid Till:</span>
+                              {new Date(quote.validUntil).toLocaleDateString()}
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <div className="flex items-center justify-end gap-3">
+                          <Link
+                            href={`/admin/quotations/${quote.id}`}
+                            className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 font-semibold"
+                          >
+                            View Details
+                          </Link>
+                          <span className="text-gray-300">|</span>
+                          <Link
+                            href={`/admin/quotations/${quote.id}/edit`}
+                            className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white font-semibold"
+                          >
+                            Edit
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

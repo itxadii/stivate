@@ -12,6 +12,7 @@ interface QuotationItem {
   price: number
   isIncluded: boolean
   isOptional: boolean
+  isClientExpense: boolean
 }
 
 interface Quotation {
@@ -64,8 +65,9 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
   }
 
   // Split items
-  const services = quotation.items.filter((item) => !item.isOptional)
-  const optionalItems = quotation.items.filter((item) => item.isOptional)
+  const services = quotation.items.filter((item) => !item.isOptional && !item.isClientExpense)
+  const optionalItems = quotation.items.filter((item) => item.isOptional && !item.isClientExpense)
+  const clientExpenses = quotation.items.filter((item) => item.isClientExpense)
 
   // Calculations
   const subtotal = services
@@ -170,7 +172,7 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
               <img
                 src="/logo.png"
                 alt="STIVATE"
-                className="h-30 w-auto object-contain dark:invert print:invert-0 mb-4"
+                className="h-36 w-auto object-contain dark:invert print:invert-0 mb-4"
               />
               <div className="text-sm text-gray-500 dark:text-gray-400 space-y-0.5">
                 <p className="font-semibold text-gray-700 dark:text-gray-300">Stivate LLC</p>
@@ -276,6 +278,46 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
             </tbody>
           </table>
         </div>
+
+        {/* EXPENSES PAID BY CLIENT TABLE */}
+        {clientExpenses.length > 0 && (
+          <div className="py-6 border-t border-gray-200 dark:border-gray-800 section-break-avoid">
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-4">
+              Expenses Paid by Client (e.g. Third-party APIs & Server Infrastructure)
+            </h3>
+
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+              <thead>
+                <tr className="border-b border-gray-200 dark:border-gray-800">
+                  <th scope="col" className="py-3 px-2 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
+                    Description
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-center text-xs font-bold text-gray-400 uppercase tracking-wider w-[15%]">
+                    Qty
+                  </th>
+                  <th scope="col" className="px-2 py-3 text-right text-xs font-bold text-gray-400 uppercase tracking-wider w-[22%]">
+                    Price
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-150 dark:divide-gray-800 bg-white dark:bg-gray-900">
+                {clientExpenses.map((item) => (
+                  <tr key={item.id}>
+                    <td className="py-4 px-2 text-sm font-semibold text-gray-900 dark:text-white">
+                      {item.description}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-center text-gray-600 dark:text-gray-400">
+                      {item.quantity}
+                    </td>
+                    <td className="px-2 py-4 text-sm text-right font-semibold text-gray-900 dark:text-white">
+                      {formatItemPrice(item)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         {/* Totals & Calculations (styled like invoice math block) */}
         <div className="flex justify-end border-t border-gray-200 dark:border-gray-800 pt-6 pb-6 section-break-avoid">

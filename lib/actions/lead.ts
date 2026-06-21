@@ -15,6 +15,13 @@ export async function getLeads() {
     },
     include: {
       client: true,
+      quotations: {
+        where: { isArchived: false },
+        select: {
+          id: true,
+          quotationNumber: true,
+        },
+      },
     },
     orderBy: {
       updatedAt: "desc",
@@ -33,6 +40,12 @@ export async function getLeadWithFollowUps(id: string) {
       followUps: {
         orderBy: {
           date: "desc",
+        },
+      },
+      quotations: {
+        where: { isArchived: false },
+        orderBy: {
+          createdAt: "desc",
         },
       },
     },

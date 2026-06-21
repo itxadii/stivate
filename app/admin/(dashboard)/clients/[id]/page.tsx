@@ -68,10 +68,17 @@ export default async function ClientDetailPage({ params }: PageProps) {
         <div className="flex items-center gap-3">
           <Link
             href={`/admin/clients/${client.id}/edit`}
-            className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-gray-800 px-3.5 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-75 transition"
+            className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-gray-800 px-3.5 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/75 transition"
           >
             <Edit className="w-4 h-4" />
             Edit Client
+          </Link>
+          <Link
+            href={`/admin/quotations/new?clientId=${client.id}`}
+            className="inline-flex items-center gap-2 rounded-md bg-purple-650 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-650 transition dark:bg-purple-700 dark:hover:bg-purple-600"
+          >
+            <Plus className="w-4 h-4" />
+            New Quotation
           </Link>
           <Link
             href={`/admin/projects/new?clientId=${client.id}`}
@@ -93,9 +100,18 @@ export default async function ClientDetailPage({ params }: PageProps) {
                 <Folder className="w-5 h-5 text-gray-400" />
                 Assigned Projects
               </h3>
-              <span className="inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:text-blue-400 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-450/20">
-                {client.projects.length} Total
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:text-blue-400 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-450/20">
+                  {client.projects.length} Total
+                </span>
+                <Link
+                  href={`/admin/projects/new?clientId=${client.id}`}
+                  className="inline-flex items-center gap-1 rounded-md bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/30 dark:hover:bg-blue-900/40 px-2 py-1 text-2xs font-semibold text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800/80 transition"
+                >
+                  <Plus className="w-3 h-3" />
+                  Add
+                </Link>
+              </div>
             </div>
 
             {client.projects.length === 0 ? (
@@ -164,6 +180,98 @@ export default async function ClientDetailPage({ params }: PageProps) {
                       <Link
                         href={`/admin/projects/${project.id}/edit`}
                         className="text-xs text-blue-600 hover:underline dark:text-blue-400 font-semibold"
+                      >
+                        Edit Details
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Associated Quotations Card */}
+          <div className="bg-white dark:bg-gray-900 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl p-6 sm:p-8 space-y-6">
+            <div className="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-3">
+              <h3 className="text-base font-semibold leading-7 text-gray-900 dark:text-white flex items-center gap-2">
+                <FileText className="w-5 h-5 text-gray-400" />
+                Associated Quotations
+              </h3>
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center rounded-full bg-purple-50 dark:bg-purple-900/20 px-2.5 py-0.5 text-xs font-medium text-purple-700 dark:text-purple-400 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-450/20">
+                  {client.quotations?.length || 0} Total
+                </span>
+                <Link
+                  href={`/admin/quotations/new?clientId=${client.id}`}
+                  className="inline-flex items-center gap-1 rounded-md bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/30 dark:hover:bg-purple-900/40 px-2 py-1 text-2xs font-semibold text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-800/80 transition"
+                >
+                  <Plus className="w-3 h-3" />
+                  Add
+                </Link>
+              </div>
+            </div>
+
+            {!client.quotations || client.quotations.length === 0 ? (
+              <div className="text-center py-12 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl space-y-3">
+                <FileText className="h-8 w-8 text-gray-400 mx-auto" />
+                <h4 className="font-semibold text-gray-900 dark:text-white text-sm">No quotations created</h4>
+                <p className="text-xs text-gray-555 dark:text-gray-400 max-w-xs mx-auto">
+                  Generate a quote detailing services and terms for this client.
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href={`/admin/quotations/new?clientId=${client.id}`}
+                    className="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-500"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    Create First Quotation
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {client.quotations.map((quote: any) => (
+                  <div
+                    key={quote.id}
+                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 rounded-xl border border-gray-150 dark:border-gray-800/80 hover:bg-gray-50 dark:hover:bg-gray-800/20 transition gap-4"
+                  >
+                    <div className="space-y-1.5 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Link
+                          href={`/admin/quotations/${quote.id}`}
+                          className="font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:underline truncate text-sm"
+                        >
+                          {quote.quotationNumber} — {quote.title}
+                        </Link>
+                      </div>
+                      
+                      {/* Quotation Meta Dates */}
+                      <div className="flex items-center gap-4 text-xs text-gray-400 dark:text-gray-505 flex-wrap">
+                        {quote.issueDate && (
+                          <span className="flex items-center gap-1">
+                            <Calendar className="w-3.5 h-3.5 shrink-0" />
+                            Issued: {new Date(quote.issueDate).toLocaleDateString()}
+                          </span>
+                         )}
+                         {quote.validUntil && (
+                           <span className="flex items-center gap-1">
+                             <Calendar className="w-3.5 h-3.5 shrink-0" />
+                             Valid: {new Date(quote.validUntil).toLocaleDateString()}
+                           </span>
+                         )}
+                      </div>
+                    </div>
+
+                    <div className="flex sm:flex-col sm:items-end justify-between items-center shrink-0 gap-2">
+                      <Link
+                        href={`/admin/quotations/${quote.id}`}
+                        className="text-xs text-blue-600 hover:underline dark:text-blue-400 font-semibold"
+                      >
+                        View Quote
+                      </Link>
+                      <Link
+                        href={`/admin/quotations/${quote.id}/edit`}
+                        className="text-xs text-gray-550 hover:underline dark:text-gray-400 font-medium"
                       >
                         Edit Details
                       </Link>

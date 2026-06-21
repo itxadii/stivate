@@ -13,6 +13,7 @@ import {
   Building
 } from "lucide-react"
 import Link from "next/link"
+import DashboardCharts from "./DashboardCharts"
 
 const exchangeRates: Record<string, number> = {
   USD: 1.0,
@@ -48,12 +49,12 @@ export default async function AdminDashboard() {
     },
   })
 
-  // Calculate upcoming deadlines (projects that are not completed/archived and have due dates in future)
+  // Calculate upcoming deadlines (projects that are not completed/archived and have due dates)
   const upcomingProjects = await prisma.project.findMany({
     where: {
       isArchived: false,
       status: { notIn: ["COMPLETED", "ARCHIVED"] },
-      dueDate: { gte: new Date() },
+      dueDate: { not: null },
     },
     include: {
       client: true,
@@ -69,6 +70,19 @@ export default async function AdminDashboard() {
     const rate = exchangeRates[currency.toUpperCase()] || 1.0
     return amount * rate
   }
+
+  // Group last 6 months cashflow trend
+  const last6Months = Array.from({ length: 6 }).map((_, i) => {
+    const d = new Date()
+    d.setMonth(d.getMonth() - i)
+    return {
+      monthName: d.toLocaleString("default", { month: "short" }),
+      year: d.getFullYear(),
+      monthNum: d.getMonth(),
+      revenue: 0,
+      expenses: 0,
+    }
+  }).reverse()
 
   // Aggregate Metrics
   let totalRevenue = 0
@@ -94,24 +108,66 @@ export default async function AdminDashboard() {
         pendingPayments += balance
       }
     }
+
+    // Add paid amount to month's revenue if paid
+    if (inv.status === "PAID" && inv.issueDate) {
+      const date = new Date(inv.issueDate)
+      const monthIndex = last6Months.findIndex(
+        (m) => m.monthNum === date.getMonth() && m.year === date.getFullYear()
+      )
+      if (monthIndex !== -1) {
+        last6Months[monthIndex].revenue += amountUSD
+      }
+    }
   })
 
-  // Total Expenses: Sum of all active expenses
+  // Total Expenses: Sum of all active expenses, and aggregate by category
+  const categoryTotals: Record<string, number> = {}
+  expenses.forEach((exp) => {
+    const amtUSD = convertToUSD(exp.amount, exp.currency)
+    // Add to monthly cashflow
+    if (exp.date) {
+      const date = new Date(exp.date)
+      const monthIndex = last6Months.findIndex(
+        (m) => m.monthNum === date.getMonth() && m.year === date.getFullYear()
+      )
+      if (monthIndex !== -1) {
+        last6Months[monthIndex].expenses += amtUSD
+      }
+    }
+    // Add to categories
+    const cat = exp.category || "Other"
+    categoryTotals[cat] = (categoryTotals[cat] || 0) + amtUSD
+  })
+
   const totalExpenses = expenses.reduce(
     (sum, exp) => sum + convertToUSD(exp.amount, exp.currency),
     0
   )
 
-  // Net Profit: Total Revenue - Total Expenses
   const netProfit = totalRevenue - totalExpenses
 
-  // Format Helper
-  const formatUSD = (val: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(val)
+  // Convert categories to format needed for the charts
+  const totalCategoryExpenses = Object.values(categoryTotals).reduce((a, b) => a + b, 0)
+  const categoryData = Object.entries(categoryTotals).map(([category, value]) => ({
+    category,
+    value,
+    percentage: totalCategoryExpenses > 0 ? (value / totalCategoryExpenses) * 100 : 0,
+  })).sort((a, b) => b.value - a.value)
+
+  const summaryData = {
+    totalRevenue,
+    totalExpenses,
+    netProfit,
+    completedPayments,
+    pendingPayments,
   }
+
+  const monthlyData = last6Months.map((m) => ({
+    monthName: m.monthName,
+    revenue: m.revenue,
+    expenses: m.expenses,
+  }))
 
   return (
     <div className="space-y-8">
@@ -125,144 +181,8 @@ export default async function AdminDashboard() {
         </p>
       </div>
 
-      {/* Metrics Row */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
-        {/* Total Revenue Card */}
-        <div className="group overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-5 shadow-sm border border-gray-150 dark:border-gray-800 hover:shadow-md hover:scale-[1.01] transition-all duration-200">
-          <div className="flex items-center">
-            <div className="flex-shrink-0 rounded-md bg-emerald-50 dark:bg-emerald-950/30 p-3 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-900/40 transition">
-              <TrendingUp className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
-            </div>
-            <div className="ml-4 w-0 flex-1">
-              <p className="truncate text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                Total Revenue
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">
-                {formatUSD(totalRevenue)}
-              </h3>
-            </div>
-          </div>
-          <div className="mt-4 border-t border-gray-100 dark:border-gray-800 pt-3">
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Paid invoices total value
-            </span>
-          </div>
-        </div>
-
-        {/* Total Expenses Card */}
-        <div className="group overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-5 shadow-sm border border-gray-150 dark:border-gray-800 hover:shadow-md hover:scale-[1.01] transition-all duration-200">
-          <div className="flex items-center">
-            <div className="flex-shrink-0 rounded-md bg-rose-50 dark:bg-rose-950/30 p-3 group-hover:bg-rose-100 dark:group-hover:bg-rose-900/40 transition">
-              <TrendingDown className="h-6 w-6 text-rose-600 dark:text-rose-400" />
-            </div>
-            <div className="ml-4 w-0 flex-1">
-              <p className="truncate text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                Total Expenses
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">
-                {formatUSD(totalExpenses)}
-              </h3>
-            </div>
-          </div>
-          <div className="mt-4 border-t border-gray-100 dark:border-gray-800 pt-3 flex items-center justify-between">
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Active operating costs
-            </span>
-            <Link
-              href="/admin/expenses"
-              className="text-xs font-semibold text-blue-600 hover:underline dark:text-blue-400"
-            >
-              View list
-            </Link>
-          </div>
-        </div>
-
-        {/* Net Profit Card */}
-        <div className="group overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-5 shadow-sm border border-gray-150 dark:border-gray-800 hover:shadow-md hover:scale-[1.01] transition-all duration-200">
-          <div className="flex items-center">
-            <div
-              className={`flex-shrink-0 rounded-md p-3 transition ${
-                netProfit >= 0
-                  ? "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400 group-hover:bg-emerald-100"
-                  : "bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400 group-hover:bg-rose-100"
-              }`}
-            >
-              <Scale className="h-6 w-6" />
-            </div>
-            <div className="ml-4 w-0 flex-1">
-              <p className="truncate text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                Net Profit
-              </p>
-              <h3
-                className={`text-xl font-bold mt-0.5 ${
-                  netProfit >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
-                }`}
-              >
-                {formatUSD(netProfit)}
-              </h3>
-            </div>
-          </div>
-          <div className="mt-4 border-t border-gray-100 dark:border-gray-800 pt-3">
-            <span
-              className={`text-xs font-semibold ${
-                netProfit >= 0 ? "text-emerald-650 dark:text-emerald-400" : "text-rose-655 dark:text-rose-400"
-              }`}
-            >
-              {netProfit >= 0 ? "Operating Profitably" : "Net Operating Loss"}
-            </span>
-          </div>
-        </div>
-
-        {/* Completed Payments Card */}
-        <div className="group overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-5 shadow-sm border border-gray-150 dark:border-gray-800 hover:shadow-md hover:scale-[1.01] transition-all duration-200">
-          <div className="flex items-center">
-            <div className="flex-shrink-0 rounded-md bg-blue-50 dark:bg-blue-950/30 p-3 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 transition">
-              <CheckCircle2 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-            </div>
-            <div className="ml-4 w-0 flex-1">
-              <p className="truncate text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                Completed Payments
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">
-                {formatUSD(completedPayments)}
-              </h3>
-            </div>
-          </div>
-          <div className="mt-4 border-t border-gray-100 dark:border-gray-800 pt-3">
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Total collected cashflow
-            </span>
-          </div>
-        </div>
-
-        {/* Pending Payments Card */}
-        <div className="group overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-5 shadow-sm border border-gray-150 dark:border-gray-800 hover:shadow-md hover:scale-[1.01] transition-all duration-200">
-          <div className="flex items-center">
-            <div className="flex-shrink-0 rounded-md bg-amber-50 dark:bg-amber-950/30 p-3 group-hover:bg-amber-100 dark:group-hover:bg-amber-900/40 transition">
-              <Clock className="h-6 w-6 text-amber-600 dark:text-amber-400" />
-            </div>
-            <div className="ml-4 w-0 flex-1">
-              <p className="truncate text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                Pending Payments
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">
-                {formatUSD(pendingPayments)}
-              </h3>
-            </div>
-          </div>
-          <div className="mt-4 border-t border-gray-100 dark:border-gray-800 pt-3 flex items-center justify-between">
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Outstanding sent/overdue balance
-            </span>
-            <Link
-              href="/admin/invoices"
-              className="text-xs font-semibold text-blue-600 hover:underline dark:text-blue-400"
-            >
-              Collect
-            </Link>
-          </div>
-        </div>
-      </div>
+      {/* Metrics Row and Charts */}
+      <DashboardCharts monthlyData={monthlyData} categoryData={categoryData} summaryData={summaryData} />
 
       {/* Two Column Layout: Activity and Deadlines */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -351,22 +271,59 @@ export default async function AdminDashboard() {
             ) : (
               <div className="space-y-4">
                 {upcomingProjects.map((project) => {
-                  const daysRemaining = project.dueDate
-                    ? Math.ceil(
-                        (new Date(project.dueDate).getTime() - new Date().getTime()) /
-                          (1000 * 60 * 60 * 24)
-                      )
-                    : null
+                  const today = new Date()
+                  const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
+                  const projectDue = project.dueDate ? new Date(project.dueDate) : null
+                  
+                  let daysRemaining: number | null = null
+                  let formattedDate = ""
+
+                  if (projectDue) {
+                    const dueUTC = Date.UTC(projectDue.getUTCFullYear(), projectDue.getUTCMonth(), projectDue.getUTCDate())
+                    const diffTime = dueUTC - todayUTC
+                    daysRemaining = Math.round(diffTime / (1000 * 60 * 60 * 24))
+                    
+                    // Format date in UTC to match the DB calendar day exactly
+                    formattedDate = projectDue.toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                      timeZone: "UTC"
+                    })
+                  }
+
+                  let badgeText = "No date"
+                  let badgeColor = "bg-slate-50 text-slate-700 ring-slate-600/10 dark:bg-slate-800 dark:text-slate-400"
+
+                  if (daysRemaining !== null) {
+                    if (daysRemaining < 0) {
+                      const absoluteDays = Math.abs(daysRemaining)
+                      badgeText = `${absoluteDays} ${absoluteDays === 1 ? "day" : "days"} overdue`
+                      badgeColor = "bg-red-50 text-red-700 ring-red-600/10 dark:bg-red-950/30 dark:text-red-400 font-bold border border-red-200/20"
+                    } else if (daysRemaining === 0) {
+                      badgeText = "Due today"
+                      badgeColor = "bg-rose-50 text-rose-750 ring-rose-650/20 dark:bg-rose-950/40 dark:text-rose-450 font-bold animate-pulse border border-rose-200/30"
+                    } else if (daysRemaining === 1) {
+                      badgeText = "Due tomorrow"
+                      badgeColor = "bg-amber-50 text-amber-800 ring-amber-600/20 dark:bg-amber-950/30 dark:text-amber-400 border border-amber-200/20"
+                    } else if (daysRemaining <= 7) {
+                      badgeText = `${daysRemaining} days left`
+                      badgeColor = "bg-amber-50 text-amber-800 ring-amber-600/20 dark:bg-amber-950/30 dark:text-amber-400 border border-amber-200/20"
+                    } else {
+                      badgeText = `${daysRemaining} days left`
+                      badgeColor = "bg-blue-50 text-blue-700 ring-blue-700/10 dark:bg-blue-950/30 dark:text-blue-400 border border-blue-200/10"
+                    }
+                  }
 
                   return (
                     <div
                       key={project.id}
-                      className="flex items-center justify-between p-3 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/40 transition"
+                      className="flex items-center justify-between p-3 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/40 transition gap-4"
                     >
                       <div className="min-w-0">
                         <Link
                           href={`/admin/projects/${project.id}/edit`}
-                          className="text-sm font-semibold text-gray-900 dark:text-white hover:text-blue-650 hover:underline block truncate"
+                          className="text-sm font-semibold text-gray-900 dark:text-white hover:text-blue-600 hover:underline block truncate"
                         >
                           {project.name}
                         </Link>
@@ -377,22 +334,12 @@ export default async function AdminDashboard() {
                       </div>
                       <div className="text-right shrink-0">
                         <span
-                          className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${
-                            daysRemaining !== null && daysRemaining <= 7
-                              ? "bg-red-50 text-red-700 ring-red-650/10 dark:bg-red-950/30 dark:text-red-400"
-                              : "bg-amber-50 text-amber-800 ring-amber-600/20 dark:bg-amber-950/30 dark:text-amber-400"
-                          }`}
+                          className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${badgeColor}`}
                         >
-                          {daysRemaining !== null
-                            ? daysRemaining === 0
-                              ? "Due today"
-                              : daysRemaining === 1
-                              ? "1 day left"
-                              : `${daysRemaining} days left`
-                            : "No date"}
+                          {badgeText}
                         </span>
-                        <span className="text-2xs text-gray-400 dark:text-gray-500 block mt-1">
-                          {project.dueDate ? new Date(project.dueDate).toLocaleDateString() : ""}
+                        <span className="text-2xs text-gray-450 dark:text-gray-500 block mt-1 font-medium">
+                          {formattedDate}
                         </span>
                       </div>
                     </div>

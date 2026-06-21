@@ -1,14 +1,18 @@
 import { getClients } from "@/lib/actions/client"
+import { getLeads } from "@/lib/actions/lead"
 import NewQuotationForm from "./NewQuotationForm"
+import { Suspense } from "react"
 
 export default async function NewQuotationPage() {
   let clients: any[] = []
+  let leads: any[] = []
   let error = null
 
   try {
     clients = await getClients()
+    leads = await getLeads()
   } catch (e: any) {
-    error = "Failed to load clients. Verify database sync is completed."
+    error = "Failed to load clients or leads data. Verify database sync is completed."
   }
 
   return (
@@ -25,7 +29,13 @@ export default async function NewQuotationPage() {
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       ) : (
-        <NewQuotationForm clients={clients} />
+        <Suspense fallback={
+          <div className="bg-white dark:bg-gray-900 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl p-6 sm:p-8 text-center text-gray-500 dark:text-gray-400 animate-pulse">
+            Loading quotation form...
+          </div>
+        }>
+          <NewQuotationForm clients={clients} leads={leads} />
+        </Suspense>
       )}
     </div>
   )

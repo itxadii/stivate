@@ -49,68 +49,70 @@ export default async function ClientsPage() {
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-            <thead className="bg-gray-50 dark:bg-gray-800/50">
-              <tr>
-                <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">Name</th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Company</th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Projects</th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Added</th>
-                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span className="sr-only">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
-              {clients.length === 0 ? (
+        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-808 dark:bg-gray-900">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+              <thead className="bg-gray-50 dark:bg-gray-800/50">
                 <tr>
-                  <td colSpan={5} className="whitespace-nowrap py-8 text-center text-sm text-gray-500 dark:text-gray-400">
-                    No clients found.
-                  </td>
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">Name</th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Company</th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Projects</th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Added</th>
+                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <span className="sr-only">Actions</span>
+                  </th>
                 </tr>
-              ) : (
-                clients.map((client) => (
-                  <tr key={client.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                      <Link
-                        href={`/admin/clients/${client.id}`}
-                        className="font-semibold text-gray-900 hover:text-blue-600 dark:text-white dark:hover:text-blue-400 block hover:underline"
-                      >
-                        {client.name}
-                      </Link>
-                      <div className="font-normal text-gray-500 dark:text-gray-400">{client.email}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                      {client.company || "-"}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="flex items-center gap-1.5">
-                        <Folder className="w-4 h-4 text-gray-400 shrink-0" />
-                        <span className="font-medium text-gray-900 dark:text-white">
-                          {client._count?.projects ?? 0}
-                        </span>
-                        <span className="text-gray-400 dark:text-gray-500 text-xs">
-                          {(client._count?.projects ?? 0) === 1 ? "project" : "projects"}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                      {new Date(client.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <Link
-                        href={`/admin/clients/${client.id}/edit`}
-                        className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 font-semibold"
-                      >
-                        Edit
-                      </Link>
+              </thead>
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
+                {clients.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="whitespace-nowrap py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                      No clients found.
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  clients.map((client) => (
+                    <tr key={client.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                        <Link
+                          href={`/admin/clients/${client.id}`}
+                          className="font-semibold text-gray-900 hover:text-blue-600 dark:text-white dark:hover:text-blue-400 block hover:underline"
+                        >
+                          {client.name}
+                        </Link>
+                        <div className="font-normal text-gray-500 dark:text-gray-400">{client.email}</div>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                        {client.company || "-"}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                        <div className="flex items-center gap-1.5">
+                          <Folder className="w-4 h-4 text-gray-400 shrink-0" />
+                          <span className="font-medium text-gray-900 dark:text-white">
+                            {client._count?.projects ?? 0}
+                          </span>
+                          <span className="text-gray-400 dark:text-gray-500 text-xs">
+                            {(client._count?.projects ?? 0) === 1 ? "project" : "projects"}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                        {new Date(client.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <Link
+                          href={`/admin/clients/${client.id}/edit`}
+                          className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 font-semibold"
+                        >
+                          Edit
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

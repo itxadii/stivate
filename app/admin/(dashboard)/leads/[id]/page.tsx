@@ -1,7 +1,7 @@
 import { getLeadWithFollowUps, archiveLead, convertLeadToClient } from "@/lib/actions/lead"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Flame, Phone, Calendar, Clock, MessageSquare, Trash2, UserCheck } from "lucide-react"
+import { ArrowLeft, Flame, Phone, Calendar, Clock, MessageSquare, Trash2, UserCheck, ClipboardList } from "lucide-react"
 import FollowUpForm from "./FollowUpForm"
 
 export default async function LeadDetailPage({
@@ -143,6 +143,26 @@ export default async function LeadDetailPage({
                   {new Date(lead.initializedAt).toLocaleDateString()}
                 </span>
               </div>
+
+              {lead.quotations && lead.quotations.length > 0 && (
+                <div className="sm:col-span-2 border-t border-gray-100 dark:border-gray-800 pt-4">
+                  <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider block">
+                    Associated Quotations
+                  </span>
+                  <div className="mt-2.5 flex flex-wrap gap-2.5">
+                    {lead.quotations.map((quote: any) => (
+                      <Link
+                        key={quote.id}
+                        href={`/admin/quotations/${quote.id}`}
+                        className="inline-flex items-center gap-2 rounded-lg bg-purple-50 dark:bg-purple-950/20 px-3.5 py-2.5 text-xs font-semibold text-purple-655 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition border border-purple-100 dark:border-purple-900/30"
+                      >
+                        <ClipboardList className="w-4 h-4" />
+                        {quote.quotationNumber} — {quote.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {lead.notes && (

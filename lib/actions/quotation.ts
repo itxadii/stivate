@@ -57,6 +57,7 @@ interface CreateQuotationInput {
   maintenancePlanPrice?: number | null
   maintenancePlanDetails?: string | null
   termsAndConditions?: string | null
+  leadId?: string | null
   items: QuotationItemInput[]
 }
 
@@ -82,6 +83,7 @@ export async function createQuotation(data: CreateQuotationInput) {
       maintenancePlanPrice: data.maintenancePlanPrice !== undefined ? Number(data.maintenancePlanPrice) : 79,
       maintenancePlanDetails: data.maintenancePlanDetails || null,
       termsAndConditions: data.termsAndConditions || null,
+      leadId: data.leadId || null,
       items: {
         create: data.items.map((item) => ({
           description: item.description,
@@ -107,12 +109,25 @@ export async function createQuotation(data: CreateQuotationInput) {
   })
 
   revalidatePath("/admin/quotations")
+  revalidatePath("/admin/clients")
+  if (data.clientId) {
+    revalidatePath(`/admin/clients/${data.clientId}`)
+  }
+  if (data.leadId) {
+    revalidatePath("/admin/leads")
+    revalidatePath(`/admin/leads/${data.leadId}`)
+  }
   return quotation
 }
 
 export async function updateQuotation(id: string, data: CreateQuotationInput) {
   const session = await auth()
   if (!session?.user?.id) throw new Error("Unauthorized")
+
+  const existing = await prisma.quotation.findUnique({
+    where: { id },
+    select: { clientId: true }
+  })
 
   const quotation = await prisma.$transaction(async (tx) => {
     // Delete existing items
@@ -140,6 +155,7 @@ export async function updateQuotation(id: string, data: CreateQuotationInput) {
         maintenancePlanPrice: data.maintenancePlanPrice !== undefined ? Number(data.maintenancePlanPrice) : 79,
         maintenancePlanDetails: data.maintenancePlanDetails || null,
         termsAndConditions: data.termsAndConditions || null,
+        leadId: data.leadId || null,
         items: {
           create: data.items.map((item) => ({
             description: item.description,
@@ -167,6 +183,17 @@ export async function updateQuotation(id: string, data: CreateQuotationInput) {
 
   revalidatePath("/admin/quotations")
   revalidatePath(`/admin/quotations/${id}`)
+  revalidatePath("/admin/clients")
+  if (data.clientId) {
+    revalidatePath(`/admin/clients/${data.clientId}`)
+  }
+  if (existing?.clientId && existing.clientId !== data.clientId) {
+    revalidatePath(`/admin/clients/${existing.clientId}`)
+  }
+  if (data.leadId) {
+    revalidatePath("/admin/leads")
+    revalidatePath(`/admin/leads/${data.leadId}`)
+  }
   return quotation
 }
 
@@ -191,5 +218,9 @@ export async function archiveQuotation(id: string) {
   })
 
   revalidatePath("/admin/quotations")
+  revalidatePath("/admin/clients")
+  if (quotation.clientId) {
+    revalidatePath(`/admin/clients/${quotation.clientId}`)
+  }
   return quotation
 }

@@ -12,6 +12,16 @@ interface Client {
   address: string | null
 }
 
+interface Lead {
+  id: string
+  name: string
+  clientName: string
+  clientId: string | null
+  client?: {
+    address: string | null
+  } | null
+}
+
 interface QuotationItemField {
   description: string
   quantity: number
@@ -22,6 +32,7 @@ interface QuotationItemField {
 interface Quotation {
   id: string
   clientId: string | null
+  leadId?: string | null
   clientName: string
   clientAddress: string | null
   quotationNumber: string
@@ -37,17 +48,19 @@ interface Quotation {
   maintenancePlanPrice: number | null
   maintenancePlanDetails: string | null
   termsAndConditions: string | null
-  items: (QuotationItemField & { isOptional: boolean })[]
+  items: (QuotationItemField & { isOptional: boolean; isClientExpense: boolean })[]
 }
 
 interface EditQuotationFormProps {
   quotation: Quotation
   clients: Client[]
+  leads: Lead[]
 }
 
-export default function EditQuotationForm({ quotation, clients }: EditQuotationFormProps) {
+export default function EditQuotationForm({ quotation, clients, leads }: EditQuotationFormProps) {
   const router = useRouter()
   const [selectedClientId, setSelectedClientId] = useState(quotation.clientId || "")
+  const [selectedLeadId, setSelectedLeadId] = useState(quotation.leadId || "")
   const [clientName, setClientName] = useState(quotation.clientName)
   const [clientAddress, setClientAddress] = useState(quotation.clientAddress || "")
   const [quotationNumber, setQuotationNumber] = useState(quotation.quotationNumber)
@@ -60,12 +73,15 @@ export default function EditQuotationForm({ quotation, clients }: EditQuotationF
   const [taxRate, setTaxRate] = useState(quotation.taxRate)
   const [discount, setDiscount] = useState(quotation.discount)
 
-  // Split items into services vs optional
+  // Split items into services vs client expenses vs optional
   const [services, setServices] = useState<QuotationItemField[]>(() =>
-    quotation.items.filter((item) => !item.isOptional)
+    quotation.items.filter((item) => !item.isOptional && !item.isClientExpense)
   )
   const [optionalItems, setOptionalItems] = useState<QuotationItemField[]>(() =>
-    quotation.items.filter((item) => item.isOptional)
+    quotation.items.filter((item) => item.isOptional && !item.isClientExpense)
+  )
+  const [clientExpenses, setClientExpenses] = useState<QuotationItemField[]>(() =>
+    quotation.items.filter((item) => item.isClientExpense)
   )
 
   const [marketComparison, setMarketComparison] = useState(quotation.marketComparison || "")
@@ -86,6 +102,29 @@ export default function EditQuotationForm({ quotation, clients }: EditQuotationF
     } else {
       setClientName("")
       setClientAddress("")
+    }
+  }
+
+  const handleLeadChange = (leadId: string) => {
+    setSelectedLeadId(leadId)
+    const lead = leads.find((l) => l.id === leadId)
+    if (lead) {
+      setClientName(lead.clientName)
+      setTitle(lead.name)
+      if (lead.clientId) {
+        setSelectedClientId(lead.clientId)
+        const matchingClient = clients.find((c) => c.id === lead.clientId)
+        if (matchingClient) {
+          setClientAddress(matchingClient.address || "")
+        } else if (lead.client?.address) {
+          setClientAddress(lead.client.address)
+        }
+      } else {
+        setSelectedClientId("")
+        setClientAddress("")
+      }
+    } else {
+      setSelectedLeadId("")
     }
   }
 
@@ -116,6 +155,18 @@ export default function EditQuotationForm({ quotation, clients }: EditQuotationF
     setOptionalItems(updated)
   }
 
+  const addClientExpenseRow = () => {
+    setClientExpenses([...clientExpenses, { description: "", quantity: 1, price: 0, isIncluded: true }])
+  }
+  const removeClientExpenseRow = (idx: number) => {
+    setClientExpenses(clientExpenses.filter((_, i) => i !== idx))
+  }
+  const handleClientExpenseChange = (idx: number, field: keyof QuotationItemField, value: any) => {
+    const updated = [...clientExpenses]
+    updated[idx] = { ...updated[idx], [field]: value }
+    setClientExpenses(updated)
+  }
+
   // Totals calculations
   const subtotal = services
     .filter((s) => !s.isIncluded)
@@ -143,8 +194,9 @@ export default function EditQuotationForm({ quotation, clients }: EditQuotationF
       setError(null)
 
       const allItems = [
-        ...services.map((s) => ({ ...s, isOptional: false })),
-        ...optionalItems.map((o) => ({ ...o, isOptional: true })),
+        ...services.map((s) => ({ ...s, isOptional: false, isClientExpense: false })),
+        ...optionalItems.map((o) => ({ ...o, isOptional: true, isClientExpense: false })),
+        ...clientExpenses.map((c) => ({ ...c, isOptional: false, isClientExpense: true })),
       ]
 
       await updateQuotation(quotation.id, {
@@ -164,6 +216,7 @@ export default function EditQuotationForm({ quotation, clients }: EditQuotationF
         maintenancePlanPrice,
         maintenancePlanDetails,
         termsAndConditions,
+        leadId: selectedLeadId || null,
         items: allItems,
       })
 
@@ -226,7 +279,25 @@ export default function EditQuotationForm({ quotation, clients }: EditQuotationF
         )}
 
         {/* Row 1: Client details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+              Import from Lead (Optional)
+            </label>
+            <select
+              value={selectedLeadId}
+              onChange={(e) => handleLeadChange(e.target.value)}
+              className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm dark:bg-gray-800 dark:text-white dark:ring-gray-700"
+            >
+              <option value="">-- No Lead Associated --</option>
+              {leads.map((l) => (
+                <option key={l.id} value={l.id}>
+                  {l.clientName} ({l.name})
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
               Select Saved Client (Optional)
@@ -254,12 +325,12 @@ export default function EditQuotationForm({ quotation, clients }: EditQuotationF
               value={clientName}
               onChange={(e) => setClientName(e.target.value)}
               placeholder="e.g. Finsmart Consultants"
-              className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm dark:bg-gray-800 dark:text-white dark:ring-gray-700"
+              className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-650 sm:text-sm dark:bg-gray-800 dark:text-white dark:ring-gray-700"
               required
             />
           </div>
 
-          <div className="md:col-span-2">
+          <div className="md:col-span-3">
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
               Client Location/Address (prints exactly as typed)
             </label>
@@ -473,6 +544,118 @@ export default function EditQuotationForm({ quotation, clients }: EditQuotationF
                     </td>
                   </tr>
                 ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <hr className="border-gray-200 dark:border-gray-800" />
+
+        {/* Expenses Paid by Client Table */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+              <Sparkles className="w-5 h-5 text-amber-500" />
+              Expenses Paid by Client (e.g. API costs, Infra costs)
+            </h3>
+            <button
+              type="button"
+              onClick={addClientExpenseRow}
+              className="inline-flex items-center gap-1 text-sm font-semibold text-blue-650 hover:text-blue-500 hover:underline"
+            >
+              <Plus className="h-4 w-4" />
+              Add Row
+            </button>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+              <thead>
+                <tr>
+                  <th scope="col" className="py-2 text-left text-xs font-semibold text-gray-555 uppercase w-[50%]">
+                    Description
+                  </th>
+                  <th scope="col" className="px-3 py-2 text-left text-xs font-semibold text-gray-555 uppercase w-[10%]">
+                    Qty
+                  </th>
+                  <th scope="col" className="px-3 py-2 text-left text-xs font-semibold text-gray-555 uppercase w-[15%]">
+                    Price ({currency})
+                  </th>
+                  <th scope="col" className="px-3 py-2 text-left text-xs font-semibold text-gray-555 uppercase w-[15%]">
+                    Is Included / Free
+                  </th>
+                  <th scope="col" className="relative py-2 px-3 w-[10%]">
+                    <span className="sr-only">Delete</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-150 dark:divide-gray-800">
+                {clientExpenses.map((item, idx) => (
+                  <tr key={idx} className="align-middle">
+                    <td className="py-2">
+                      <input
+                        type="text"
+                        placeholder="e.g. OpenAI API subscription"
+                        value={item.description}
+                        onChange={(e) => handleClientExpenseChange(idx, "description", e.target.value)}
+                        className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-955 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-655 sm:text-sm dark:bg-gray-850 dark:text-white dark:ring-gray-700"
+                        required
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        min="1"
+                        value={item.quantity}
+                        onChange={(e) => handleClientExpenseChange(idx, "quantity", Number(e.target.value))}
+                        className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-955 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-655 sm:text-sm dark:bg-gray-850 dark:text-white dark:ring-gray-700"
+                        required
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        disabled={item.isIncluded}
+                        value={item.price}
+                        onChange={(e) => handleClientExpenseChange(idx, "price", Number(e.target.value))}
+                        className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-955 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-655 sm:text-sm dark:bg-gray-850 dark:text-white dark:ring-gray-700 disabled:opacity-40"
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={item.isIncluded}
+                          onChange={(e) => {
+                            const val = e.target.checked
+                            handleClientExpenseChange(idx, "isIncluded", val)
+                            if (val) handleClientExpenseChange(idx, "price", 0)
+                          }}
+                          className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
+                        />
+                        <span className="ml-2 text-xs font-semibold text-gray-600 dark:text-gray-400">Yes, Included</span>
+                      </div>
+                    </td>
+                    <td className="py-2 pl-3 text-right">
+                      <button
+                        type="button"
+                        onClick={() => removeClientExpenseRow(idx)}
+                        className="text-red-500 hover:text-red-700 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                {clientExpenses.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="text-center py-4 text-xs italic text-gray-450">
+                      No client paid expenses listed. Click &quot;Add Row&quot; to add.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

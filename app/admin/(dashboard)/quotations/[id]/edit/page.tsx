@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma"
 import { getClients } from "@/lib/actions/client"
+import { getLeads } from "@/lib/actions/lead"
 import { notFound } from "next/navigation"
 import { auth } from "@/auth"
 import EditQuotationForm from "./EditQuotationForm"
@@ -26,11 +27,13 @@ export default async function EditQuotationPage({ params }: PageProps) {
   }
 
   const clients = await getClients()
+  const leads = await getLeads()
 
   // Serialize properties to plain object values for Client Component form
   const serializedQuotation = {
     id: quotation.id,
     clientId: quotation.clientId,
+    leadId: quotation.leadId,
     clientName: quotation.clientName,
     clientAddress: quotation.clientAddress,
     quotationNumber: quotation.quotationNumber,
@@ -61,12 +64,12 @@ export default async function EditQuotationPage({ params }: PageProps) {
     <div className="max-w-6xl mx-auto space-y-6">
       <div>
         <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Edit Quotation</h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-550 dark:text-gray-400">
           Modify quotation scope details, pricing items, terms or optional maintenance blocks.
         </p>
       </div>
 
-      <EditQuotationForm quotation={serializedQuotation} clients={clients} />
+      <EditQuotationForm quotation={serializedQuotation} clients={clients} leads={leads} />
     </div>
   )
 }

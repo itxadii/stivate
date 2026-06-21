@@ -183,6 +183,7 @@ model Lead {
 
   client        Client?    @relation(fields: [clientId], references: [id], onDelete: SetNull)
   followUps     FollowUp[]
+  quotations    Quotation[]
 }
 
 model FollowUp {
@@ -239,6 +240,8 @@ model Quotation {
   updatedAt               DateTime        @updatedAt
 
   client                  Client?         @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  leadId                  String?
+  lead                    Lead?           @relation(fields: [leadId], references: [id], onDelete: SetNull)
   items                   QuotationItem[]
 }
 

@@ -120,6 +120,10 @@ export async function getClientWithProjects(id: string) {
       },
       followUps: {
         orderBy: { date: "desc" }
+      },
+      quotations: {
+        where: { isArchived: false },
+        orderBy: { createdAt: "desc" }
       }
     }
   })

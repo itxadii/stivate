@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { createQuotation } from "@/lib/actions/quotation"
 import { Plus, Trash2, Calendar, ClipboardList, Info, Sparkles, DollarSign } from "lucide-react"
 
@@ -11,8 +11,19 @@ interface Client {
   address: string | null
 }
 
+interface Lead {
+  id: string
+  name: string
+  clientName: string
+  clientId: string | null
+  client?: {
+    address: string | null
+  } | null
+}
+
 interface NewQuotationFormProps {
   clients: Client[]
+  leads: Lead[]
 }
 
 interface QuotationItemField {
@@ -22,9 +33,14 @@ interface QuotationItemField {
   isIncluded: boolean
 }
 
-export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
+export default function NewQuotationForm({ clients, leads }: NewQuotationFormProps) {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const urlClientId = searchParams?.get("clientId") || ""
+  const urlLeadId = searchParams?.get("leadId") || ""
+
   const [selectedClientId, setSelectedClientId] = useState("")
+  const [selectedLeadId, setSelectedLeadId] = useState("")
   const [clientName, setClientName] = useState("")
   const [clientAddress, setClientAddress] = useState("")
   const [quotationNumber, setQuotationNumber] = useState("")
@@ -37,48 +53,25 @@ export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
   const [validUntil, setValidUntil] = useState("")
   const [taxText, setTaxText] = useState("Not Applicable")
   const [taxRate, setTaxRate] = useState(0)
-  const [discount, setDiscount] = useState(181)
+  const [discount, setDiscount] = useState(0)
 
   // Items and Optional Items
   const [services, setServices] = useState<QuotationItemField[]>([
-    { description: "Project Setup & Core WordPress Configuration", quantity: 1, price: 200, isIncluded: false },
-    { description: "Home Page Development", quantity: 1, price: 100, isIncluded: false },
-    { description: "About Us Page Development", quantity: 1, price: 60, isIncluded: false },
-    { description: "Services Overview Page", quantity: 1, price: 80, isIncluded: false },
-    { description: "Mortgage Service Page", quantity: 1, price: 60, isIncluded: false },
-    { description: "Investment Service Page", quantity: 1, price: 60, isIncluded: false },
-    { description: "Insurance Service Page", quantity: 1, price: 60, isIncluded: false },
-    { description: "Contact Us Page", quantity: 1, price: 50, isIncluded: false },
-    { description: "Consultation Form Integration", quantity: 1, price: 80, isIncluded: false },
-    { description: "WhatsApp Business Integration", quantity: 1, price: 0, isIncluded: true },
-    { description: "FAQ Chatbot Integration", quantity: 1, price: 120, isIncluded: false },
-    { description: "Testimonials & Trust Sections", quantity: 1, price: 60, isIncluded: false },
-    { description: "Bank Partner Logo Showcase", quantity: 1, price: 0, isIncluded: true },
-    { description: "Responsive Mobile Optimization", quantity: 1, price: 0, isIncluded: true },
-    { description: "SEO Optimized Website Structure", quantity: 1, price: 120, isIncluded: false },
-    { description: "Technical SEO Setup & Indexing", quantity: 1, price: 80, isIncluded: false },
-    { description: "Google Analytics Integration", quantity: 1, price: 50, isIncluded: false },
-    { description: "Google Search Console Setup", quantity: 1, price: 0, isIncluded: true },
-    { description: "Google Indexing Setup", quantity: 1, price: 0, isIncluded: true },
-    { description: "SSL Security Integration", quantity: 1, price: 0, isIncluded: true },
+    { description: "", quantity: 1, price: 0, isIncluded: false }
   ])
 
-  const [optionalItems, setOptionalItems] = useState<QuotationItemField[]>([
-    { description: "Business Hosting Setup (1 Year)", quantity: 1, price: 100, isIncluded: false },
-    { description: "Domain Registration (1 Year)", quantity: 1, price: 118, isIncluded: false },
+  const [optionalItems, setOptionalItems] = useState<QuotationItemField[]>([])
+
+  const [clientExpenses, setClientExpenses] = useState<QuotationItemField[]>([
+    { description: "Server Hosting & Subscription Costs", quantity: 1, price: 0, isIncluded: true },
+    { description: "Third-party API Costs (e.g. OpenAI / Google)", quantity: 1, price: 0, isIncluded: true },
   ])
 
   // Custom text paragraphs/bullets
-  const [marketComparison, setMarketComparison] = useState(
-    "Similar financial consultancy websites in Dubai generally range between AED 3,500 – AED 8,000, depending on design quality, functionality, and agency pricing.\n\nStivate delivers a competitive solution with professional quality and direct development support without agency overhead costs."
-  )
-  const [maintenancePlanPrice, setMaintenancePlanPrice] = useState(79)
-  const [maintenancePlanDetails, setMaintenancePlanDetails] = useState(
-    "Security Monitoring\nMonthly Backups\nPlugin Updates\nMinor Content Updates\nTechnical Support\nWebsite Health Checks"
-  )
-  const [termsAndConditions, setTermsAndConditions] = useState(
-    "This quotation covers one business website only.\nUp to seven pages are included within the scope.\nClient shall provide logo, content, images, and branding materials.\nFAQ chatbot includes predefined questions and answers.\nDomain and hosting are not included in the project total and may be purchased separately if required.\nIf the client already owns a domain and hosting account, access credentials must be provided before development begins.\nRenewal charges after one year are excluded.\nOne major revision cycle and two minor revision cycles are included.\nSEO includes technical setup only. Search rankings cannot be guaranteed.\nPost-launch support is included for 15 days.\n50% advance payment is required before project commencement.\nRemaining payment is due before final handover."
-  )
+  const [marketComparison, setMarketComparison] = useState("")
+  const [maintenancePlanPrice, setMaintenancePlanPrice] = useState(0)
+  const [maintenancePlanDetails, setMaintenancePlanDetails] = useState("")
+  const [termsAndConditions, setTermsAndConditions] = useState("")
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -94,7 +87,32 @@ export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
     const valid = new Date(today)
     valid.setDate(today.getDate() + 18) // ~18 days validity
     setValidUntil(valid.toISOString().split("T")[0])
-  }, [])
+
+    if (urlLeadId) {
+      const lead = leads.find((l) => l.id === urlLeadId)
+      if (lead) {
+        setSelectedLeadId(urlLeadId)
+        setClientName(lead.clientName)
+        setTitle(lead.name)
+        if (lead.clientId) {
+          setSelectedClientId(lead.clientId)
+          const matchingClient = clients.find((c) => c.id === lead.clientId)
+          if (matchingClient) {
+            setClientAddress(matchingClient.address || "")
+          } else if (lead.client?.address) {
+            setClientAddress(lead.client.address)
+          }
+        }
+      }
+    } else if (urlClientId) {
+      const client = clients.find((c) => c.id === urlClientId)
+      if (client) {
+        setSelectedClientId(urlClientId)
+        setClientName(client.name)
+        setClientAddress(client.address || "")
+      }
+    }
+  }, [urlClientId, urlLeadId, clients, leads])
 
   const handleClientChange = (clientId: string) => {
     setSelectedClientId(clientId)
@@ -105,6 +123,29 @@ export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
     } else {
       setClientName("")
       setClientAddress("")
+    }
+  }
+
+  const handleLeadChange = (leadId: string) => {
+    setSelectedLeadId(leadId)
+    const lead = leads.find((l) => l.id === leadId)
+    if (lead) {
+      setClientName(lead.clientName)
+      setTitle(lead.name)
+      if (lead.clientId) {
+        setSelectedClientId(lead.clientId)
+        const matchingClient = clients.find((c) => c.id === lead.clientId)
+        if (matchingClient) {
+          setClientAddress(matchingClient.address || "")
+        } else if (lead.client?.address) {
+          setClientAddress(lead.client.address)
+        }
+      } else {
+        setSelectedClientId("")
+        setClientAddress("")
+      }
+    } else {
+      setSelectedLeadId("")
     }
   }
 
@@ -135,6 +176,18 @@ export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
     setOptionalItems(updated)
   }
 
+  const addClientExpenseRow = () => {
+    setClientExpenses([...clientExpenses, { description: "", quantity: 1, price: 0, isIncluded: true }])
+  }
+  const removeClientExpenseRow = (idx: number) => {
+    setClientExpenses(clientExpenses.filter((_, i) => i !== idx))
+  }
+  const handleClientExpenseChange = (idx: number, field: keyof QuotationItemField, value: any) => {
+    const updated = [...clientExpenses]
+    updated[idx] = { ...updated[idx], [field]: value }
+    setClientExpenses(updated)
+  }
+
   // Totals calculations
   const subtotal = services
     .filter((s) => !s.isIncluded)
@@ -163,8 +216,9 @@ export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
 
       // Transform items to save
       const allItems = [
-        ...services.map((s) => ({ ...s, isOptional: false })),
-        ...optionalItems.map((o) => ({ ...o, isOptional: true })),
+        ...services.map((s) => ({ ...s, isOptional: false, isClientExpense: false })),
+        ...optionalItems.map((o) => ({ ...o, isOptional: true, isClientExpense: false })),
+        ...clientExpenses.map((c) => ({ ...c, isOptional: false, isClientExpense: true })),
       ]
 
       await createQuotation({
@@ -184,6 +238,7 @@ export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
         maintenancePlanPrice,
         maintenancePlanDetails,
         termsAndConditions,
+        leadId: selectedLeadId || null,
         items: allItems,
       })
 
@@ -205,7 +260,25 @@ export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
       )}
 
       {/* Row 1: Client details */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+            Import from Lead (Optional)
+          </label>
+          <select
+            value={selectedLeadId}
+            onChange={(e) => handleLeadChange(e.target.value)}
+            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm dark:bg-gray-800 dark:text-white dark:ring-gray-700"
+          >
+            <option value="">-- No Lead Associated --</option>
+            {leads.map((l) => (
+              <option key={l.id} value={l.id}>
+                {l.clientName} ({l.name})
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div>
           <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
             Select Saved Client (Optional)
@@ -238,7 +311,7 @@ export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
           />
         </div>
 
-        <div className="md:col-span-2">
+        <div className="md:col-span-3">
           <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
             Client Location/Address (prints exactly as typed)
           </label>
@@ -452,6 +525,118 @@ export default function NewQuotationForm({ clients }: NewQuotationFormProps) {
                   </td>
                 </tr>
               ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr className="border-gray-200 dark:border-gray-800" />
+
+      {/* Expenses Paid by Client Table */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+            <Sparkles className="w-5 h-5 text-amber-500" />
+            Expenses Paid by Client (e.g. API costs, Infra costs)
+          </h3>
+          <button
+            type="button"
+            onClick={addClientExpenseRow}
+            className="inline-flex items-center gap-1 text-sm font-semibold text-blue-650 hover:text-blue-500 hover:underline"
+          >
+            <Plus className="h-4 w-4" />
+            Add Row
+          </button>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+            <thead>
+              <tr>
+                <th scope="col" className="py-2 text-left text-xs font-semibold text-gray-550 uppercase w-[50%]">
+                  Description
+                </th>
+                <th scope="col" className="px-3 py-2 text-left text-xs font-semibold text-gray-550 uppercase w-[10%]">
+                  Qty
+                </th>
+                <th scope="col" className="px-3 py-2 text-left text-xs font-semibold text-gray-550 uppercase w-[15%]">
+                  Price ({currency})
+                </th>
+                <th scope="col" className="px-3 py-2 text-left text-xs font-semibold text-gray-550 uppercase w-[15%]">
+                  Is Included / Free
+                </th>
+                <th scope="col" className="relative py-2 px-3 w-[10%]">
+                  <span className="sr-only">Delete</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-150 dark:divide-gray-800">
+              {clientExpenses.map((item, idx) => (
+                <tr key={idx} className="align-middle">
+                  <td className="py-2">
+                    <input
+                      type="text"
+                      placeholder="e.g. OpenAI API subscription"
+                      value={item.description}
+                      onChange={(e) => handleClientExpenseChange(idx, "description", e.target.value)}
+                      className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-955 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-655 sm:text-sm dark:bg-gray-850 dark:text-white dark:ring-gray-700"
+                      required
+                    />
+                  </td>
+                  <td className="px-3 py-2">
+                    <input
+                      type="number"
+                      min="1"
+                      value={item.quantity}
+                      onChange={(e) => handleClientExpenseChange(idx, "quantity", Number(e.target.value))}
+                      className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-955 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-655 sm:text-sm dark:bg-gray-850 dark:text-white dark:ring-gray-700"
+                      required
+                    />
+                  </td>
+                  <td className="px-3 py-2">
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      disabled={item.isIncluded}
+                      value={item.price}
+                      onChange={(e) => handleClientExpenseChange(idx, "price", Number(e.target.value))}
+                      className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-955 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-655 sm:text-sm dark:bg-gray-850 dark:text-white dark:ring-gray-700 disabled:opacity-40"
+                    />
+                  </td>
+                  <td className="px-3 py-2">
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={item.isIncluded}
+                        onChange={(e) => {
+                          const val = e.target.checked
+                          handleClientExpenseChange(idx, "isIncluded", val)
+                          if (val) handleClientExpenseChange(idx, "price", 0)
+                        }}
+                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
+                      />
+                      <span className="ml-2 text-xs font-semibold text-gray-600 dark:text-gray-400">Yes, Included</span>
+                    </div>
+                  </td>
+                  <td className="py-2 pl-3 text-right">
+                    <button
+                      type="button"
+                      onClick={() => removeClientExpenseRow(idx)}
+                      className="text-red-500 hover:text-red-700 p-1"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {clientExpenses.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="text-center py-4 text-xs italic text-gray-400">
+                    No client paid expenses listed. Click &quot;Add Row&quot; to add.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

@@ -135,80 +135,82 @@ export default async function ExpensesPage() {
 
           {/* Expenses Table */}
           <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-808 dark:bg-gray-900">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-              <thead className="bg-gray-50 dark:bg-gray-800/50">
-                <tr>
-                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
-                    Title
-                  </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                    Category
-                  </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                    Amount
-                  </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                    Date Incurred
-                  </th>
-                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                    <span className="sr-only">Actions</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
-                {expenses.length === 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+                <thead className="bg-gray-50 dark:bg-gray-800/50">
                   <tr>
-                    <td colSpan={5} className="whitespace-nowrap py-12 text-center text-sm text-gray-500 dark:text-gray-400">
-                      <div className="flex flex-col items-center justify-center space-y-2">
-                        <Banknote className="h-8 w-8 text-gray-400" />
-                        <span className="font-medium text-gray-650 dark:text-gray-300">No expenses recorded.</span>
-                        <p className="text-xs text-gray-500 dark:text-gray-450 max-w-xs">
-                          Create an expense record to start tracking outgoing cashflow and operational overheads.
-                        </p>
-                      </div>
-                    </td>
+                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
+                      Title
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                      Category
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                      Amount
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                      Date Incurred
+                    </th>
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                      <span className="sr-only">Actions</span>
+                    </th>
                   </tr>
-                ) : (
-                  expenses.map((exp) => (
-                    <tr key={exp.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition">
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
-                        <div className="flex items-center gap-1.5">
-                          <FileText className="h-4 w-4 text-gray-400" />
-                          <div>
-                            <div>{exp.title}</div>
-                            {exp.notes && (
-                              <div className="text-xs text-gray-400 font-normal max-w-xs truncate">{exp.notes}</div>
-                            )}
-                          </div>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
+                  {expenses.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="whitespace-nowrap py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+                        <div className="flex flex-col items-center justify-center space-y-2">
+                          <Banknote className="h-8 w-8 text-gray-400" />
+                          <span className="font-medium text-gray-650 dark:text-gray-300">No expenses recorded.</span>
+                          <p className="text-xs text-gray-500 dark:text-gray-455 max-w-xs">
+                            Create an expense record to start tracking outgoing cashflow and operational overheads.
+                          </p>
                         </div>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm">
-                        <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${getCategoryColor(exp.category)}`}>
-                          {exp.category}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-950 dark:text-white font-semibold">
-                        {formatCurrency(exp.amount, exp.currency)}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                        <div className="flex items-center gap-1.5 text-xs">
-                          <Calendar className="w-3.5 h-3.5 text-gray-400" />
-                          {exp.date ? new Date(exp.date).toLocaleDateString() : "-"}
-                        </div>
-                      </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <Link
-                          href={`/admin/expenses/${exp.id}/edit`}
-                          className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 font-semibold"
-                        >
-                          Edit
-                        </Link>
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ) : (
+                    expenses.map((exp) => (
+                      <tr key={exp.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition">
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
+                          <div className="flex items-center gap-1.5">
+                            <FileText className="h-4 w-4 text-gray-400" />
+                            <div>
+                              <div>{exp.title}</div>
+                              {exp.notes && (
+                                <div className="text-xs text-gray-400 font-normal max-w-xs truncate">{exp.notes}</div>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm">
+                          <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${getCategoryColor(exp.category)}`}>
+                            {exp.category}
+                          </span>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-955 dark:text-white font-semibold">
+                          {formatCurrency(exp.amount, exp.currency)}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                          <div className="flex items-center gap-1.5 text-xs">
+                            <Calendar className="w-3.5 h-3.5 text-gray-400" />
+                            {exp.date ? new Date(exp.date).toLocaleDateString() : "-"}
+                          </div>
+                        </td>
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                          <Link
+                            href={`/admin/expenses/${exp.id}/edit`}
+                            className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 font-semibold"
+                          >
+                            Edit
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}

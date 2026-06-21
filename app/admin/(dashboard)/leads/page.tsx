@@ -1,6 +1,6 @@
 import { getLeads, archiveLead, convertLeadToClient } from "@/lib/actions/lead"
 import Link from "next/link"
-import { Plus, Flame, Phone, Calendar, Trash2, UserCheck } from "lucide-react"
+import { Plus, Flame, Phone, Calendar, Trash2, UserCheck, ClipboardList } from "lucide-react"
 
 export default async function LeadsPage() {
   let leads: any[] = []
@@ -30,7 +30,7 @@ export default async function LeadsPage() {
       <div className="sm:flex sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Leads & Pitches</h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-550 dark:text-gray-400">
             Track prospective leads, client pitches, and deal temperatures.
           </p>
         </div>
@@ -81,7 +81,7 @@ export default async function LeadsPage() {
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                       <div className="flex items-center">
                         <div className="h-10 w-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-rose-50 dark:bg-rose-950/20">
-                          <Flame className="h-5 w-5 text-rose-600 dark:text-rose-400" />
+                           <Flame className="h-5 w-5 text-rose-600 dark:text-rose-400" />
                         </div>
                         <div className="ml-4">
                           <Link
@@ -92,6 +92,15 @@ export default async function LeadsPage() {
                           </Link>
                           {lead.notes && (
                             <div className="text-gray-500 truncate max-w-[200px] text-xs">{lead.notes}</div>
+                          )}
+                          {lead.quotations && lead.quotations.length > 0 && (
+                            <Link
+                              href={`/admin/quotations/${lead.quotations[0].id}`}
+                              className="mt-1 text-xs text-purple-655 hover:underline dark:text-purple-400 font-semibold flex items-center gap-1 w-fit"
+                            >
+                              <ClipboardList className="w-3 h-3 shrink-0 text-purple-500" />
+                              Quote: {lead.quotations[0].quotationNumber}
+                            </Link>
                           )}
                         </div>
                       </div>
