@@ -6,4 +6,5 @@ const nextConfig: NextConfig = {
   },
 };
 
+// Trigger reload to clear cached global.prisma client instance
 export default nextConfig;

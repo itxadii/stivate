@@ -159,9 +159,11 @@ export default function NewQuotationForm({ clients, leads }: NewQuotationFormPro
     }
   }
   const handleServiceChange = (idx: number, field: keyof QuotationItemField, value: any) => {
-    const updated = [...services]
-    updated[idx] = { ...updated[idx], [field]: value }
-    setServices(updated)
+    setServices((prev) => {
+      const updated = [...prev]
+      updated[idx] = { ...updated[idx], [field]: value }
+      return updated
+    })
   }
 
   const addOptionalRow = () => {
@@ -171,9 +173,11 @@ export default function NewQuotationForm({ clients, leads }: NewQuotationFormPro
     setOptionalItems(optionalItems.filter((_, i) => i !== idx))
   }
   const handleOptionalChange = (idx: number, field: keyof QuotationItemField, value: any) => {
-    const updated = [...optionalItems]
-    updated[idx] = { ...updated[idx], [field]: value }
-    setOptionalItems(updated)
+    setOptionalItems((prev) => {
+      const updated = [...prev]
+      updated[idx] = { ...updated[idx], [field]: value }
+      return updated
+    })
   }
 
   const addClientExpenseRow = () => {
@@ -183,9 +187,11 @@ export default function NewQuotationForm({ clients, leads }: NewQuotationFormPro
     setClientExpenses(clientExpenses.filter((_, i) => i !== idx))
   }
   const handleClientExpenseChange = (idx: number, field: keyof QuotationItemField, value: any) => {
-    const updated = [...clientExpenses]
-    updated[idx] = { ...updated[idx], [field]: value }
-    setClientExpenses(updated)
+    setClientExpenses((prev) => {
+      const updated = [...prev]
+      updated[idx] = { ...updated[idx], [field]: value }
+      return updated
+    })
   }
 
   // Totals calculations

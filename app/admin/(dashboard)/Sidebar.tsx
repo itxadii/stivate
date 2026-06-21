@@ -17,7 +17,8 @@ import {
   X, 
   ChevronLeft, 
   ChevronRight,
-  PanelLeft 
+  PanelLeft,
+  CheckCircle2 
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -67,6 +68,7 @@ export default function Sidebar({ session, logoutAction }: SidebarProps) {
     { name: "Quotations", href: "/admin/quotations", icon: ClipboardList },
     { name: "Expenses", href: "/admin/expenses", icon: Banknote },
     { name: "Documents", href: "/admin/documents", icon: FileText },
+    { name: "Todos", href: "/admin/todos", icon: CheckCircle2 },
   ]
 
   const isActive = (href: string) => {
@@ -167,6 +169,10 @@ export default function Sidebar({ session, logoutAction }: SidebarProps) {
               alt="Profile"
               className="h-9 w-9 rounded-full ring-2 ring-gray-100 dark:ring-gray-800"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = `https://avatar.vercel.sh/${session?.user?.email || "user"}`;
+              }}
             />
             <div className="flex flex-col truncate">
               <span className="text-sm font-semibold text-gray-950 dark:text-white truncate">
@@ -290,6 +296,10 @@ export default function Sidebar({ session, logoutAction }: SidebarProps) {
               alt="Profile"
               className="h-9 w-9 rounded-full ring-2 ring-gray-100 dark:ring-gray-800 shrink-0"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = `https://avatar.vercel.sh/${session?.user?.email || "user"}`;
+              }}
             />
             {!isCollapsed && (
               <div className="flex flex-col truncate">

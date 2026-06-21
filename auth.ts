@@ -33,6 +33,19 @@ const nextAuthResult = NextAuth({
               role: "ADMIN",
             },
           })
+        } else if (
+          !dbUser.image || 
+          !dbUser.name || 
+          dbUser.name !== (profile?.name || user?.name) || 
+          dbUser.image !== (profile?.picture || user?.image)
+        ) {
+          dbUser = await prisma.user.update({
+            where: { email },
+            data: {
+              name: profile?.name || user?.name || dbUser.name,
+              image: profile?.picture || user?.image || dbUser.image,
+            },
+          })
         }
 
         if (dbUser.isArchived) {
@@ -62,15 +75,33 @@ export const auth = async (...args: any[]) => {
   }
   if (process.env.NODE_ENV === "development") {
     // Return a mock session in development only if no active session is found (to enable automated visual verification)
-    return {
-      user: {
-        id: "mock-admin-id",
-        name: "Aditya Waghmare",
-        email: "adityawaghmarex@gmail.com",
-        role: "ADMIN",
-        image: "https://lh3.googleusercontent.com/a/ACg8ocL3g9p1s"
-      },
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+    try {
+      let dbUser = await prisma.user.findUnique({
+        where: { email: "adityawaghmarex@gmail.com" }
+      })
+
+      if (!dbUser) {
+        dbUser = await prisma.user.create({
+          data: {
+            email: "adityawaghmarex@gmail.com",
+            name: "Aditya Waghmare",
+            role: "ADMIN"
+          }
+        })
+      }
+
+      return {
+        user: {
+          id: dbUser.id,
+          name: dbUser.name || "Aditya Waghmare",
+          email: dbUser.email,
+          role: dbUser.role,
+          image: dbUser.image || "https://lh3.googleusercontent.com/a/default-user"
+        },
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+      }
+    } catch (e) {
+      console.error("Mock auth error:", e)
     }
   }
   return null
