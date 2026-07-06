@@ -1,9 +1,10 @@
 import Hero from "@/components/home/Hero";
 import Problem from "@/components/home/OurStudio";
 import ClientsBar from "@/components/home/People";
-import Services from "@/components/home/Services";
+import Industries from "@/components/home/Industries";
+import SolutionsPreviewGrid from "@/components/home/Services";
 import Results from "@/components/home/OurWork";
-import HowItWorks from "@/components/home/HowItWorks";
+import HowWeWorkTimeline from "@/components/home/HowItWorks";
 import WhyStivate from "@/components/home/OurApproach";
 import Testimonials from "@/components/home/Testimonials";
 import LeadCapture from "@/components/home/GetStarted";
@@ -16,9 +17,10 @@ export default function Home() {
       <Hero />
       <ClientsBar />
       <Problem />
-      <Services />
+      <Industries />
+      <SolutionsPreviewGrid />
       <Results />
-      <HowItWorks />
+      <HowWeWorkTimeline />
       <WhyStivate />
       <Testimonials />
       <LeadCapture />

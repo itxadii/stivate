@@ -1,12 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200;300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #ffffff;
-  --foreground: #18181b;
-  --primary: #18181b;
-  --primary-foreground: #ffffff;
+  --foreground: #111827;
+  --primary: #8BCF2F;
+  --primary-foreground: #111827;
+  --primary-hover: #76B827;
+  --secondary-bg: #F8FAFC;
+  --border-color: #E5E7EB;
+  --dark-bg: #1E293B;
+  --muted-text: #6B7280;
   --glass: rgba(255, 255, 255, 0.6);
   --glass-border: rgba(0, 0, 0, 0.08);
 }
@@ -24,10 +30,15 @@ canvas+div {
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary-bg: var(--secondary-bg);
+  --color-border-color: var(--border-color);
+  --color-dark-bg: var(--dark-bg);
+  --color-muted-text: var(--muted-text);
   --color-glass: var(--glass);
   --color-glass-border: var(--glass-border);
 
-  --font-sans: var(--font-inter);
+  --font-sans: "Stack Sans Notch", sans-serif;
 }
 
 body {
@@ -40,26 +51,17 @@ body {
 }
 
 ::selection {
-  background-color: #e9d5ff;
-  color: #18181b;
+  background-color: #8BCF2F;
+  color: #111827;
 }
 
-/* Custom cinematic utilities */
+/* Custom industrial B2B utilities */
 @layer utilities {
-  .text-glow {
-    text-shadow: 0 0 40px rgba(195, 226, 54, 0.4);
-  }
-
-  .glassmorphism {
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-  }
-
-  .cinematic-shadow {
-    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.8),
-      0 0 40px -10px rgba(195, 226, 54, 0.1);
+  .bg-grid {
+    background-size: 30px 30px;
+    background-image: 
+      linear-gradient(to right, rgba(139, 207, 47, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(139, 207, 47, 0.04) 1px, transparent 1px);
   }
 
   .text-tight {
@@ -71,11 +73,7 @@ body {
     font-size: clamp(4rem, 15vw, 12rem);
   }
 
-  .bg-isometric {
-    background-image: url('/patterns/isometric.svg');
-    background-repeat: repeat;
-    background-size: 86.603px 150px;
-  }
+
 }
 
 /* Lenis recommended CSS */
@@ -112,4 +110,97 @@ html.lenis body {
 
 .animate-marquee {
   animation: marquee 20s linear infinite;
+}
+
+/* Rainbow border keyframes */
+@keyframes rainbow-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-rainbow {
+  background-size: 300% 300%;
+  animation: rainbow-border 8s linear infinite;
+}
+
+@keyframes trail-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -2000;
+  }
+}
+
+@keyframes pulse-flow {
+  0% {
+    stroke-dashoffset: 2000;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+  }
+  50% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.animate-trail-blue {
+  stroke-dasharray: 400 1600;
+  animation: trail-flow 10s linear infinite;
+  will-change: stroke-dashoffset;
+}
+
+.animate-trail-green {
+  stroke-dasharray: 200 1800;
+  animation: trail-flow 7s linear infinite reverse;
+  will-change: stroke-dashoffset;
+}
+
+.animate-trail-red {
+  stroke-dasharray: 300 1700;
+  animation: trail-flow 12s linear infinite;
+  will-change: stroke-dashoffset;
+}
+
+.animate-trail-yellow {
+  stroke-dasharray: 150 1850;
+  animation: trail-flow 6s linear infinite;
+  will-change: stroke-dashoffset;
+}
+
+.animate-trail-pulse {
+  stroke-dasharray: 80 1920;
+  animation: pulse-flow 8s ease-in-out infinite;
+  will-change: stroke-dashoffset;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.08);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s ease-in-out infinite;
 }

@@ -1,86 +1,80 @@
-import { Phone, Hammer, Rocket, type LucideIcon } from "lucide-react";
-import ModernButton from "../ui/ModernButton";
-
-interface Step {
-  num: string;
-  Icon: LucideIcon;
-  title: string;
-  desc: string;
-}
-
-const steps: Step[] = [
+const steps = [
   {
     num: "01",
-    Icon: Phone,
-    title: "Free Strategy Call",
-    desc: "Tell us about your business. We'll map out exactly what's holding you back and what to build first.",
+    title: "Process Audit",
+    desc: "We walk your warehouse floor or audit operational sheets to map existing dispatch and receiving patterns.",
   },
   {
     num: "02",
-    Icon: Hammer,
-    title: "We Build It",
-    desc: "Our team designs and delivers your solution fast. No fluff, no delays, no jargon — just results.",
+    title: "Requirement Analysis",
+    desc: "We identify exact API connections, custom ERP schema extensions, and user security roles needed.",
   },
   {
     num: "03",
-    Icon: Rocket,
-    title: "You Grow",
-    desc: "Your new system goes live. More leads come in. Less time wasted. You focus on running your business.",
+    title: "Solution Design",
+    desc: "We sketch structural database models, API flows, and clean responsive dashboard views.",
+  },
+  {
+    num: "04",
+    title: "Development",
+    desc: "We construct your specialized cloud web panels, QR scanning APIs, and server-side database endpoints.",
+  },
+  {
+    num: "05",
+    title: "Testing & Validation",
+    desc: "We run deep integration tests against simulated network lags and load spikes to prevent runtime errors.",
+  },
+  {
+    num: "06",
+    title: "Staged Deployment",
+    desc: "We launch the system in a secure sandbox, verify ERP data mirrors, and then flip to live production.",
+  },
+  {
+    num: "07",
+    title: "Operator Training",
+    desc: "We provide hands-on guides for warehouse workers, QR scanning runs, and administrative walkthroughs.",
+  },
+  {
+    num: "08",
+    title: "Continuous Support",
+    desc: "We monitor systems, check database backups, and maintain API health keys to guarantee 99.9% uptime.",
   },
 ];
 
-export default function HowItWorks() {
+export default function HowWeWorkTimeline() {
   return (
-    <section
-      id="how-it-works"
-      className="py-24 px-6 md:px-12 bg-transparent text-zinc-900 border-t border-zinc-200 relative overflow-hidden"
-    >
-      <div className="absolute right-0 top-0 w-[450px] h-[450px] bg-background/50 rounded-full filter blur-[100px] pointer-events-none" />
-
+    <section id="how-we-work" className="py-24 px-6 md:px-12 bg-secondary-bg border-y border-slate-200 relative overflow-hidden">
       <div className="max-w-5xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-slate-400 bg-white/60 backdrop-blur-sm text-sm font-medium text-zinc-600">
-            Simple process
+        <div className="text-center mb-20 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-bold text-zinc-600 mb-4">
+            Our Method
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">
-            From idea to live system
-            <br />
-            <span className="text-zinc-400">in 3 steps</span>
+          <h2 className="text-3xl md:text-5xl font-black text-zinc-900 tracking-tight leading-tight">
+            How We Work
           </h2>
+          <p className="text-zinc-500 text-base md:text-lg mt-3">
+            A structured, 8-phase implementation pipeline engineered to ensure zero database downtime and fast on-floor adoption.
+          </p>
         </div>
 
-        <div className="space-y-5 mb-14">
-          {steps.map(({ num, Icon, title, desc }, i) => (
-            <div
-              key={i}
-              className="flex flex-col md:flex-row items-start md:items-center gap-6 p-8 rounded-3xl bg-white/60 backdrop-blur-md border border-white/80 shadow-sm hover:shadow-lg hover:bg-white/80 transition-all duration-300 group"
-            >
-              <div className="flex-shrink-0 flex items-center gap-4">
-                <div className="text-5xl md:text-6xl font-extrabold text-zinc-100 group-hover:text-zinc-200 transition-colors leading-none select-none">
-                  {num}
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center">
-                  <Icon size={18} />
-                </div>
+        {/* Timeline container */}
+        <div className="relative border-l border-slate-300 md:ml-32 pl-8 md:pl-12 space-y-12 py-2">
+          {steps.map(({ num, title, desc }, i) => (
+            <div key={i} className="relative group">
+              {/* Timeline dot */}
+              <div className="absolute -left-[45px] md:-left-[61px] top-1.5 w-8 h-8 rounded-full bg-white border-2 border-slate-300 group-hover:border-primary group-hover:bg-primary transition-colors duration-300 flex items-center justify-center text-xs font-bold text-zinc-600 group-hover:text-primary-foreground shadow-sm">
+                {num}
               </div>
-              <div>
-                <h3 className="text-xl font-bold mb-2 text-zinc-900">{title}</h3>
-                <p className="text-zinc-600 text-base leading-relaxed">{desc}</p>
+
+              {/* Content box */}
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all duration-300">
+                <h3 className="text-lg font-bold text-zinc-950 mb-2">{title}</h3>
+                <p className="text-zinc-500 text-sm leading-relaxed">{desc}</p>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="text-center">
-          <ModernButton
-            href="#contact"
-            label="Book Your Free Call Today"
-            className="px-10 py-5 text-base"
-          />
         </div>
       </div>
     </section>
   );
 }
-
-

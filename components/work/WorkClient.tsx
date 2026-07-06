@@ -34,14 +34,14 @@ export type { CaseStudy };
 
 export default function WorkClient() {
   return (
-    <div className="w-full max-w-7xl mx-auto pt-32 pb-24 px-6 md:px-12">
+    <div className="w-full max-w-7xl mx-auto pt-32 pb-24 px-6 md:px-12 bg-white">
       <div className="space-y-16">
         {/* Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <span className="px-4 py-1.5 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold uppercase tracking-wider inline-flex items-center gap-1.5">
+          <span className="px-4 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-zinc-600 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5">
             <Briefcase size={12} /> Case Studies
           </span>
-          <h1 className="text-4xl md:text-6xl font-black text-zinc-900 tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-black text-zinc-950 tracking-tight">
             Our Work
           </h1>
           <p className="text-lg md:text-xl text-zinc-500 font-medium">
@@ -54,27 +54,27 @@ export default function WorkClient() {
           {caseStudies.map((study, idx) => (
             <div 
               key={study.id}
-              className="group rounded-3xl bg-white border border-slate-400 p-6 flex flex-col justify-between hover:shadow-2xl hover:border-zinc-800 transition-all duration-300"
+              className="group rounded-3xl bg-slate-50/30 border border-slate-200 p-6 flex flex-col justify-between hover:shadow-lg hover:border-slate-300 transition-all duration-300"
             >
               <div className="space-y-4">
                 {/* Project Image */}
-                <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-sm border border-zinc-100">
+                <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
                   <Image
                     src={study.image}
                     alt={study.title}
                     fill
-                    className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                    className="object-cover group-hover:scale-[1.01] transition-transform duration-500"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
 
                 <div className="space-y-2 pt-2">
-                  <h3 className="text-2xl font-black text-zinc-900 group-hover:text-purple-700 transition-colors leading-tight">
+                  <h3 className="text-xl font-bold text-zinc-950 group-hover:text-primary-hover transition-colors leading-tight">
                     {study.title}
                   </h3>
                 </div>
 
-                <p className="text-zinc-600 text-sm md:text-base leading-relaxed font-medium">
+                <p className="text-zinc-500 text-sm md:text-base leading-relaxed font-medium">
                   {study.brief}
                 </p>
               </div>
@@ -82,7 +82,7 @@ export default function WorkClient() {
               <div className="mt-8 pt-4 flex justify-end">
                 <Link
                   href={`/work/${study.id === "cre-crm" ? "primetimebusinesscentre" : study.id}`}
-                  className="px-5 py-2.5 text-xs font-bold bg-[#7d2ae8] text-white rounded-xl hover:bg-[#631ec4] transition-all flex items-center gap-1.5 cursor-pointer shadow-md hover:shadow-lg"
+                  className="px-5 py-2.5 text-xs font-bold bg-primary text-primary-foreground rounded-xl hover:bg-primary-hover transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
                 >
                   Read Case Study <ArrowRight size={12} />
                 </Link>

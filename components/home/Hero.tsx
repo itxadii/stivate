@@ -1,104 +1,152 @@
-'use client'
-import Image from 'next/image'
-import { Star } from 'lucide-react'
-import ModernButton from '../ui/ModernButton'
+"use client";
 
-const stats = [
-  { value: '50+', label: 'Businesses served' },
-  { value: '2–4 wks', label: 'Average delivery' },
-  { value: '3×', label: 'Avg. lead growth' },
-]
+import Link from "next/link";
+import { ClipboardCheck, ArrowRight, Activity, Truck, Package, ShieldCheck, Database } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-[calc(100vh-8.5rem)] flex items-center overflow-hidden rounded-3xl mx-auto max-w-[98%] mt-30 mb-4">
+    <section className="relative max-w-[98%] mx-auto mt-30 mb-4 rounded-3xl min-h-[calc(100vh-8.5rem)] pt-16 pb-16 flex items-center bg-white overflow-hidden border border-slate-200/60 shadow-sm">
+      
+      {/* AI Corner Glowing Auras (vibrant, soft color bleeds at corners) */}
+      <div className="absolute top-[-60px] left-[-60px] w-[350px] h-[350px] rounded-full bg-blue-500/20 blur-[80px] pointer-events-none animate-pulse-slow" />
+      <div className="absolute top-[-60px] right-[-60px] w-[350px] h-[350px] rounded-full bg-pink-500/15 blur-[80px] pointer-events-none animate-pulse-slow delay-1000" />
+      <div className="absolute bottom-[-60px] left-[-60px] w-[350px] h-[350px] rounded-full bg-[#8BCF2F]/20 blur-[80px] pointer-events-none animate-pulse-slow delay-2000" />
+      <div className="absolute bottom-[-60px] right-[-60px] w-[350px] h-[350px] rounded-full bg-yellow-500/15 blur-[80px] pointer-events-none animate-pulse-slow delay-700" />
 
-      {/* Hero background image */}
-      <Image
-        src="/heroimage.png"
-        alt=""
-        fill
-        priority
-        className="object-cover"
-        sizes="100vw"
-      />
-
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/55 z-[1]" />
-
-
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12 pt-16 pb-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-
-        <div className="flex flex-col items-start max-w-2xl lg:w-[65%]">
-
-          <div className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full border border-slate-400/30 bg-white/10 backdrop-blur-md text-sm font-medium text-slate-200">
-            <span className="w-1.5 h-1.5 rounded-full bg-slate-300/60 animate-pulse" />
-            Your competitors are already automating.
+      {/* Top soft cyan glow to add background depth */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/3 rounded-full filter blur-[120px] pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto w-full px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        {/* Left Side Content */}
+        <div className="lg:col-span-7 flex flex-col items-start space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs font-bold text-zinc-600">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            Operations-First Custom Software
           </div>
 
-          <h1 className="text-slate-200 text-5xl md:text-6xl xl:text-7xl font-extrabold tracking-tight leading-[1.05] mb-4 drop-shadow-lg">
-            Is your <span className="text-[#a5d8e6]">business</span>
-            <br />
-            still{' '}
-            <span className="relative inline-block text-[#b8d44a]">
-              running
-              <svg
-                className="absolute -bottom-1 left-0 w-full"
-                viewBox="0 0 200 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden
-              >
-                <path
-                  d="M2 5.5C50 2 100 2 198 5.5"
-                  stroke="#b8d44a"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </span>{' '}
-            manually?
+          <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black text-zinc-950 tracking-tight leading-[1.1]">
+            Software That Automates <br className="hidden sm:inline" />
+            <span className="text-zinc-800 border-b-4 border-primary">Manufacturing & Warehouse</span> Operations
           </h1>
 
-          <p className="text-slate-400 text-lg leading-relaxed mb-6 max-w-xl">
-            We build <strong className="text-slate-200">logistics automation systems</strong>,{' '}
-            <strong className="text-slate-200">custom WMS tracking portals</strong>, and{' '}
-            <strong className="text-slate-200">high-converting websites</strong> that turn
-            your slow, manual operations into a lean, high-efficiency machine —
-            in weeks, not months.
+          <p className="text-zinc-500 text-lg leading-relaxed max-w-xl">
+            We build custom software and AI-powered automation solutions to scale warehousing, logistics, and plant operations. No more paper checklists, manual data entry, or dispatch bottlenecks.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
-            <ModernButton href="#contact" label="Start My Free Consultation" className="!bg-[#C3E236] !border-[#C3E236] !text-zinc-900 hover:!bg-[#d4f04a]" />
-            <span className="text-slate-400 text-sm">No commitment. 30-minute call.</span>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary-hover shadow-md hover:shadow-lg transition-all text-center"
+            >
+              <ClipboardCheck size={18} />
+              Book Free Process Audit
+            </Link>
+            <Link
+              href="/work"
+              className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-zinc-800 font-bold transition-all text-center border border-slate-200"
+            >
+              View Case Studies
+              <ArrowRight size={16} />
+            </Link>
           </div>
 
-          <div className="flex flex-wrap gap-8 mb-6">
-            {stats.map((s, i) => (
-              <div key={i}>
-                <div className="text-3xl font-extrabold text-slate-200 tracking-tight drop-shadow-md">{s.value}</div>
-                <div className="text-slate-400 text-sm mt-0.5">{s.label}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-0.5">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} size={14} className="text-slate-200 fill-slate-200" />
-              ))}
+          {/* Quick trust metrics */}
+          <div className="grid grid-cols-3 gap-8 pt-6 border-t border-slate-100/80 w-full max-w-md">
+            <div>
+              <div className="text-2xl font-black text-zinc-950">3+</div>
+              <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Active Warehouses</div>
             </div>
-            <span className="text-slate-300 text-sm font-medium">
-              Trusted by 50+ businesses across India
-            </span>
+            <div>
+              <div className="text-2xl font-black text-zinc-950">10+</div>
+              <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Integrations Live</div>
+            </div>
+            <div>
+              <div className="text-2xl font-black text-zinc-950">99.9%</div>
+              <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">System Uptime</div>
+            </div>
           </div>
-
         </div>
 
-      </div>
+        {/* Right Side - Custom CSS Dashboard Widget */}
+        <div className="lg:col-span-5 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="w-full bg-[#1E293B] rounded-3xl p-6 shadow-2xl border border-slate-800 text-white relative overflow-hidden"
+          >
+            {/* Top bar */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+              <div className="flex items-center gap-2">
+                <div className="flex gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                </div>
+                <span className="text-xs font-bold text-slate-400 font-mono pl-2">STIVATE_WMS_NODE_01</span>
+              </div>
+              <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider border border-primary/20">
+                LIVE MONITOR
+              </span>
+            </div>
 
+            {/* KPI Row */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-400 uppercase">Inbound Gate Queue</span>
+                  <Truck size={14} className="text-primary" />
+                </div>
+                <div className="text-2xl font-black">12 Trucks</div>
+                <span className="text-[10px] text-emerald-400 font-medium">Avg. wait: 14 mins</span>
+              </div>
+              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-400 uppercase">SAP Sync Status</span>
+                  <Database size={14} className="text-primary" />
+                </div>
+                <div className="text-2xl font-black text-emerald-400">100% OK</div>
+                <span className="text-[10px] text-slate-400 font-mono">Last sync: 2s ago</span>
+              </div>
+            </div>
+
+            {/* Live Receiving List */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mb-2">
+                <Activity size={12} className="text-primary" /> Inbound GRN Pipeline
+              </h4>
+
+              {[
+                { grn: "GRN-2026-089", sku: "SKU-AMP-882", qty: "450 Units", status: "SAP Synced", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
+                { grn: "GRN-2026-090", sku: "SKU-WLT-110", qty: "1,200 Units", status: "QR Generated", statusColor: "text-[#8BCF2F] bg-[#8BCF2F]/10 border-[#8BCF2F]/20" },
+                { grn: "GRN-2026-091", sku: "SKU-CBX-459", qty: "180 Units", status: "OCR Validation", statusColor: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
+              ].map((row, idx) => (
+                <div key={idx} className="flex items-center justify-between p-3 rounded-lg bg-slate-900/30 border border-slate-800/50 text-xs">
+                  <div>
+                    <div className="font-bold font-mono text-slate-200">{row.grn}</div>
+                    <div className="text-[10px] text-slate-400">{row.sku} • {row.qty}</div>
+                  </div>
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${row.statusColor}`}>
+                    {row.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom summary stats */}
+            <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <span className="flex items-center gap-1">
+                <Package size={12} className="text-primary" /> 14,892 items sorted today
+              </span>
+              <span className="flex items-center gap-1 text-emerald-400">
+                <ShieldCheck size={12} /> SSL Secured
+              </span>
+            </div>
+          </motion.div>
+        </div>
+      </div>
     </section>
-  )
+  );
 }
 

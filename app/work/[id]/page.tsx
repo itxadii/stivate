@@ -57,8 +57,8 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
         {/* Case Study Header Card */}
         <div className="p-8 md:p-12 rounded-3xl bg-zinc-950 text-white relative overflow-hidden border border-zinc-900 shadow-2xl mb-16">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl -z-10" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#C3E236]/5 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl -z-10" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/3 rounded-full blur-3xl -z-10" />
 
           {/* Background Image of header */}
           <div className="absolute inset-0 opacity-20 -z-20">
@@ -74,10 +74,10 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
           <div className="space-y-6">
             <div className="flex flex-wrap gap-3">
-              <span className="px-3.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-xs font-bold uppercase tracking-wider text-purple-400">
+              <span className="px-3.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-xs font-bold uppercase tracking-wider text-slate-400">
                 {project.industry}
               </span>
-              <span className="px-3.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-xs font-bold uppercase tracking-wider text-[#C3E236]">
+              <span className="px-3.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-xs font-bold uppercase tracking-wider text-[#8BCF2F]">
                 {project.client}
               </span>
             </div>
@@ -103,10 +103,10 @@ export default async function CaseStudyPage({ params }: PageProps) {
         {/* Detailed Scrollable Content Sections */}
         <div className="space-y-16">
           {/* Section 1: Overview, Challenges & Approach */}
-          <div className="bg-white rounded-3xl border border-slate-400 p-8 md:p-12 shadow-sm space-y-10">
+          <div className="bg-white rounded-3xl border border-slate-200 p-8 md:p-12 shadow-sm space-y-10">
             <div className="space-y-4">
               <h3 className="text-2xl font-black text-zinc-900 uppercase tracking-tight flex items-center gap-2.5">
-                <FileText className="text-purple-600" size={20} /> Project Overview
+                <FileText className="text-primary-hover" size={20} /> Project Overview
               </h3>
               <p className="text-zinc-600 text-base md:text-lg leading-relaxed font-medium">
                 {project.brief}
@@ -134,12 +134,12 @@ export default async function CaseStudyPage({ params }: PageProps) {
               {/* Approach */}
               <div className="space-y-5">
                 <h4 className="text-lg font-extrabold text-zinc-900 uppercase tracking-wide flex items-center gap-2">
-                  <span className="w-1.5 h-6 bg-[#C3E236] rounded-full" /> Our Approach
+                  <span className="w-1.5 h-6 bg-primary rounded-full" /> Our Approach
                 </h4>
                 <ul className="space-y-3.5">
                   {project.approach.map((a, i) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-zinc-600 font-medium">
-                      <CheckCircle2 size={18} className="text-purple-600 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 size={18} className="text-primary-hover mt-0.5 flex-shrink-0" />
                       <span>{a}</span>
                     </li>
                   ))}
@@ -149,7 +149,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </div>
 
           {/* Section 2: Platform Architecture or Solutions Delivered */}
-          <div className="bg-white rounded-3xl border border-slate-400 p-8 md:p-12 shadow-sm">
+          <div className="bg-white rounded-3xl border border-slate-200 p-8 md:p-12 shadow-sm">
             {project.id === "i3pl" ? (
               /* I3PL Architecture Flow & Components */
               <div className="space-y-12">
@@ -162,7 +162,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                     {project.architecture?.steps.map((step, idx) => (
                       <div key={idx} className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100 flex flex-col justify-between space-y-4">
                         <div className="flex justify-between items-start">
-                          <span className="text-xs font-extrabold text-purple-600 uppercase tracking-wider bg-purple-50 px-2 py-0.5 rounded">
+                          <span className="text-xs font-extrabold text-zinc-600 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
                             Step 0{idx + 1}
                           </span>
                           <span className="text-xxs font-bold text-zinc-400 uppercase">
@@ -189,12 +189,12 @@ export default async function CaseStudyPage({ params }: PageProps) {
                     {project.components?.map((comp, idx) => (
                       <div key={idx} className="p-6 rounded-2xl bg-zinc-50 border border-zinc-100 space-y-4">
                         <h4 className="text-base font-extrabold text-zinc-900 flex items-center gap-2">
-                          <Cpu size={18} className="text-purple-600" /> {comp.name}
+                          <Cpu size={18} className="text-primary-hover" /> {comp.name}
                         </h4>
                         <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                           {comp.features.map((feat, fIdx) => (
                             <li key={fIdx} className="flex items-start gap-2.5 text-xs md:text-sm text-zinc-600 font-medium">
-                              <Check size={16} className="text-[#C3E236] mt-0.5 flex-shrink-0" />
+                              <Check size={16} className="text-primary-hover mt-0.5 flex-shrink-0" />
                               <span>{feat}</span>
                             </li>
                           ))}
@@ -215,15 +215,15 @@ export default async function CaseStudyPage({ params }: PageProps) {
                     <div key={idx} className="p-6 rounded-2xl bg-zinc-50 border border-zinc-100 flex flex-col justify-between space-y-4">
                       <div className="space-y-2">
                         <h4 className="text-base font-extrabold text-zinc-900 flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-purple-600" />
+                          <span className="w-2 h-2 rounded-full bg-primary" />
                           {sol.title}
                         </h4>
                         <p className="text-zinc-600 text-xs md:text-sm leading-relaxed font-medium">
                           {sol.description}
                         </p>
                       </div>
-                      <div className="p-3.5 rounded-xl bg-purple-50/50 border border-purple-100/50 text-xs font-bold text-purple-700">
-                        <span className="uppercase text-purple-500 text-[10px] block mb-0.5">Result</span>
+                      <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-zinc-800">
+                        <span className="uppercase text-zinc-400 text-[10px] block mb-0.5">Result</span>
                         {sol.result}
                       </div>
                     </div>
@@ -234,7 +234,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </div>
 
           {/* Section 3: Business Impact, Highlights & Project Value */}
-          <div className="bg-white rounded-3xl border border-slate-400 p-8 md:p-12 shadow-sm space-y-10">
+          <div className="bg-white rounded-3xl border border-slate-200 p-8 md:p-12 shadow-sm space-y-10">
             <div className="space-y-6">
               <h3 className="text-2xl font-black text-zinc-900 uppercase tracking-tight">
                 Business & Operational Impact
@@ -242,7 +242,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {project.businessImpact.map((impact, idx) => (
                   <div key={idx} className="p-6 rounded-2xl bg-zinc-50 border border-zinc-100 space-y-3">
-                    <div className="p-2.5 rounded-xl bg-[#C3E236]/10 text-zinc-950 inline-block">
+                    <div className="p-2.5 rounded-xl bg-primary/10 text-zinc-950 inline-block">
                       <TrendingUp size={20} />
                     </div>
                     <h4 className="text-base font-extrabold text-zinc-900">{impact.title}</h4>
@@ -260,20 +260,20 @@ export default async function CaseStudyPage({ params }: PageProps) {
               {/* Tech Highlights */}
               <div className="space-y-5">
                 <h4 className="text-lg font-extrabold text-zinc-900 uppercase tracking-wide flex items-center gap-2">
-                  <Layers size={18} className="text-purple-600" /> Technical Highlights
+                  <Layers size={18} className="text-primary-hover" /> Technical Highlights
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {project.techHighlights.map((tech, idx) => (
                     <span key={idx} className="px-3 py-1.5 rounded-lg bg-zinc-900 text-zinc-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-                      <CheckCircle size={12} className="text-[#C3E236]" /> {tech}
+                      <CheckCircle size={12} className="text-primary" /> {tech}
                     </span>
                   ))}
                 </div>
               </div>
 
               {/* Value Statement */}
-              <div className="space-y-5 p-6 rounded-2xl bg-purple-50/40 border border-purple-100">
-                <h4 className="text-lg font-extrabold text-purple-900 uppercase tracking-wide flex items-center gap-2">
+              <div className="space-y-5 p-6 rounded-2xl bg-slate-50 border border-slate-200">
+                <h4 className="text-lg font-extrabold text-zinc-950 uppercase tracking-wide flex items-center gap-2">
                   <FileCheck size={18} /> Project Value
                 </h4>
                 <p className="text-zinc-700 text-xs md:text-sm leading-relaxed font-medium">

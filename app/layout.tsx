@@ -106,7 +106,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-background bg-isometric text-foreground overflow-x-hidden selection:bg-primary selection:text-primary-foreground">
+      <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-primary-foreground">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-GQWMGVG48M"
           strategy="afterInteractive"
