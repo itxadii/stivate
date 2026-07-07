@@ -34,9 +34,9 @@ export default function Footer() {
             <Image
               src="/logo.png"
               alt="Stivate"
-              width={140}
-              height={44}
-              className="h-10 w-auto object-contain mb-6"
+              width={280}
+              height={88}
+              className="h-20 w-auto object-contain mb-6"
             />
             <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
               Enterprise software engineering for manufacturing, warehouse operations, and logistics process automation.
