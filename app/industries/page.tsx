@@ -21,11 +21,11 @@ function getIcon(slug: string) {
   switch (slug) {
     case "manufacturing":
       return Building2;
-    case "warehousing":
+    case "warehouse":
       return Warehouse;
-    case "3pl-logistics":
+    case "3pl":
       return Ship;
-    case "food-manufacturing":
+    case "food-processing":
       return UtensilsCrossed;
     case "automotive":
       return Car;
@@ -46,8 +46,9 @@ function getIcon(slug: string) {
 
 // Helper to map slug to image asset
 function getImagePath(slug: string) {
-  if (slug === "3pl-logistics") return "/industries/3pllogistics.png";
-  if (slug === "food-manufacturing") return "/industries/foodmanufacturing.png";
+  if (slug === "warehouse") return "/industries/warehousing.png";
+  if (slug === "3pl") return "/industries/3pllogistics.png";
+  if (slug === "food-processing") return "/industries/foodmanufacturing.png";
   return `/industries/${slug}.png`;
 }
 

@@ -52,12 +52,12 @@ export default function Footer() {
             </h5>
             <ul className="space-y-3 text-zinc-500 text-sm font-medium">
               {[
-                ["Dispatch Management", "/solutions/dispatch-management"],
-                ["GRN & Inbound Gate", "/solutions/grn-management"],
+                ["Dispatch Management", "/solutions/dispatch-management-software"],
+                ["GRN & Inbound Gate", "/solutions/grn-management-software"],
                 ["Warehouse Dashboard", "/solutions/warehouse-dashboard"],
-                ["Employee Productivity", "/solutions/employee-productivity"],
+                ["Employee Productivity", "/solutions/employee-productivity-tracking"],
                 ["ERP & SAP Integration", "/solutions/erp-integration"],
-                ["Custom Development", "/solutions/custom-software-development"],
+                ["Custom Development", "/solutions/custom-manufacturing-software"],
               ].map(([label, href]) => (
                 <li key={label}>
                   <Link href={href} className="hover:text-zinc-950 transition-colors">
@@ -75,10 +75,10 @@ export default function Footer() {
             <ul className="space-y-3 text-zinc-500 text-sm font-medium">
               {[
                 ["Manufacturing Operations", "/industries/manufacturing"],
-                ["Warehousing & Storage", "/industries/warehousing"],
-                ["3PL Logistics", "/industries/3pl-logistics"],
+                ["Warehousing & Storage", "/industries/warehouse"],
+                ["3PL Logistics", "/industries/3pl"],
                 ["Automotive Parts", "/industries/automotive"],
-                ["Food & Beverages", "/industries/food-manufacturing"],
+                ["Food & Beverages", "/industries/food-processing"],
                 ["FMCG Distribution", "/industries/fmcg"],
               ].map(([label, href]) => (
                 <li key={label}>

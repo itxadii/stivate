@@ -31,7 +31,7 @@ export const industries: Industry[] = [
     ]
   },
   {
-    slug: "warehousing",
+    slug: "warehouse",
     name: "Warehousing",
     title: "Warehouse Management Systems (WMS)",
     subtitle: "Custom-fit picking layouts, QR barcodes slotting, and real-time inventory tracking logs.",
@@ -52,7 +52,7 @@ export const industries: Industry[] = [
     ]
   },
   {
-    slug: "3pl-logistics",
+    slug: "3pl",
     name: "3PL Logistics",
     title: "Third-Party Logistics (3PL) Automation",
     subtitle: "Multi-tenant inventory control, billing ledger builders, and client shipping portals.",
@@ -73,7 +73,7 @@ export const industries: Industry[] = [
     ]
   },
   {
-    slug: "food-manufacturing",
+    slug: "food-processing",
     name: "Food Manufacturing",
     title: "Food & Beverage Processing Plants",
     subtitle: "Batch serial control, expiration calendar alerts, and recipe database logs.",

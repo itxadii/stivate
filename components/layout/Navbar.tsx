@@ -7,25 +7,25 @@ import { ChevronDown, Menu, X, ClipboardCheck, LayoutGrid, CheckCircle } from "l
 import { motion, AnimatePresence } from "framer-motion";
 
 const solutions = [
-  { name: "Dispatch Management", href: "/solutions/dispatch-management" },
-  { name: "GRN Management", href: "/solutions/grn-management" },
-  { name: "Gate Entry", href: "/solutions/gate-entry" },
+  { name: "Dispatch Management", href: "/solutions/dispatch-management-software" },
+  { name: "GRN Management", href: "/solutions/grn-management-software" },
+  { name: "Gate Entry", href: "/solutions/gate-entry-management" },
   { name: "Visitor Management", href: "/solutions/visitor-management" },
-  { name: "Employee Productivity", href: "/solutions/employee-productivity" },
+  { name: "Employee Productivity", href: "/solutions/employee-productivity-tracking" },
   { name: "Warehouse Dashboard", href: "/solutions/warehouse-dashboard" },
   { name: "Barcode Management", href: "/solutions/barcode-management" },
-  { name: "Inventory Tracking", href: "/solutions/inventory-tracking" },
+  { name: "Inventory Tracking", href: "/solutions/warehouse-automation" },
   { name: "Vendor Portal", href: "/solutions/vendor-portal" },
   { name: "Approval Workflow", href: "/solutions/approval-workflow" },
   { name: "ERP Integration", href: "/solutions/erp-integration" },
-  { name: "Custom Software", href: "/solutions/custom-software-development" },
+  { name: "Custom Software", href: "/solutions/custom-manufacturing-software" },
 ];
 
 const industries = [
   { name: "Manufacturing", href: "/industries/manufacturing" },
-  { name: "Warehousing", href: "/industries/warehousing" },
-  { name: "3PL Logistics", href: "/industries/3pl-logistics" },
-  { name: "Food Manufacturing", href: "/industries/food-manufacturing" },
+  { name: "Warehousing", href: "/industries/warehouse" },
+  { name: "3PL Logistics", href: "/industries/3pl" },
+  { name: "Food Manufacturing", href: "/industries/food-processing" },
   { name: "Automotive", href: "/industries/automotive" },
   { name: "Pharmaceutical", href: "/industries/pharmaceutical" },
   { name: "Engineering", href: "/industries/engineering" },

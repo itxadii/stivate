@@ -19,9 +19,9 @@ import {
 
 const previewIndustries = [
   { name: "Manufacturing", icon: Building2, desc: "Process logs, inventory scheduling, and on-floor machine telemetry logging.", slug: "manufacturing", image: "/industries/manufacturing.png" },
-  { name: "Warehousing", icon: Warehouse, desc: "Real-time bin slotting, carton counts, picking layouts, and QR sorting systems.", slug: "warehousing", image: "/industries/warehousing.png" },
-  { name: "3PL Logistics", icon: Ship, desc: "Multi-tenant inventory ledgers, cargo load scheduling, and tracking systems.", slug: "3pl-logistics", image: "/industries/3pllogistics.png" },
-  { name: "Food Manufacturing", icon: UtensilsCrossed, desc: "Batch tracking, expiration alerts, temperature log sheets, and recipe controls.", slug: "food-manufacturing", image: "/industries/foodmanufacturing.png" },
+  { name: "Warehousing", icon: Warehouse, desc: "Real-time bin slotting, carton counts, picking layouts, and QR sorting systems.", slug: "warehouse", image: "/industries/warehousing.png" },
+  { name: "3PL Logistics", icon: Ship, desc: "Multi-tenant inventory ledgers, cargo load scheduling, and tracking systems.", slug: "3pl", image: "/industries/3pllogistics.png" },
+  { name: "Food Manufacturing", icon: UtensilsCrossed, desc: "Batch tracking, expiration alerts, temperature log sheets, and recipe controls.", slug: "food-processing", image: "/industries/foodmanufacturing.png" },
   { name: "Automotive", icon: Car, desc: "Just-In-Time part sorting, supply chain alerts, and order confirmations.", slug: "automotive", image: "/industries/automotive.png" },
   { name: "Pharmaceutical", icon: Pill, desc: "FDA-compliant batch logs, document audit trails, and strict shelf-life tracking.", slug: "pharmaceutical", image: "/industries/pharmaceutical.png" },
   { name: "Engineering", icon: Wrench, desc: "BOM management, CAD drawing sheets link logs, and part assembly logs.", slug: "engineering", image: "/industries/engineering.png" },

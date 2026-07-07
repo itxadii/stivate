@@ -10,7 +10,7 @@ export interface Solution {
 
 export const solutions: Solution[] = [
   {
-    slug: "dispatch-management",
+    slug: "dispatch-management-software",
     title: "Dispatch Management System",
     subtitle: "Streamline yard congestion, slot scheduling, and loading bays validation.",
     problem: "Trucks queuing at the gate for hours, manual log sheets causing errors, and duplicate data entry.",
@@ -28,7 +28,7 @@ export const solutions: Solution[] = [
     ]
   },
   {
-    slug: "grn-management",
+    slug: "grn-management-software",
     title: "GRN Management & Goods Inbound",
     subtitle: "OCR-powered document processing and automatic receipt verification.",
     problem: "Inbound document tallies matched line-by-line, causing data lag and backlogs.",
@@ -46,7 +46,7 @@ export const solutions: Solution[] = [
     ]
   },
   {
-    slug: "gate-entry",
+    slug: "gate-entry-management",
     title: "Gate Entry & Vehicle Control",
     subtitle: "Digitized yard management, vehicle inspections, and gatepass tracking.",
     problem: "Uninspected trucks entering the yard and missing records of vehicle exit timestamps.",
@@ -82,7 +82,7 @@ export const solutions: Solution[] = [
     ]
   },
   {
-    slug: "employee-productivity",
+    slug: "employee-productivity-tracking",
     title: "Employee Floor Productivity Tracker",
     subtitle: "Real-time tracking of sorting, picking, and packing volumes.",
     problem: "Managers have no visibility over worker throughput, leading to skewed workloads and zero performance metrics.",
@@ -136,7 +136,7 @@ export const solutions: Solution[] = [
     ]
   },
   {
-    slug: "inventory-tracking",
+    slug: "warehouse-automation",
     title: "Inventory Bin-Location Tracking",
     subtitle: "Multi-warehouse slotting control and cycle count auditing.",
     problem: "High search times for items and physical warehouse counts not matching digital system records.",
@@ -208,7 +208,7 @@ export const solutions: Solution[] = [
     ]
   },
   {
-    slug: "custom-software-development",
+    slug: "custom-manufacturing-software",
     title: "Custom Operational Software",
     subtitle: "Bespoke business applications built for unique plant workflows.",
     problem: "Standard off-the-shelf software doesn't fit specific sorting, billing, or real estate workflows.",

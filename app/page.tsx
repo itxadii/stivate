@@ -11,6 +11,11 @@ import LeadCapture from "@/components/home/GetStarted";
 import FAQ from "@/components/home/KeyStats";
 import Footer from "@/components/layout/Footer";
 
+export const metadata = {
+  title: "Manufacturing & Warehouse Automation Software | Stivate",
+  description: "Stivate builds custom software for manufacturing companies, warehouses, and 3PL providers. Automate dispatch, GRN, gate entry, employee productivity, reporting, and operational workflows.",
+};
+
 export default function Home() {
   return (
     <main className="relative w-full bg-transparent text-zinc-900 font-sans">

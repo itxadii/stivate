@@ -1,17 +1,37 @@
 import { MetadataRoute } from 'next'
+import { solutions } from './solutions/solutionsData'
+import { industries } from './industries/industriesData'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://stivate.com'
   
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
+      changeFrequency: 'weekly',
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/solutions`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/industries`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/services`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/about`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
@@ -46,5 +66,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
-  ]
+  ];
+
+  const solutionPages: MetadataRoute.Sitemap = solutions.map((sol) => ({
+    url: `${baseUrl}/solutions/${sol.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
+  const industryPages: MetadataRoute.Sitemap = industries.map((ind) => ({
+    url: `${baseUrl}/industries/${ind.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...solutionPages, ...industryPages];
 }

@@ -13,13 +13,13 @@ import {
 const previewSolutions = [
   {
     title: "Dispatch Management",
-    slug: "dispatch-management",
+    slug: "dispatch-management-software",
     desc: "Automate vehicle gate logs, dispatch slot scheduling, and loading verification to eliminate yard delays.",
     Icon: Truck
   },
   {
     title: "GRN & Goods Inbound",
-    slug: "grn-management",
+    slug: "grn-management-software",
     desc: "OCR verification of packing lists and PO receipts matching, reducing receiving delays by up to 90%.",
     Icon: ClipboardCheck
   },
@@ -31,7 +31,7 @@ const previewSolutions = [
   },
   {
     title: "Employee Productivity",
-    slug: "employee-productivity",
+    slug: "employee-productivity-tracking",
     desc: "Track sorting, packing, and bin loading activities per worker to set up clear performance incentives.",
     Icon: Users
   },
@@ -43,7 +43,7 @@ const previewSolutions = [
   },
   {
     title: "Custom Software Development",
-    slug: "custom-software-development",
+    slug: "custom-manufacturing-software",
     desc: "Tailored industrial software engineered to resolve unique manufacturing, sorting, or billing bottle-necks.",
     Icon: Code2
   }
