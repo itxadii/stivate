@@ -14,7 +14,7 @@ export default function ClientsBar() {
   const scrollBrands = [...brands, ...brands];
 
   return (
-    <section className="py-12 bg-secondary-bg border-y border-slate-200 overflow-hidden">
+    <section className="py-12 bg-white border-y border-slate-200 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <p className="text-center text-zinc-400 text-xs font-bold uppercase tracking-widest mb-8">
           Trusted by Industrial, Logistics & B2B Enterprises

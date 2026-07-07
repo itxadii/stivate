@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { solutions } from "../solutionsData";
 import { 
@@ -20,6 +21,38 @@ export async function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+// Helper to map slug to image asset
+function getImagePath(slug: string) {
+  switch (slug) {
+    case "dispatch-management":
+      return "/industrialsolutions/dispatchmanagement.png";
+    case "grn-management":
+      return "/industrialsolutions/grnandgoodsinbound.png";
+    case "gate-entry":
+      return "/industrialsolutions/gateentryandvehiclecontrol.png";
+    case "visitor-management":
+      return "/industrialsolutions/visitormanagementsystem.png";
+    case "employee-productivity":
+      return "/industrialsolutions/employeeproductivity.png";
+    case "warehouse-dashboard":
+      return "/industrialsolutions/warehousedashboard.png";
+    case "barcode-management":
+      return "/industrialsolutions/barcodeandqrmanagement.png";
+    case "inventory-tracking":
+      return "/industrialsolutions/inventorybintracking.png";
+    case "vendor-portal":
+      return "/industrialsolutions/vendorcollaborationportal.png";
+    case "approval-workflow":
+      return "/industrialsolutions/customworkflowapproval.png";
+    case "erp-integration":
+      return "/industrialsolutions/sapintegrations.png";
+    case "custom-software-development":
+      return "/industrialsolutions/customsoftwaredevelopmetn.png";
+    default:
+      return "/industrialsolutions/customsoftwaredevelopmetn.png";
+  }
 }
 
 export default async function SolutionDetailPage({ params }: PageProps) {
@@ -53,16 +86,31 @@ export default async function SolutionDetailPage({ params }: PageProps) {
           {/* Subtle decoration */}
           <div className="absolute right-0 top-0 w-64 h-64 bg-primary/3 rounded-full filter blur-[80px] pointer-events-none" />
           
-          <div className="space-y-6 relative z-10">
-            <span className="px-3.5 py-1 rounded-md bg-white border border-slate-200 text-xs font-bold uppercase tracking-wider text-[#76B827]">
-              Industrial Module
-            </span>
-            <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-tight text-zinc-950">
-              {sol.title}
-            </h1>
-            <p className="text-zinc-500 text-base md:text-lg leading-relaxed max-w-3xl">
-              {sol.subtitle}
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+            <div className="md:col-span-7 space-y-6">
+              <span className="px-3.5 py-1 rounded-md bg-white border border-slate-200 text-xs font-bold uppercase tracking-wider text-[#76B827]">
+                Industrial Module
+              </span>
+              <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-tight text-zinc-950">
+                {sol.title}
+              </h1>
+              <p className="text-zinc-500 text-base md:text-lg leading-relaxed max-w-3xl">
+                {sol.subtitle}
+              </p>
+            </div>
+            
+            <div className="md:col-span-5 w-full">
+              <div className="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100">
+                <Image
+                  src={getImagePath(slug)}
+                  alt={sol.title}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 35vw"
+                />
+              </div>
+            </div>
           </div>
         </div>
 

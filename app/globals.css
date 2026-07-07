@@ -204,3 +204,26 @@ html.lenis body {
 .animate-pulse-slow {
   animation: pulse-slow 8s ease-in-out infinite;
 }
+
+/* Left-to-Right Marquee */
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 35s linear infinite;
+}
+
+/* Hide scrollbars globally for utility classes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+.no-scrollbar {
+  -ms-overflow-style: none !important;  /* IE/Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}

@@ -71,31 +71,22 @@ export default function LeadCapture({
   return (
     <section
       id="contact"
-      className={`py-24 px-6 md:px-12 bg-transparent relative overflow-hidden rounded-3xl mx-auto max-w-[98%] my-12 shadow-xl ${className}`}
+      className={`py-24 px-6 md:px-12 bg-[#E8F4FD] border border-slate-200 relative overflow-hidden rounded-3xl mx-auto max-w-[98%] my-12 shadow-md ${className}`}
     >
-      <Image
-        src="/contactsection.png"
-        alt=""
-        fill
-        className="object-cover z-0"
-        sizes="100vw"
-      />
-      {/* Dark overlay for high contrast readability */}
-      <div className="absolute inset-0 bg-black/65 z-[1]" />
       <div className="max-w-xl mx-auto relative z-10">
 
         {/* Header */}
         {!hideHeader && (
           <div className="text-center mb-12">
-            <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-xs font-bold text-slate-200">
+            <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-slate-200 bg-slate-50/80 backdrop-blur-md text-xs font-bold text-zinc-600">
               Free Process Audit
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-4 text-white">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-4 text-zinc-950">
               Ready to Automate
               <br />
               <span className="text-primary font-black">Your Operations?</span>
             </h2>
-            <p className="text-slate-300 text-sm font-medium leading-relaxed">
+            <p className="text-zinc-600 text-sm font-medium leading-relaxed">
               Get a free 30-minute operational process audit. We will review your current systems of record and highlight immediate digitizing opportunities.
             </p>
           </div>

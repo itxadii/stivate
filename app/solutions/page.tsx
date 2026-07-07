@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { solutions } from "./solutionsData";
 import { 
   Truck, 
@@ -48,6 +49,38 @@ function getIcon(slug: string) {
   }
 }
 
+// Helper to map slug to image asset
+function getImagePath(slug: string) {
+  switch (slug) {
+    case "dispatch-management":
+      return "/industrialsolutions/dispatchmanagement.png";
+    case "grn-management":
+      return "/industrialsolutions/grnandgoodsinbound.png";
+    case "gate-entry":
+      return "/industrialsolutions/gateentryandvehiclecontrol.png";
+    case "visitor-management":
+      return "/industrialsolutions/visitormanagementsystem.png";
+    case "employee-productivity":
+      return "/industrialsolutions/employeeproductivity.png";
+    case "warehouse-dashboard":
+      return "/industrialsolutions/warehousedashboard.png";
+    case "barcode-management":
+      return "/industrialsolutions/barcodeandqrmanagement.png";
+    case "inventory-tracking":
+      return "/industrialsolutions/inventorybintracking.png";
+    case "vendor-portal":
+      return "/industrialsolutions/vendorcollaborationportal.png";
+    case "approval-workflow":
+      return "/industrialsolutions/customworkflowapproval.png";
+    case "erp-integration":
+      return "/industrialsolutions/sapintegrations.png";
+    case "custom-software-development":
+      return "/industrialsolutions/customsoftwaredevelopmetn.png";
+    default:
+      return "/industrialsolutions/customsoftwaredevelopmetn.png";
+  }
+}
+
 export const metadata = {
   title: "Enterprise Solutions for Warehouse & Operations Automation | Stivate",
   description: "We build custom software systems for GRN processing, dispatch yards, barcode printing, ERP middleware, and inventory location tracking.",
@@ -78,13 +111,26 @@ export default function SolutionsLandingPage() {
             return (
               <div 
                 key={sol.slug}
-                className="p-8 rounded-3xl bg-slate-50/50 border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+                className="group p-6 rounded-3xl bg-slate-50/50 border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 text-primary-hover flex items-center justify-center mb-6 shadow-sm">
-                    <Icon size={22} />
+                  {/* Solution Image */}
+                  <div className="relative w-full h-60 rounded-2xl overflow-hidden mb-6 border border-slate-200/50 bg-slate-100">
+                    <Image
+                      src={getImagePath(sol.slug)}
+                      alt={sol.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-350"
+                      sizes="(max-width: 768px) 100vw, 30vw"
+                    />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-zinc-950">{sol.title}</h3>
+
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 text-primary-hover flex items-center justify-center shadow-sm">
+                      <Icon size={18} />
+                    </div>
+                    <h3 className="text-lg font-bold text-zinc-950">{sol.title}</h3>
+                  </div>
                   <p className="text-zinc-500 text-sm leading-relaxed mb-6">{sol.subtitle}</p>
                 </div>
                 <div>

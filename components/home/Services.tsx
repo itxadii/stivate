@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { 
   Truck, 
   ClipboardCheck, 
@@ -48,6 +49,26 @@ const previewSolutions = [
   }
 ];
 
+// Helper to map slug to image asset
+function getImagePath(slug: string) {
+  switch (slug) {
+    case "dispatch-management":
+      return "/industrialsolutions/dispatchmanagement.png";
+    case "grn-management":
+      return "/industrialsolutions/grnandgoodsinbound.png";
+    case "warehouse-dashboard":
+      return "/industrialsolutions/warehousedashboard.png";
+    case "employee-productivity":
+      return "/industrialsolutions/employeeproductivity.png";
+    case "erp-integration":
+      return "/industrialsolutions/sapintegrations.png";
+    case "custom-software-development":
+      return "/industrialsolutions/customsoftwaredevelopmetn.png";
+    default:
+      return "/industrialsolutions/customsoftwaredevelopmetn.png";
+  }
+}
+
 export default function SolutionsPreviewGrid() {
   return (
     <section id="solutions" className="py-24 px-6 md:px-12 bg-white text-zinc-900">
@@ -68,14 +89,27 @@ export default function SolutionsPreviewGrid() {
           {previewSolutions.map(({ title, slug, desc, Icon }, i) => (
             <div
               key={i}
-              className="p-8 rounded-2xl bg-slate-50/50 border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              className="group p-6 rounded-3xl bg-slate-50/50 border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 text-primary-hover flex items-center justify-center mb-6 shadow-sm">
-                  <Icon size={22} />
+                {/* Solution Image */}
+                <div className="relative w-full h-56 rounded-2xl overflow-hidden mb-6 border border-slate-200/50 bg-slate-100">
+                  <Image
+                    src={getImagePath(slug)}
+                    alt={title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-350"
+                    sizes="(max-width: 768px) 100vw, 30vw"
+                  />
                 </div>
-                <h3 className="text-lg font-bold mb-2 text-zinc-950">{title}</h3>
-                <p className="text-zinc-500 text-sm leading-relaxed mb-6">{desc}</p>
+
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 text-primary-hover flex items-center justify-center shadow-sm">
+                    <Icon size={18} />
+                  </div>
+                  <h3 className="text-base font-bold text-zinc-950 truncate">{title}</h3>
+                </div>
+                <p className="text-zinc-500 text-xs leading-relaxed mb-6">{desc}</p>
               </div>
               <div>
                 <Link

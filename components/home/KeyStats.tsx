@@ -30,7 +30,7 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="py-24 px-6 md:px-12 bg-white text-zinc-900 border-t border-slate-250 relative overflow-hidden">
+    <section className="py-24 px-6 md:px-12 bg-white text-zinc-900 relative overflow-hidden">
       <div className="max-w-3xl mx-auto relative z-10">
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs font-bold text-zinc-600 mb-4">

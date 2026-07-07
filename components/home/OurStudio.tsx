@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { 
   FileSpreadsheet, 
   FileSignature, 
@@ -14,49 +15,57 @@ const problems = [
     title: "Manual Excel Processes",
     desc: "Relying on offline spreadsheets to track inventory movements and dispatch logs.",
     impact: "Impact: Triggers version conflicts, file loss, and zero real-time visibility.",
-    Icon: FileSpreadsheet
+    Icon: FileSpreadsheet,
+    image: "/operationalbottlenecks/manualexcelprocess.png"
   },
   {
     title: "Paper-based Approvals",
     desc: "Routing physical gate passes, delivery challans, and PO sheets for manual signatures.",
     impact: "Impact: Causes bottlenecks at gate loading and delays invoice clearance.",
-    Icon: FileSignature
+    Icon: FileSignature,
+    image: "/operationalbottlenecks/paperbasedworking.png"
   },
   {
     title: "Vehicle & Dispatch Delays",
     desc: "Slow vehicle check-ins and unstructured driver registration workflows.",
     impact: "Impact: Increases turnaround times (TAT) and incurs transporter penalties.",
-    Icon: Clock
+    Icon: Clock,
+    image: "/operationalbottlenecks/vehicledispatchdelays.png"
   },
   {
     title: "Lack of Visibility",
     desc: "No single-pane visibility over dock availability, bin occupancy, or pending dispatches.",
     impact: "Impact: Plant heads cannot adjust layout sorting plans dynamically.",
-    Icon: EyeOff
+    Icon: EyeOff,
+    image: "/operationalbottlenecks/lackofvisibility.png"
   },
   {
     title: "Manual Reporting",
     desc: "Compiling weekly operational and stock metrics by manually merging siloed logs.",
     impact: "Impact: Consumes administrative labor and delays weekly dispatch decisions.",
-    Icon: BarChart
+    Icon: BarChart,
+    image: "/operationalbottlenecks/manualreporting.png"
   },
   {
     title: "Duplicate Data Entry",
     desc: "Re-typing shipping challan details across multiple isolated portal terminals.",
     impact: "Impact: Doubles manual entry work and introduces data mismatch errors.",
-    Icon: Copy
+    Icon: Copy,
+    image: "/operationalbottlenecks/duplicatedataentry.png"
   },
   {
     title: "Inventory Inaccuracies",
     desc: "Missing physical bin locations and blind spot slots in storage corridors.",
     impact: "Impact: Slows picking speeds and triggers accidental stockouts.",
-    Icon: MapPin
+    Icon: MapPin,
+    image: "/operationalbottlenecks/inventoryinaccuracies.png"
   },
   {
     title: "Unmonitored Productivity",
     desc: "No clear metrics on sorting, picking, or packing counts per warehouse worker.",
     impact: "Impact: Prevents performance-based incentives and hinders labor planning.",
-    Icon: UserCheck
+    Icon: UserCheck,
+    image: "/operationalbottlenecks/unmonitoredproductivity.png"
   }
 ];
 
@@ -77,26 +86,39 @@ export default function Problem() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {problems.map(({ title, desc, impact, Icon }, i) => (
+          {problems.map(({ title, desc, impact, Icon, image }, i) => (
             <div
               key={i}
-              className="flex flex-col justify-between p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 group"
+              className="flex flex-col justify-between p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 group"
             >
-              <div className="space-y-4">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary-hover flex items-center justify-center">
-                  <Icon size={20} />
+              <div>
+                {/* Bottleneck Image */}
+                <div className="relative w-full h-36 rounded-xl overflow-hidden mb-4 border border-slate-100 bg-slate-50">
+                  <Image
+                    src={image}
+                    alt={title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-350"
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                  />
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-zinc-950 mb-1 leading-snug">
-                    {title}
-                  </h3>
-                  <p className="text-zinc-500 text-xs leading-relaxed">
+
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary-hover flex items-center justify-center flex-shrink-0">
+                      <Icon size={16} />
+                    </div>
+                    <h3 className="text-sm font-bold text-zinc-950 leading-snug">
+                      {title}
+                    </h3>
+                  </div>
+                  <p className="text-zinc-500 text-[11px] leading-relaxed">
                     {desc}
                   </p>
                 </div>
               </div>
               <div className="mt-4 pt-3 border-t border-slate-100">
-                <p className="text-xs font-bold text-[#76B827]">
+                <p className="text-[11px] font-bold text-[#76B827]">
                   {impact}
                 </p>
               </div>

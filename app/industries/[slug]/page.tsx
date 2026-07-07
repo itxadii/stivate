@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { industries } from "../industriesData";
 import { 
@@ -19,6 +20,13 @@ export async function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+// Helper to map slug to image asset
+function getImagePath(slug: string) {
+  if (slug === "3pl-logistics") return "/industries/3pllogistics.png";
+  if (slug === "food-manufacturing") return "/industries/foodmanufacturing.png";
+  return `/industries/${slug}.png`;
 }
 
 export default async function IndustryDetailPage({ params }: PageProps) {
@@ -52,16 +60,31 @@ export default async function IndustryDetailPage({ params }: PageProps) {
           {/* Decorative glow */}
           <div className="absolute right-0 top-0 w-64 h-64 bg-primary/3 rounded-full filter blur-[80px] pointer-events-none" />
           
-          <div className="space-y-6 relative z-10">
-            <span className="px-3.5 py-1 rounded-md bg-white border border-slate-200 text-xs font-bold uppercase tracking-wider text-[#76B827]">
-              Sector Profile
-            </span>
-            <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-tight text-zinc-950">
-              {ind.title}
-            </h1>
-            <p className="text-zinc-500 text-base md:text-lg leading-relaxed max-w-3xl">
-              {ind.subtitle}
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+            <div className="md:col-span-7 space-y-6">
+              <span className="px-3.5 py-1 rounded-md bg-white border border-slate-200 text-xs font-bold uppercase tracking-wider text-[#76B827]">
+                Sector Profile
+              </span>
+              <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-tight text-zinc-950">
+                {ind.title}
+              </h1>
+              <p className="text-zinc-500 text-base md:text-lg leading-relaxed max-w-3xl">
+                {ind.subtitle}
+              </p>
+            </div>
+            
+            <div className="md:col-span-5 w-full">
+              <div className="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100">
+                <Image
+                  src={getImagePath(slug)}
+                  alt={ind.name}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 35vw"
+                />
+              </div>
+            </div>
           </div>
         </div>
 

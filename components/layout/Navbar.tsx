@@ -54,21 +54,41 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-        ? "bg-white/95 backdrop-blur-md border-b border-slate-200/80 py-4 shadow-sm"
-        : "bg-white/70 backdrop-blur-sm border-b border-transparent py-5"
+        ? "bg-white/95 backdrop-blur-md border-b border-slate-200/80 py-2 shadow-sm"
+        : "bg-white/70 backdrop-blur-sm border-b border-transparent py-3 lg:py-4"
         }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
-          <Image
-            src="/logo.png"
-            alt="Stivate Logo"
-            width={140}
-            height={44}
-            priority
-            className="h-20 w-auto object-contain"
-          />
+        <Link
+          href="/"
+          className="flex items-center relative transition-all duration-300"
+          style={{ height: scrolled ? '44px' : '90px', width: scrolled ? '44px' : '280px' }}
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          {/* Logo Text (logo.png) */}
+          <div className={`transition-all duration-300 ease-in-out ${scrolled ? 'opacity-0 scale-75 pointer-events-none absolute' : 'opacity-100 scale-100'}`}>
+            <Image
+              src="/logo.png"
+              alt="Stivate Logo"
+              width={280}
+              height={88}
+              priority
+              className="h-20 w-auto object-contain"
+            />
+          </div>
+
+          {/* Favicon Icon (favicon.ico) */}
+          <div className={`transition-all duration-300 ease-in-out ${scrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none absolute'}`}>
+            <Image
+              src="/favicon.ico"
+              alt="Stivate Icon"
+              width={36}
+              height={36}
+              priority
+              className="h-9 w-auto object-contain"
+            />
+          </div>
         </Link>
 
         {/* Desktop Nav Links */}

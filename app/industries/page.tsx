@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { industries } from "./industriesData";
 import { 
   Building2, 
@@ -43,6 +44,13 @@ function getIcon(slug: string) {
   }
 }
 
+// Helper to map slug to image asset
+function getImagePath(slug: string) {
+  if (slug === "3pl-logistics") return "/industries/3pllogistics.png";
+  if (slug === "food-manufacturing") return "/industries/foodmanufacturing.png";
+  return `/industries/${slug}.png`;
+}
+
 export const metadata = {
   title: "Sectors & Industries We Support | Stivate",
   description: "We build tailored software applications for manufacturing plants, multi-tenant warehouses, automotive JIT yards, and food processing lines.",
@@ -73,13 +81,26 @@ export default function IndustriesLandingPage() {
             return (
               <div 
                 key={ind.slug}
-                className="p-8 rounded-3xl bg-slate-50/50 border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+                className="group p-6 rounded-3xl bg-slate-50/50 border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 text-primary-hover flex items-center justify-center mb-6 shadow-sm">
-                    <Icon size={22} />
+                  {/* Industry Image */}
+                  <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-6 border border-slate-200/50 bg-slate-100">
+                    <Image
+                      src={getImagePath(ind.slug)}
+                      alt={ind.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-350"
+                      sizes="(max-width: 768px) 100vw, 30vw"
+                    />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-zinc-950">{ind.name}</h3>
+
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 text-primary-hover flex items-center justify-center shadow-sm">
+                      <Icon size={18} />
+                    </div>
+                    <h3 className="text-lg font-bold text-zinc-950">{ind.name}</h3>
+                  </div>
                   <p className="text-zinc-500 text-sm leading-relaxed mb-6">{ind.subtitle}</p>
                 </div>
                 <div>
