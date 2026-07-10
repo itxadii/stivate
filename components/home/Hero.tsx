@@ -52,18 +52,18 @@ export default function Hero() {
           </div>
 
           {/* Quick trust metrics */}
-          <div className="grid grid-cols-3 gap-8 pt-6 border-t border-slate-100/80 w-full max-w-md">
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 pt-6 border-t border-slate-100/80 w-full max-w-md">
             <div>
-              <div className="text-2xl font-black text-zinc-950">3+</div>
-              <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Active Warehouses</div>
+              <div className="text-xl sm:text-2xl font-black text-zinc-950">3+</div>
+              <div className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Active Warehouses</div>
             </div>
             <div>
-              <div className="text-2xl font-black text-zinc-950">10+</div>
-              <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Integrations Live</div>
+              <div className="text-xl sm:text-2xl font-black text-zinc-950">10+</div>
+              <div className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Integrations Live</div>
             </div>
             <div>
-              <div className="text-2xl font-black text-zinc-950">99.9%</div>
-              <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">System Uptime</div>
+              <div className="text-xl sm:text-2xl font-black text-zinc-950">99.9%</div>
+              <div className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">System Uptime</div>
             </div>
           </div>
         </div>
