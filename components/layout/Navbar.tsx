@@ -58,7 +58,7 @@ export default function Navbar() {
         : "bg-white/70 backdrop-blur-sm border-b border-transparent py-3 lg:py-4"
         }`}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-12 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
@@ -77,7 +77,7 @@ export default function Navbar() {
               width={280}
               height={88}
               priority
-              className="h-16 lg:h-20 max-w-full w-auto object-contain"
+              className="max-h-full max-w-full object-contain"
             />
           </div>
 
