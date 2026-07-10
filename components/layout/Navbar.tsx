@@ -70,14 +70,14 @@ export default function Navbar() {
           onClick={() => setMobileMenuOpen(false)}
         >
           {/* Logo Text (logo.png) */}
-          <div className={`w-full h-full flex items-center transition-all duration-300 ease-in-out ${scrolled ? 'opacity-0 scale-75 pointer-events-none absolute' : 'opacity-100 scale-100'}`}>
+          <div className={`w-full h-full flex items-center justify-start transition-all duration-300 ease-in-out ${scrolled ? 'opacity-0 scale-75 pointer-events-none absolute' : 'opacity-100 scale-100'}`}>
             <Image
               src="/logo.png"
               alt="Stivate Logo"
               width={280}
               height={88}
               priority
-              className="max-h-full max-w-full object-contain"
+              className="max-h-full max-w-full object-contain object-left"
             />
           </div>
 
