@@ -62,8 +62,11 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center relative transition-all duration-300"
-          style={{ height: scrolled ? '44px' : '90px', width: scrolled ? '44px' : '280px' }}
+          className={`flex items-center relative transition-all duration-300 ${
+            scrolled 
+              ? 'h-11 w-11' 
+              : 'h-[72px] lg:h-[90px] w-[180px] lg:w-[280px]'
+          }`}
           onClick={() => setMobileMenuOpen(false)}
         >
           {/* Logo Text (logo.png) */}
@@ -74,7 +77,7 @@ export default function Navbar() {
               width={280}
               height={88}
               priority
-              className="h-20 w-auto object-contain"
+              className="h-12 lg:h-20 w-auto object-contain"
             />
           </div>
 
@@ -83,10 +86,10 @@ export default function Navbar() {
             <Image
               src="/favicon.ico"
               alt="Stivate Icon"
-              width={36}
-              height={36}
+              width={40}
+              height={40}
               priority
-              className="h-9 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
           </div>
         </Link>
