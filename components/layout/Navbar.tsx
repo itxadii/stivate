@@ -58,26 +58,26 @@ export default function Navbar() {
         : "bg-white/70 backdrop-blur-sm border-b border-transparent py-3 lg:py-4"
         }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
           className={`flex items-center relative transition-all duration-300 ${
             scrolled 
               ? 'h-11 w-11' 
-              : 'h-[72px] lg:h-[90px] w-[180px] lg:w-[280px]'
+              : 'h-[72px] lg:h-[90px] w-[250px] sm:w-[280px] max-w-[65vw] lg:max-w-none'
           }`}
           onClick={() => setMobileMenuOpen(false)}
         >
           {/* Logo Text (logo.png) */}
-          <div className={`transition-all duration-300 ease-in-out ${scrolled ? 'opacity-0 scale-75 pointer-events-none absolute' : 'opacity-100 scale-100'}`}>
+          <div className={`w-full h-full flex items-center transition-all duration-300 ease-in-out ${scrolled ? 'opacity-0 scale-75 pointer-events-none absolute' : 'opacity-100 scale-100'}`}>
             <Image
               src="/logo.png"
               alt="Stivate Logo"
               width={280}
               height={88}
               priority
-              className="h-12 lg:h-20 w-auto object-contain"
+              className="h-16 lg:h-20 max-w-full w-auto object-contain"
             />
           </div>
 

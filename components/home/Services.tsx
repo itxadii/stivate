@@ -52,17 +52,17 @@ const previewSolutions = [
 // Helper to map slug to image asset
 function getImagePath(slug: string) {
   switch (slug) {
-    case "dispatch-management":
+    case "dispatch-management-software":
       return "/industrialsolutions/dispatchmanagement.png";
-    case "grn-management":
+    case "grn-management-software":
       return "/industrialsolutions/grnandgoodsinbound.png";
     case "warehouse-dashboard":
       return "/industrialsolutions/warehousedashboard.png";
-    case "employee-productivity":
+    case "employee-productivity-tracking":
       return "/industrialsolutions/employeeproductivity.png";
     case "erp-integration":
       return "/industrialsolutions/sapintegrations.png";
-    case "custom-software-development":
+    case "custom-manufacturing-software":
       return "/industrialsolutions/customsoftwaredevelopmetn.png";
     default:
       return "/industrialsolutions/customsoftwaredevelopmetn.png";
