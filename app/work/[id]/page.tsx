@@ -14,6 +14,11 @@ import {
 } from "lucide-react";
 import { caseStudies } from "@/components/work/caseStudiesData";
 import Footer from "@/components/layout/Footer";
+import { Metadata } from "next";
+
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
 
 export async function generateStaticParams() {
   return [
@@ -23,9 +28,21 @@ export async function generateStaticParams() {
   ];
 }
 
-interface PageProps {
-  params: Promise<{ id: string }>;
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const targetId = id === "primetimebusinesscentre" ? "cre-crm" : id;
+  const project = caseStudies.find((study) => study.id === targetId);
+  if (!project) return {};
+
+  return {
+    title: `${project.title} Case Study | Stivate`,
+    description: `${project.subtitle}. Learn how Stivate delivered: ${project.brief}`,
+    alternates: {
+      canonical: `/work/${id}`,
+    },
+  };
 }
+
 
 export default async function CaseStudyPage({ params }: PageProps) {
   const { id } = await params;

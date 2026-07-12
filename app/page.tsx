@@ -14,11 +14,26 @@ import Footer from "@/components/layout/Footer";
 export const metadata = {
   title: "Manufacturing & Warehouse Automation Software | Stivate",
   description: "Stivate builds custom software for manufacturing companies, warehouses, and 3PL providers. Automate dispatch, GRN, gate entry, employee productivity, reporting, and operational workflows.",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function Home() {
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Stivate",
+    "url": "https://stivate.com"
+  };
+
   return (
     <main className="relative w-full bg-transparent text-zinc-900 font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+
       <Hero />
       <ClientsBar />
       <Problem />

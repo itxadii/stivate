@@ -55,7 +55,11 @@ function getImagePath(slug: string) {
 export const metadata = {
   title: "Sectors & Industries We Support | Stivate",
   description: "We build tailored software applications for manufacturing plants, multi-tenant warehouses, automotive JIT yards, and food processing lines.",
+  alternates: {
+    canonical: "/industries",
+  },
 };
+
 
 export default function IndustriesLandingPage() {
   return (

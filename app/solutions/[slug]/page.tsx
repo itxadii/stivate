@@ -35,8 +35,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${sol.title} | Warehouse & Manufacturing Automation`,
     description: `Optimize operations with our custom ${sol.title.toLowerCase()}. ${sol.subtitle} Read challenges, workflows, metrics, and FAQs.`,
+    alternates: {
+      canonical: `/solutions/${slug}`,
+    },
   };
 }
+
 
 // Helper to map slug to image asset
 function getImagePath(slug: string) {

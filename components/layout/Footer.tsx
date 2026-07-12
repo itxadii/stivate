@@ -58,8 +58,9 @@ export default function Footer() {
                 ["Employee Productivity", "/solutions/employee-productivity-tracking"],
                 ["ERP & SAP Integration", "/solutions/erp-integration"],
                 ["Custom Development", "/solutions/custom-manufacturing-software"],
+                ["View All Solutions →", "/solutions"],
               ].map(([label, href]) => (
-                <li key={label}>
+                <li key={label} className={label.includes("→") ? "pt-1.5 border-t border-slate-300/40" : ""}>
                   <Link href={href} className="hover:text-zinc-950 transition-colors">
                     {label}
                   </Link>
@@ -80,8 +81,9 @@ export default function Footer() {
                 ["Automotive Parts", "/industries/automotive"],
                 ["Food & Beverages", "/industries/food-processing"],
                 ["FMCG Distribution", "/industries/fmcg"],
+                ["View All Verticals →", "/industries"],
               ].map(([label, href]) => (
-                <li key={label}>
+                <li key={label} className={label.includes("→") ? "pt-1.5 border-t border-slate-300/40" : ""}>
                   <Link href={href} className="hover:text-zinc-950 transition-colors">
                     {label}
                   </Link>
@@ -97,6 +99,7 @@ export default function Footer() {
             <ul className="space-y-3 text-zinc-500 text-sm font-medium">
               {[
                 ["About Stivate", "/about"],
+                ["Services", "/services"],
                 ["Our Case Studies", "/work"],
                 ["Careers", "/careers"],
                 ["Contact Office", "/contact"],

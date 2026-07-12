@@ -4,83 +4,72 @@ import { industries } from './industries/industriesData'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://stivate.com'
+  // Static modification date representing the latest site update (2026-07-13)
+  const lastModified = new Date('2026-07-13')
   
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1.0,
+      lastModified,
     },
     {
       url: `${baseUrl}/solutions`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
+      lastModified,
     },
     {
       url: `${baseUrl}/industries`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
+      lastModified,
     },
     {
       url: `${baseUrl}/services`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
+      lastModified,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      lastModified,
     },
     {
       url: `${baseUrl}/work`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      lastModified,
     },
     {
       url: `${baseUrl}/careers`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
+      lastModified,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      lastModified,
     },
     {
-      url: `${baseUrl}/privacy-policy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
+      url: `${baseUrl}/websites`,
+      lastModified,
     },
     {
-      url: `${baseUrl}/cookie-policy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
+      url: `${baseUrl}/resources`,
+      lastModified,
+    },
+  ];
+
+  const caseStudyPages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/work/i3pl`,
+      lastModified,
+    },
+    {
+      url: `${baseUrl}/work/cre-crm`,
+      lastModified,
     },
   ];
 
   const solutionPages: MetadataRoute.Sitemap = solutions.map((sol) => ({
     url: `${baseUrl}/solutions/${sol.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.8,
+    lastModified,
   }));
 
   const industryPages: MetadataRoute.Sitemap = industries.map((ind) => ({
     url: `${baseUrl}/industries/${ind.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.8,
+    lastModified,
   }));
 
-  return [...staticPages, ...solutionPages, ...industryPages];
+  return [...staticPages, ...caseStudyPages, ...solutionPages, ...industryPages];
 }

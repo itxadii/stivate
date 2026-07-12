@@ -13,7 +13,11 @@ import Footer from "@/components/layout/Footer";
 export const metadata = {
   title: "About Stivate Manufacturing Automation Company",
   description: "Learn about Stivate's journey to help manufacturing operations, warehouses, and 3PL providers modernize workflows and move beyond manual spreadsheet sheets.",
+  alternates: {
+    canonical: "/about",
+  },
 };
+
 
 const values = [
   {

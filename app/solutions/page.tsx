@@ -84,7 +84,11 @@ function getImagePath(slug: string) {
 export const metadata = {
   title: "Enterprise Solutions for Warehouse & Operations Automation | Stivate",
   description: "We build custom software systems for GRN processing, dispatch yards, barcode printing, ERP middleware, and inventory location tracking.",
+  alternates: {
+    canonical: "/solutions",
+  },
 };
+
 
 export default function SolutionsLandingPage() {
   return (

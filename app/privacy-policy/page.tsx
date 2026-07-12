@@ -1,4 +1,17 @@
 import Footer from "@/components/layout/Footer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | Stivate",
+  robots: {
+    index: false,
+    follow: true,
+  },
+  alternates: {
+    canonical: "/privacy-policy",
+  },
+};
+
 
 export default function PrivacyPolicy() {
   return (

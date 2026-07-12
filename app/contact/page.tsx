@@ -6,7 +6,11 @@ import Footer from "@/components/layout/Footer";
 export const metadata = {
   title: "Contact Stivate | Custom Warehouse Software Consultation",
   description: "Get in touch with Stivate to schedule a free 30-minute process audit for your manufacturing plant, warehouse, or 3PL logistics operations.",
+  alternates: {
+    canonical: "/contact",
+  },
 };
+
 
 export default function ContactPage() {
   const localBusinessSchema = {

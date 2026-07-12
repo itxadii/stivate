@@ -1,6 +1,17 @@
 import { auth, signOut } from "@/auth"
 import { redirect } from "next/navigation"
 import Sidebar from "./Sidebar"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Stivate Internal Team",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
+}
+
 
 export default async function AdminLayout({
   children,

@@ -34,8 +34,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${ind.title} Solutions | Stivate`,
     description: `Modernize ${ind.name.toLowerCase()} workflows, optimize loading dock turnaround, and eliminate manual processes. Read challenges, case studies, and FAQs.`,
+    alternates: {
+      canonical: `/industries/${slug}`,
+    },
   };
 }
+
 
 // Helper to map slug to image asset
 function getImagePath(slug: string) {
