@@ -44,7 +44,7 @@ export const caseStudies: CaseStudy[] = [
     technologies: ["AWS", "SAP Integration", "OCR", "QR Tracking", "FastAPI", "PostgreSQL", "React", "Next.js"],
     impactTitle: "90% Faster",
     impactLabel: "Document Extraction",
-    image: "/systems/wmsautomation.png",
+    image: "/services/businessautomation.png",
     brief: "A cloud-native warehouse automation platform that digitizes receiving processes, synchronizes stock movements with SAP ERP in real-time, and reduces processing backlogs.",
     challenge: [
       "Manual inventory receiving and physical stock verification took hours.",
@@ -118,7 +118,7 @@ export const caseStudies: CaseStudy[] = [
     technologies: ["PHP 8", "CodeIgniter", "Perfex CRM", "MySQL", "JavaScript", "DataTables", "REST Integrations"],
     impactTitle: "100% Active",
     impactLabel: "Payment & Lead Sync",
-    image: "/systems/customcrm.png",
+    image: "/services/customcrm.png",
     brief: "Enhanced and extended a heavily customized business CRM managing office rentals, tenant billing, lead scoring, and financial operations in a production-safe environment.",
     challenge: [
       "The client's growth outpaced their CRM capacity, resulting in workspace customization limits.",
