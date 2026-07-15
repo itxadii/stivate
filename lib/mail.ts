@@ -13,7 +13,7 @@ export async function sendEnquiryEmail(enquiry: {
   const user = process.env.SMTP_USER
   const pass = process.env.SMTP_PASS
   const from = process.env.SMTP_FROM || "hello@stivate.com"
-  const to = "adityawaghmarex@gmail.com"
+  const to = "adityawaghmarex@gmail.com, kolpeprathamesh@gmail.com"
 
   if (!host || !user || !pass) {
     console.warn("SMTP configuration is missing in environment variables. Skipping email sending.")
