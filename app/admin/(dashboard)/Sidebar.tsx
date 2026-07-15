@@ -18,7 +18,8 @@ import {
   ChevronLeft, 
   ChevronRight,
   PanelLeft,
-  CheckCircle2 
+  CheckCircle2,
+  Inbox
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -62,6 +63,7 @@ export default function Sidebar({ session, logoutAction }: SidebarProps) {
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Clients", href: "/admin/clients", icon: Users },
+    { name: "Enquiries", href: "/admin/enquiries", icon: Inbox },
     { name: "Leads", href: "/admin/leads", icon: Flame },
     { name: "Projects", href: "/admin/projects", icon: FolderKanban },
     { name: "Invoices", href: "/admin/invoices", icon: Receipt },

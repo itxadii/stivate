@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { createEnquiry } from "@/lib/actions/enquiry";
 
 const businessTypes = [
   "Manufacturing / Plant Operations",
@@ -39,27 +40,11 @@ export default function LeadCapture({
     e.preventDefault();
     setLoading(true);
 
-    const data = new FormData();
-    data.append("access_key", "dc080f7f-2531-4b32-864f-71eb3d5f7a27");
-    data.append("name", formData.name);
-    data.append("email", formData.email);
-    data.append("whatsapp", formData.whatsapp);
-    data.append("businessType", formData.businessType);
-    data.append("erpSystem", formData.erpSystem);
-    data.append("challenge", formData.challenge);
-
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: data,
-      });
-      const resData = await response.json();
-      if (resData.success) {
-        setSubmitted(true);
-      } else {
-        alert("Something went wrong. Please try again.");
-      }
-    } catch {
+      await createEnquiry(formData);
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
       alert("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

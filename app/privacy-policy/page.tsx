@@ -72,7 +72,6 @@ export default function PrivacyPolicy() {
           <div className="space-y-4">
             <p className="text-zinc-600 leading-relaxed">We do not sell, rent, or trade your personal information to any third party. We only share data with:</p>
             <ul className="list-disc pl-6 text-zinc-600 space-y-2">
-              <li><span className="font-bold text-zinc-900">Web3Forms</span> — our form submission service that delivers your enquiry to our inbox. Their privacy policy is available at web3forms.com.</li>
               <li><span className="font-bold text-zinc-900">Vercel / hosting provider</span> — our website hosting platform which processes server logs.</li>
               <li><span className="font-bold text-zinc-900">Google Analytics (if enabled)</span> — for anonymous website traffic analysis.</li>
             </ul>
