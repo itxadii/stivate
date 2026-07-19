@@ -3,8 +3,10 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { updateQuotation, archiveQuotation } from "@/lib/actions/quotation"
-import { Plus, Trash2, Calendar, ClipboardList, Info, Sparkles, Trash, Save, ArrowLeft } from "lucide-react"
+import { Plus, Trash2, Calendar, ClipboardList, Info, Sparkles, Trash, Save, ArrowLeft, Copy, CheckCircle } from "lucide-react"
 import Link from "next/link"
+import AIImportModal from "@/components/crm/AIImportModal"
+import { mapQuotationFields, QUOTATION_PROMPT } from "@/lib/aiImport"
 
 interface Client {
   id: string
@@ -92,6 +94,84 @@ export default function EditQuotationForm({ quotation, clients, leads }: EditQuo
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isArchiving, setIsArchiving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false)
+  const [importSuccess, setImportSuccess] = useState<string | null>(null)
+  const [importWarnings, setImportWarnings] = useState<string[]>([])
+  const [highlighted, setHighlighted] = useState(false)
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
+
+  const handleCopyPrompt = () => {
+    navigator.clipboard.writeText(QUOTATION_PROMPT);
+    setToastMessage("AI prompt copied. Paste it into your preferred AI and describe your quotation or invoice.");
+    setTimeout(() => setToastMessage(null), 4000);
+  };
+
+  const handleAIImportSuccess = (jsonData: any, warnings: string[]) => {
+    try {
+      const mapped = mapQuotationFields(jsonData, clients)
+
+      if (mapped.selectedClientId) {
+        setSelectedClientId(mapped.selectedClientId)
+      }
+      if (mapped.clientName) setClientName(mapped.clientName)
+      if (mapped.clientAddress) setClientAddress(mapped.clientAddress)
+
+      if (mapped.currency) setCurrency(mapped.currency)
+      if (mapped.issueDate) setIssueDate(mapped.issueDate)
+      if (mapped.validUntil) setValidUntil(mapped.validUntil)
+      if (mapped.title) setTitle(mapped.title)
+      if (mapped.introduction) setIntroduction(mapped.introduction)
+      if (mapped.marketComparison) setMarketComparison(mapped.marketComparison)
+
+      if (mapped.services.length > 0) {
+        setServices(mapped.services.map(item => ({
+          description: item.description,
+          quantity: item.quantity,
+          price: item.price,
+          isIncluded: item.isIncluded
+        })))
+      }
+      if (mapped.clientExpenses.length > 0) {
+        setClientExpenses(mapped.clientExpenses.map(item => ({
+          description: item.description,
+          quantity: item.quantity,
+          price: item.price,
+          isIncluded: item.isIncluded
+        })))
+      } else {
+        setClientExpenses([])
+      }
+      if (mapped.optionalItems.length > 0) {
+        setOptionalItems(mapped.optionalItems.map(item => ({
+          description: item.description,
+          quantity: item.quantity,
+          price: item.price,
+          isIncluded: item.isIncluded
+        })))
+      } else {
+        setOptionalItems([])
+      }
+
+      if (mapped.taxText) setTaxText(mapped.taxText)
+      setTaxRate(mapped.taxRate)
+      setDiscount(mapped.discount)
+
+      setMaintenancePlanPrice(mapped.maintenancePlanPrice)
+      if (mapped.maintenancePlanDetails) {
+        setMaintenancePlanDetails(mapped.maintenancePlanDetails)
+      }
+      if (mapped.termsAndConditions) {
+        setTermsAndConditions(mapped.termsAndConditions)
+      }
+
+      setImportSuccess("AI data imported successfully.")
+      setImportWarnings(warnings)
+      setHighlighted(true)
+      setTimeout(() => setHighlighted(false), 2000)
+    } catch (err: any) {
+      setError("Import failed to apply: " + err.message)
+    }
+  }
 
   const handleClientChange = (clientId: string) => {
     setSelectedClientId(clientId)
@@ -266,21 +346,57 @@ export default function EditQuotationForm({ quotation, clients, leads }: EditQuo
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={handleArchive}
-          disabled={isArchiving || isSubmitting}
-          className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-gray-800 px-3.5 py-2 text-sm font-semibold text-red-650 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-50 transition"
-        >
-          <Trash2 className="w-4 h-4" />
-          {isArchiving ? "Archiving..." : "Archive Quotation"}
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleCopyPrompt}
+            className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-3.5 py-2 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-750 transition border border-gray-300 dark:border-gray-700 cursor-pointer"
+          >
+            <Copy className="w-4 h-4 text-gray-400 dark:text-gray-300" />
+            Copy AI Prompt
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsImportModalOpen(true)}
+            className="inline-flex items-center gap-2 rounded-md bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 px-3.5 py-2 text-sm font-semibold hover:bg-blue-100 dark:hover:bg-blue-900/30 transition border border-blue-200 dark:border-blue-900/30 cursor-pointer"
+          >
+            <Sparkles className="w-4 h-4 text-blue-500" />
+            Import from AI
+          </button>
+
+          <button
+            type="button"
+            onClick={handleArchive}
+            disabled={isArchiving || isSubmitting}
+            className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-gray-800 px-3.5 py-2 text-sm font-semibold text-red-650 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-50 transition cursor-pointer"
+          >
+            <Trash2 className="w-4 h-4" />
+            {isArchiving ? "Archiving..." : "Archive Quotation"}
+          </button>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8 bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-800 rounded-xl p-6 sm:p-8">
+      <form onSubmit={handleSubmit} className={`space-y-8 bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-800 rounded-xl p-6 sm:p-8 ${highlighted ? "ring-2 ring-amber-500/50 bg-amber-50/10 dark:bg-amber-950/5 transition-all duration-300" : "transition-all duration-1000"}`}>
         {error && (
           <div className="rounded-md bg-red-50 p-4 border border-red-200 dark:bg-red-900/20 dark:border-red-800">
             <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
+          </div>
+        )}
+
+        {importSuccess && (
+          <div className="rounded-md bg-green-50 p-4 border border-green-200 dark:bg-green-900/20 dark:border-green-800">
+            <p className="text-sm text-green-700 dark:text-green-400 font-semibold">{importSuccess}</p>
+            {importWarnings.length > 0 && (
+              <div className="mt-2 text-xs text-amber-700 dark:text-amber-400 space-y-1">
+                <p className="font-bold">Warnings:</p>
+                <ul className="list-disc pl-5">
+                  {importWarnings.map((w, idx) => (
+                    <li key={idx}>{w}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
 
@@ -928,6 +1044,20 @@ export default function EditQuotationForm({ quotation, clients, leads }: EditQuo
           </button>
         </div>
       </form>
+
+      <AIImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        expectedType="quotation"
+        onImportSuccess={handleAIImportSuccess}
+      />
+
+      {toastMessage && (
+        <div className="fixed bottom-5 right-5 z-55 max-w-sm rounded-lg bg-gray-900 text-white text-xs py-3 px-4 shadow-xl flex items-center gap-2 border border-gray-800 dark:bg-white dark:text-gray-900 dark:border-gray-200 transition-all duration-300 animate-slide-in">
+          <CheckCircle className="w-4 h-4 text-green-500 shrink-0" />
+          <span className="font-medium">{toastMessage}</span>
+        </div>
+      )}
     </div>
   )
 }
