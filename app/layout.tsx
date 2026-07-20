@@ -121,12 +121,16 @@ export default async function RootLayout({
             gtag('config', 'G-GQWMGVG48M');
           `}
         </Script>
-        <LenisProvider>
-          {!isAdmin && <NoiseOverlay />}
-          {!isAdmin && <Navbar />}
-          {children}
-          {!isAdmin && <CookiePopup />}
-        </LenisProvider>
+        {isAdmin ? (
+          children
+        ) : (
+          <LenisProvider>
+            <NoiseOverlay />
+            <Navbar />
+            {children}
+            <CookiePopup />
+          </LenisProvider>
+        )}
       </body>
     </html>
   );

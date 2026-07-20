@@ -42,7 +42,7 @@ export default function NewInvoiceForm({ projects }: NewInvoiceFormProps) {
   const [issueDate, setIssueDate] = useState("")
   const [dueDate, setDueDate] = useState("")
   const [termsAndConditions, setTermsAndConditions] = useState(
-    "1. Payment is due within 30 days of the invoice date.\n2. Please make all checks payable to Stivate LLC.\n3. Thank you for your business!"
+    "1. Payment is due within 30 days of the invoice date.\n2. Please make all checks payable to Stivate LLP.\n3. Thank you for your business!"
   )
   const [items, setItems] = useState<InvoiceItemField[]>([
     { description: "", quantity: 1, price: 0 },

@@ -91,6 +91,9 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
       {/* Print styles overrides */}
       <style jsx global>{`
         @media print {
+          @page {
+            margin: 0 !important;
+          }
           /* Hide everything except the quotation container */
           body * {
             visibility: hidden !important;
@@ -105,7 +108,7 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
             width: 100%;
             border: none !important;
             box-shadow: none !important;
-            padding: 0 !important;
+            padding: 1.5cm !important;
             margin: 0 !important;
             background: white !important;
             color: black !important;
@@ -162,20 +165,29 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
       </div>
 
       {/* Main Quotation Sheet */}
-      <div className="printable-quotation max-w-4xl mx-auto bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-800 rounded-xl p-8 sm:p-12 text-gray-900 dark:text-gray-100 leading-relaxed font-sans">
+      <div className="printable-quotation max-w-4xl mx-auto bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-800 rounded-xl p-8 sm:p-12 text-gray-900 dark:text-gray-100 leading-relaxed font-sans relative overflow-hidden">
+        {/* Background decorative graphics */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/25 dark:bg-blue-950/10 rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none z-0" />
+        <div className="absolute top-1/4 left-0 w-48 h-48 bg-slate-200/35 dark:bg-slate-800/15 rounded-full -translate-x-1/2 pointer-events-none z-0" />
+        <div className="absolute top-1/3 right-1/4 w-32 h-32 bg-blue-100/20 dark:bg-blue-950/8 rounded-full pointer-events-none z-0" />
+        <div className="absolute top-1/2 right-0 w-56 h-56 bg-slate-200/35 dark:bg-slate-800/15 rounded-full translate-x-1/2 pointer-events-none z-0" />
+        <div className="absolute bottom-1/3 left-1/4 w-40 h-40 bg-blue-100/20 dark:bg-blue-950/8 pointer-events-none rounded-full z-0" />
+        <div className="absolute bottom-1/4 right-10 w-28 h-28 bg-slate-200/30 dark:bg-slate-800/12 rounded-full pointer-events-none z-0" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-100/25 dark:bg-blue-950/10 rounded-full -translate-x-1/3 translate-y-1/3 pointer-events-none z-0" />
+
 
         {/* PAGE 1: Header + Metadata + Intro */}
-        <div className="space-y-6">
+        <div className="space-y-6 relative z-10">
           {/* Company branding block */}
           <div className="flex flex-col sm:flex-row justify-between items-start gap-6 border-b border-gray-200 dark:border-gray-800 pb-8">
             <div>
               <img
                 src="/logo.png"
                 alt="STIVATE"
-                className="h-36 w-auto object-contain dark:invert print:invert-0 mb-4"
+                className="h-[216px] w-auto object-contain dark:invert print:invert-0 mb-4 -ml-[16.5px]"
               />
               <div className="text-sm text-gray-500 dark:text-gray-400 space-y-0.5">
-                <p className="font-semibold text-gray-700 dark:text-gray-300">Stivate LLC</p>
+                <p className="font-semibold text-gray-700 dark:text-gray-300">Stivate LLP</p>
                 <p>Flat no.5 & 7 Sakar Appartment</p>
                 <p>Pandit Colony Lane 7, Gangapur Rd,</p>
                 <p>Nashik, Maharashtra</p>
@@ -242,74 +254,36 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
         </div>
 
         {/* SERVICES INCLUDED TABLE */}
-        <div className="py-6 section-break-avoid">
+        <div className="py-6 section-break-avoid relative z-10">
           <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-4">
             Services Included
           </h3>
 
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-800">
-                <th scope="col" className="py-3 px-2 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  Description
-                </th>
-                <th scope="col" className="px-4 py-3 text-center text-xs font-bold text-gray-400 uppercase tracking-wider w-[15%]">
-                  Qty
-                </th>
-                <th scope="col" className="px-2 py-3 text-right text-xs font-bold text-gray-400 uppercase tracking-wider w-[22%]">
-                  Price
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-150 dark:divide-gray-800 bg-white dark:bg-gray-900">
-              {services.map((item) => (
-                <tr key={item.id}>
-                  <td className="py-4 px-2 text-sm font-semibold text-gray-900 dark:text-white">
-                    {item.description}
-                  </td>
-                  <td className="px-4 py-4 text-sm text-center text-gray-600 dark:text-gray-400">
-                    {item.quantity}
-                  </td>
-                  <td className="px-2 py-4 text-sm text-right font-semibold text-gray-900 dark:text-white">
-                    {formatItemPrice(item)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* EXPENSES PAID BY CLIENT TABLE */}
-        {clientExpenses.length > 0 && (
-          <div className="py-6 border-t border-gray-200 dark:border-gray-800 section-break-avoid">
-            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-4">
-              Expenses Paid by Client (e.g. Third-party APIs & Server Infrastructure)
-            </h3>
-
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+          <div className="border border-slate-300 dark:border-slate-700 rounded-lg overflow-hidden">
+            <table className="min-w-full divide-y divide-slate-300 dark:divide-slate-700">
               <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-800">
-                  <th scope="col" className="py-3 px-2 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
+                <tr className="bg-gray-100 dark:bg-gray-850/60 border-b border-slate-300 dark:border-slate-700 divide-x divide-slate-300 dark:divide-slate-700">
+                  <th scope="col" className="pl-4 pr-4 py-3 text-left text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">
                     Description
                   </th>
-                  <th scope="col" className="px-4 py-3 text-center text-xs font-bold text-gray-400 uppercase tracking-wider w-[15%]">
+                  <th scope="col" className="px-4 py-3 text-center text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider w-[15%]">
                     Qty
                   </th>
-                  <th scope="col" className="px-2 py-3 text-right text-xs font-bold text-gray-400 uppercase tracking-wider w-[22%]">
+                  <th scope="col" className="pl-4 pr-4 py-3 text-right text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider w-[22%]">
                     Price
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-150 dark:divide-gray-800 bg-white dark:bg-gray-900">
-                {clientExpenses.map((item) => (
-                  <tr key={item.id}>
-                    <td className="py-4 px-2 text-sm font-semibold text-gray-900 dark:text-white">
+              <tbody className="divide-y divide-slate-300 dark:divide-slate-700 bg-white dark:bg-gray-900">
+                {services.map((item) => (
+                  <tr key={item.id} className="divide-x divide-slate-300 dark:divide-slate-700">
+                    <td className="pl-4 pr-4 py-4 text-sm font-normal text-gray-700 dark:text-gray-300">
                       {item.description}
                     </td>
-                    <td className="px-4 py-4 text-sm text-center text-gray-600 dark:text-gray-400">
+                    <td className="px-4 py-4 text-sm text-center text-gray-600 dark:text-gray-400 font-normal">
                       {item.quantity}
                     </td>
-                    <td className="px-2 py-4 text-sm text-right font-semibold text-gray-900 dark:text-white">
+                    <td className="pl-4 pr-4 py-4 text-sm text-right font-normal text-gray-700 dark:text-gray-300">
                       {formatItemPrice(item)}
                     </td>
                   </tr>
@@ -317,10 +291,52 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* EXPENSES PAID BY CLIENT TABLE */}
+        {clientExpenses.length > 0 && (
+          <div className="py-6 border-t border-gray-200 dark:border-gray-800 section-break-avoid relative z-10">
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-4">
+              Expenses Paid by Client (e.g. Third-party APIs & Server Infrastructure)
+            </h3>
+
+            <div className="border border-slate-300 dark:border-slate-700 rounded-lg overflow-hidden">
+              <table className="min-w-full divide-y divide-slate-300 dark:divide-slate-700">
+                <thead>
+                  <tr className="bg-gray-100 dark:bg-gray-850/60 border-b border-slate-300 dark:border-slate-700 divide-x divide-slate-300 dark:divide-slate-700">
+                    <th scope="col" className="pl-4 pr-4 py-3 text-left text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-center text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider w-[15%]">
+                      Qty
+                    </th>
+                    <th scope="col" className="pl-4 pr-4 py-3 text-right text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider w-[22%]">
+                      Price
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-300 dark:divide-slate-700 bg-white dark:bg-gray-900">
+                  {clientExpenses.map((item) => (
+                    <tr key={item.id} className="divide-x divide-slate-300 dark:divide-slate-700">
+                      <td className="pl-4 pr-4 py-4 text-sm font-normal text-gray-700 dark:text-gray-300">
+                        {item.description}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-center text-gray-600 dark:text-gray-400 font-normal">
+                        {item.quantity}
+                      </td>
+                      <td className="pl-4 pr-4 py-4 text-sm text-right font-normal text-gray-700 dark:text-gray-300">
+                        {formatItemPrice(item)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         )}
 
         {/* Totals & Calculations (styled like invoice math block) */}
-        <div className="flex justify-end border-t border-gray-200 dark:border-gray-800 pt-6 pb-6 section-break-avoid">
+        <div className="flex justify-end border-t border-gray-200 dark:border-gray-800 pt-6 pb-6 section-break-avoid relative z-10">
           <div className="w-full sm:w-64 space-y-2 text-right text-sm">
             <div className="flex justify-between text-gray-500 dark:text-gray-400">
               <span>Subtotal</span>
@@ -351,41 +367,43 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
 
         {/* OPTIONAL ITEMS SECTION */}
         {optionalItems.length > 0 && (
-          <div className="py-6 border-t border-gray-200 dark:border-gray-800 section-break-avoid">
+          <div className="py-6 border-t border-gray-200 dark:border-gray-800 section-break-avoid relative z-10">
             <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-4">
               Optional Items (If Required)
             </h3>
 
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-              <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-800">
-                  <th scope="col" className="py-3 px-2 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
-                    Description
-                  </th>
-                  <th scope="col" className="px-4 py-3 text-center text-xs font-bold text-gray-400 uppercase tracking-wider w-[15%]">
-                    Qty
-                  </th>
-                  <th scope="col" className="px-2 py-3 text-right text-xs font-bold text-gray-400 uppercase tracking-wider w-[22%]">
-                    Price
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-150 dark:divide-gray-800 bg-white dark:bg-gray-900">
-                {optionalItems.map((item) => (
-                  <tr key={item.id}>
-                    <td className="py-4 px-2 text-sm font-semibold text-gray-900 dark:text-white">
-                      {item.description}
-                    </td>
-                    <td className="px-4 py-4 text-sm text-center text-gray-600 dark:text-gray-400">
-                      {item.quantity}
-                    </td>
-                    <td className="px-2 py-4 text-sm text-right font-semibold text-gray-900 dark:text-white">
-                      {formatItemPrice(item)}
-                    </td>
+            <div className="border border-slate-300 dark:border-slate-700 rounded-lg overflow-hidden">
+              <table className="min-w-full divide-y divide-slate-300 dark:divide-slate-700">
+                <thead>
+                  <tr className="bg-gray-100 dark:bg-gray-850/60 border-b border-slate-300 dark:border-slate-700 divide-x divide-slate-300 dark:divide-slate-700">
+                    <th scope="col" className="pl-4 pr-4 py-3 text-left text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-center text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider w-[15%]">
+                      Qty
+                    </th>
+                    <th scope="col" className="pl-4 pr-4 py-3 text-right text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider w-[22%]">
+                      Price
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-300 dark:divide-slate-700 bg-white dark:bg-gray-900">
+                  {optionalItems.map((item) => (
+                    <tr key={item.id} className="divide-x divide-slate-300 dark:divide-slate-700">
+                      <td className="pl-4 pr-4 py-4 text-sm font-normal text-gray-700 dark:text-gray-300">
+                        {item.description}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-center text-gray-600 dark:text-gray-400 font-normal">
+                        {item.quantity}
+                      </td>
+                      <td className="pl-4 pr-4 py-4 text-sm text-right font-normal text-gray-700 dark:text-gray-300">
+                        {formatItemPrice(item)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <div className="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800/80">
               <p className="text-3xs sm:text-2xs text-gray-400 italic">
@@ -396,7 +414,7 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
         )}
 
         {/* PAGE 3: Market Comparison + Maintenance + Terms */}
-        <div className="page-break-before pt-6 space-y-8 border-t border-gray-200 dark:border-gray-800">
+        <div className="page-break-before pt-6 space-y-8 border-t border-gray-200 dark:border-gray-800 relative z-10">
 
           {/* Market Comparison */}
           {quotation.marketComparison && (
@@ -447,7 +465,7 @@ export default function QuotationDetail({ quotation }: QuotationDetailProps) {
         </div>
 
         {/* PAGE 4: Client Acceptance Signature */}
-        <div className="page-break-before pt-6 space-y-8 border-t border-gray-200 dark:border-gray-800">
+        <div className="page-break-before pt-6 space-y-8 border-t border-gray-200 dark:border-gray-800 relative z-10">
 
           <div className="space-y-2 section-break-avoid">
             <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-2">

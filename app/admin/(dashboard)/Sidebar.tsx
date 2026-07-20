@@ -213,7 +213,7 @@ export default function Sidebar({ session, logoutAction }: SidebarProps) {
 
       {/* Desktop Persistent Sidebar */}
       <aside 
-        className={`hidden md:flex md:flex-col h-screen sticky top-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shrink-0 transition-all duration-300 relative z-25 ${
+        className={`hidden md:flex md:flex-col h-screen sticky top-0 self-start bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shrink-0 transition-all duration-300 relative z-25 ${
           isCollapsed ? "w-20" : "w-64"
         }`}
       >

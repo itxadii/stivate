@@ -2,6 +2,14 @@ import { auth, signOut } from "@/auth"
 import { redirect } from "next/navigation"
 import Sidebar from "./Sidebar"
 import type { Metadata } from "next"
+import { Roboto } from "next/font/google"
+
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto",
+})
 
 export const metadata: Metadata = {
   title: "Stivate Internal Team",
@@ -30,7 +38,13 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col md:flex-row">
+    <div
+      className={`min-h-screen md:h-screen md:overflow-hidden bg-gray-50 dark:bg-gray-950 flex flex-col md:flex-row ${roboto.variable}`}
+      style={{
+        fontFamily: "var(--font-roboto), sans-serif",
+        ["--font-sans" as any]: "var(--font-roboto), sans-serif",
+      }}
+    >
       <Sidebar session={session} logoutAction={logoutAction} />
       
       {/* Main Content Area */}

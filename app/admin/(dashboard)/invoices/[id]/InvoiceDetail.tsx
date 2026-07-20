@@ -102,6 +102,9 @@ export default function InvoiceDetail({ invoice }: InvoiceDetailProps) {
       {/* Print styles overrides */}
       <style jsx global>{`
         @media print {
+          @page {
+            margin: 0 !important;
+          }
           /* Hide everything in the layout except our printable container */
           body * {
             visibility: hidden !important;
@@ -116,10 +119,15 @@ export default function InvoiceDetail({ invoice }: InvoiceDetailProps) {
             width: 100%;
             border: none !important;
             box-shadow: none !important;
-            padding: 0 !important;
+            padding: 1.5cm !important;
             margin: 0 !important;
             background: white !important;
             color: black !important;
+          }
+          /* Force backgrounds & text when printing */
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
           }
           /* Prevent page split inside tables and sections */
           tr, blockquote, pre {
@@ -195,18 +203,26 @@ export default function InvoiceDetail({ invoice }: InvoiceDetailProps) {
         </div>
       </div>
 
-      {/* Main Invoice Card (Target of printable-area) */}
-      <div className="printable-area bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-8 sm:p-12 shadow-sm text-gray-900 dark:text-gray-100">
+      <div className="printable-area bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-8 sm:p-12 shadow-sm text-gray-900 dark:text-gray-100 relative overflow-hidden">
+        {/* Background decorative graphics */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/25 dark:bg-blue-950/10 rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none z-0" />
+        <div className="absolute top-1/4 left-0 w-48 h-48 bg-slate-200/35 dark:bg-slate-800/15 rounded-full -translate-x-1/2 pointer-events-none z-0" />
+        <div className="absolute top-1/3 right-1/4 w-32 h-32 bg-blue-100/20 dark:bg-blue-950/8 rounded-full pointer-events-none z-0" />
+        <div className="absolute top-1/2 right-0 w-56 h-56 bg-slate-200/35 dark:bg-slate-800/15 rounded-full translate-x-1/2 pointer-events-none z-0" />
+        <div className="absolute bottom-1/3 left-1/4 w-40 h-40 bg-blue-100/20 dark:bg-blue-950/8 pointer-events-none rounded-full z-0" />
+        <div className="absolute bottom-1/4 right-10 w-28 h-28 bg-slate-200/30 dark:bg-slate-800/12 rounded-full pointer-events-none z-0" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-100/25 dark:bg-blue-950/10 rounded-full -translate-x-1/3 translate-y-1/3 pointer-events-none z-0" />
+
         {/* Header Grid */}
-        <div className="flex flex-col sm:flex-row justify-between items-start gap-6 border-b border-gray-200 dark:border-gray-800 pb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-6 border-b border-gray-200 dark:border-gray-800 pb-8 relative z-10">
           <div>
             <img
               src="/logo.png"
               alt="Stivate"
-              className="h-30 w-auto object-contain dark:invert print:invert-0 mb-4"
+              className="h-[180px] w-auto object-contain dark:invert print:invert-0 mb-4 -ml-[16.5px]"
             />
             <div className="text-sm text-gray-500 dark:text-gray-400 space-y-0.5">
-              <p className="font-semibold text-gray-700 dark:text-gray-300">Stivate LLC</p>
+              <p className="font-semibold text-gray-700 dark:text-gray-300">Stivate LLP</p>
               <p>Flat no.5 & 7 Sakar Appartment</p>
               <p>Pandit Colony Lane 7, Gangapur Rd,</p>
               <p>Nashik, Maharashtra</p>
@@ -238,7 +254,7 @@ export default function InvoiceDetail({ invoice }: InvoiceDetailProps) {
         </div>
 
         {/* Billing Info Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-b border-gray-200 dark:border-gray-800">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-b border-gray-200 dark:border-gray-800 relative z-10">
           <div>
             <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-2">Billed To</span>
             <div className="text-sm space-y-1">
@@ -265,47 +281,49 @@ export default function InvoiceDetail({ invoice }: InvoiceDetailProps) {
         </div>
 
         {/* Invoice Items Table */}
-        <div className="py-8">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-800">
-                <th scope="col" className="py-3 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  Description
-                </th>
-                <th scope="col" className="px-4 py-3 text-right text-xs font-bold text-gray-400 uppercase tracking-wider w-[12%]">
-                  Qty
-                </th>
-                <th scope="col" className="px-4 py-3 text-right text-xs font-bold text-gray-400 uppercase tracking-wider w-[20%]">
-                  Unit Price
-                </th>
-                <th scope="col" className="pl-4 py-3 text-right text-xs font-bold text-gray-400 uppercase tracking-wider w-[20%]">
-                  Amount
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-150 dark:divide-gray-800">
-              {invoice.items.map((item) => (
-                <tr key={item.id}>
-                  <td className="py-4 text-sm font-semibold text-gray-900 dark:text-white">
-                    {item.description}
-                  </td>
-                  <td className="px-4 py-4 text-sm text-right text-gray-600 dark:text-gray-400">
-                    {item.quantity}
-                  </td>
-                  <td className="px-4 py-4 text-sm text-right text-gray-600 dark:text-gray-400">
-                    {formatCurrency(item.price)}
-                  </td>
-                  <td className="pl-4 py-4 text-sm text-right font-semibold text-gray-900 dark:text-white">
-                    {formatCurrency(item.quantity * item.price)}
-                  </td>
+        <div className="py-8 relative z-10">
+          <div className="border border-slate-300 dark:border-slate-700 rounded-lg overflow-hidden">
+            <table className="min-w-full divide-y divide-slate-300 dark:divide-slate-700">
+              <thead>
+                <tr className="bg-gray-100 dark:bg-gray-850/60 border-b border-slate-300 dark:border-slate-700 divide-x divide-slate-300 dark:divide-slate-700">
+                  <th scope="col" className="pl-4 pr-4 py-3 text-left text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+                    Description
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-right text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider w-[12%]">
+                    Qty
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-right text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider w-[20%]">
+                    Unit Price
+                  </th>
+                  <th scope="col" className="pl-4 pr-4 py-3 text-right text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider w-[20%]">
+                    Amount
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-300 dark:divide-slate-700">
+                {invoice.items.map((item) => (
+                  <tr key={item.id} className="divide-x divide-slate-300 dark:divide-slate-700">
+                    <td className="pl-4 pr-4 py-4 text-sm font-normal text-gray-700 dark:text-gray-300">
+                      {item.description}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-right text-gray-600 dark:text-gray-400 font-normal">
+                      {item.quantity}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-right text-gray-600 dark:text-gray-400 font-normal">
+                      {formatCurrency(item.price)}
+                    </td>
+                    <td className="pl-4 pr-4 py-4 text-sm text-right font-normal text-gray-700 dark:text-gray-300">
+                      {formatCurrency(item.quantity * item.price)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Math Summary Grid */}
-        <div className="flex justify-end border-t border-gray-200 dark:border-gray-800 pt-8 pb-8">
+        <div className="flex justify-end border-t border-gray-200 dark:border-gray-800 pt-8 pb-8 relative z-10">
           <div className="w-full sm:w-64 space-y-2 text-right">
             <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
               <span>Subtotal</span>
@@ -361,7 +379,7 @@ export default function InvoiceDetail({ invoice }: InvoiceDetailProps) {
         </div>
 
         {/* Terms & Conditions Section at the bottom */}
-        <div className="border-t border-gray-200 dark:border-gray-800 pt-6">
+        <div className="border-t border-gray-200 dark:border-gray-800 pt-6 relative z-10">
           <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-2">Terms & Conditions</span>
           {invoice.termsAndConditions ? (
             <p className="text-xs text-gray-500 dark:text-gray-400 whitespace-pre-line leading-relaxed">

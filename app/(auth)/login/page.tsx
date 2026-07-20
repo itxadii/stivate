@@ -105,7 +105,7 @@ export default async function LoginPage() {
 
           {/* Footer Section */}
           <div className="relative text-xs text-slate-500 flex items-center justify-between border-t border-slate-200 pt-6">
-            <span>© 2026 Stivate LLC. All rights reserved.</span>
+            <span>© 2026 Stivate LLP. All rights reserved.</span>
             <Link
               href="/security-policy"
               className="flex items-center gap-1 hover:text-sky-600 cursor-pointer transition text-slate-500 hover:underline font-medium"
